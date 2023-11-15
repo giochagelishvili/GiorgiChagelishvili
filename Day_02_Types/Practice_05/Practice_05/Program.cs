@@ -1,4 +1,6 @@
-﻿Console.WriteLine("Enter your day of birth: ");
+﻿using System.Net.Http.Headers;
+
+Console.WriteLine("Enter your day of birth: ");
 var dayInput = Console.ReadLine();
 int day;
 
@@ -20,6 +22,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Aries.");
+    return;
 }
 
 if (
@@ -28,6 +31,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Taurus.");
+    return;
 }
 
 if (
@@ -36,6 +40,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Gemini.");
+    return;
 }
 
 if (
@@ -44,6 +49,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Cancer.");
+    return;
 }
 
 if (
@@ -52,6 +58,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Leo.");
+    return;
 }
 
 if (
@@ -60,6 +67,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Virgo.");
+    return;
 }
 
 if (
@@ -68,6 +76,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Libra.");
+    return;
 }
 
 if (
@@ -76,6 +85,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Scorpio.");
+    return;
 }
 
 if (
@@ -84,6 +94,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Sagittarius.");
+    return;
 }
 
 if (
@@ -92,6 +103,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Capricorn.");
+    return;
 }
 
 if (
@@ -100,6 +112,7 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Aquarius.");
+    return;
 }
 
 if (
@@ -108,4 +121,5 @@ if (
    )
 {
     Console.WriteLine($"{day} {month} is Pisces.");
+    return;
 }
