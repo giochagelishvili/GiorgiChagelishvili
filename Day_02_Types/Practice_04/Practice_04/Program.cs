@@ -1,10 +1,10 @@
 ﻿Console.WriteLine("Enter your birth year: ");
 
-var userInput = Console.ReadLine();
 int birthYear;
+bool userInput = int.TryParse(Console.ReadLine(), out birthYear);
 
 // Stop further code execution if user input is not an integer
-if (int.TryParse(userInput, out birthYear) == false)
+if (userInput == false)
 {
     return;
 }
