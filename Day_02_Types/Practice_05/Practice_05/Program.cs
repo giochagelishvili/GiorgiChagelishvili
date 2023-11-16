@@ -1,17 +1,13 @@
 ﻿using System.Net.Http.Headers;
 
 Console.WriteLine("Enter your day of birth: ");
-var dayInput = Console.ReadLine();
 int day;
+bool dayInput = int.TryParse(Console.ReadLine(), out day);
 
 Console.WriteLine("Enter your month of birth: ");
 string? month = Console.ReadLine();
 
-if (
-    int.TryParse(dayInput, out day) == false ||
-    month == null ||
-    month == ""
-   )
+if (dayInput == false || month == null || month == "")
 {
     return;
 }
@@ -123,3 +119,5 @@ if (
     Console.WriteLine($"{day} {month} is Pisces.");
     return;
 }
+
+Console.ReadKey();
