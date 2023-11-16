@@ -1,21 +1,22 @@
 ﻿Console.WriteLine("Enter integer number: ");
 
-// Prompt the user for input
-var userInput = Console.ReadLine();
 int num;
 
-// Check if user input is integer
-if (int.TryParse(userInput, out num) == true)
+// Try parsing user input into integer
+bool userInput = int.TryParse(Console.ReadLine(), out num);
+
+if (userInput == true)
 {
-    // Check if number is odd or even
+    isOdd(num);
+}
+
+// Check if passed number is even or odd
+static void isOdd(int num)
+{
     if (num % 2 == 0)
-    {
         Console.WriteLine($"Entered number {num} is even.");
-    }
     else
-    {
         Console.WriteLine($"Entered number {num} is odd.");
-    }
 }
 
 Console.ReadKey();
