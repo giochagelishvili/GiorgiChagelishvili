@@ -48,3 +48,5 @@ switch (birthYear % 12)
         Console.WriteLine($"{birthYear} was a Pig year!");
         break;
 }
+
+Console.ReadKey();
