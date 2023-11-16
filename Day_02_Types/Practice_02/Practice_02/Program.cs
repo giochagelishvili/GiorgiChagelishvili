@@ -1,30 +1,33 @@
 ﻿Console.WriteLine("Enter first number: ");
-var firstInput = Console.ReadLine();
-int firstNum; // First side length
+int firstSideLength;
+bool firstSideInput = int.TryParse(Console.ReadLine(), out firstSideLength);
 
 Console.WriteLine("Enter second number: ");
-var secondInput = Console.ReadLine();
-int secondNum; // Second side length
+int secondSideLength;
+bool secondSideInput = int.TryParse(Console.ReadLine(), out secondSideLength);
 
 Console.WriteLine("Enter third number: ");
-var thirdInput = Console.ReadLine();
-int thirdNum; // Third side length
+int thirdSideLength;
+bool thirdSideInput = int.TryParse(Console.ReadLine(), out thirdSideLength);
 
-if (
-    int.TryParse(firstInput, out firstNum) == true &&
-    int.TryParse(secondInput, out secondNum) == true &&
-    int.TryParse(thirdInput, out thirdNum) == true
-   )
+if (firstSideInput == true && secondSideInput == true && thirdSideInput == true)
 {
-    /* 
-     * Check sides according to Triangle Inequality Theorem, 
-     * which states that the sum of two side lengths of a 
-     * triangle is always greater than the third side.
-    */
+    validTriangle(firstSideLength, secondSideLength, thirdSideLength);
+}
+
+Console.ReadKey();
+
+/* 
+* Check sides according to Triangle Inequality Theorem, 
+* which states that the sum of two side lengths of a 
+* triangle is always greater than the third side.
+*/
+static void validTriangle(int firstSide, int secondSide, int thirdSide)
+{
     if (
-        (firstNum + secondNum) > thirdNum &&
-        (firstNum + thirdNum) > secondNum &&
-        (secondNum + thirdNum) > firstNum
+        (firstSide + secondSide) > thirdSide &&
+        (firstSide + thirdSide) > secondSide &&
+        (secondSide + thirdSide) > firstSide
        )
     {
         Console.WriteLine("This should be a triangle !");
