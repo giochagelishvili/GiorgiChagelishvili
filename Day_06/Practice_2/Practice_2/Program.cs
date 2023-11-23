@@ -1,13 +1,16 @@
 ﻿int[] numArray = { 1, 3, 123, 15, 13, 23, 98 };
+int[] digitSum = calculateDigitSum(numArray, 6);
 
-calculateDigitSum(numArray, 6);
+if (digitSum == null)
+    return;
 
+Console.WriteLine($"The sum of the digits of a number at index {digitSum[0]} is {digitSum[1]}");
 Console.ReadKey();
 
-void calculateDigitSum(int[] array, int index)
+int[] calculateDigitSum(int[] array, int index)
 {
     if (index > array.Length - 1 || index < 0)
-        return;
+        return null;
 
     int num = array[index];
     int sum = 0;
@@ -18,5 +21,5 @@ void calculateDigitSum(int[] array, int index)
         num /= 10;
     }
 
-    Console.WriteLine($"The sum of the digits of a number at index {index} is {sum}");
+    return new int[] { index, sum };
 }
