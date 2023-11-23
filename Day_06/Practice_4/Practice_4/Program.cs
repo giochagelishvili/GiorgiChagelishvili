@@ -3,10 +3,13 @@
 if (numArray == null)
     return;
 
-calculateAverage(numArray);
+float average = calculateAverage(numArray);
+string roundedAverage = average.ToString("#.##");
+
+Console.WriteLine($"Arithmetic average of array is: {roundedAverage}");
 Console.ReadKey();
 
-void calculateAverage(int[] array)
+float calculateAverage(int[] array)
 {
     int length = array.Length;
     int sum = 0;
@@ -15,9 +18,9 @@ void calculateAverage(int[] array)
         sum += num;
 
     // Round float value to 2 decimal points
-    string average = ((float)sum / length).ToString("#.##");
+    float average = (float)sum / length;
 
-    Console.Write($"Arithmetic average of array is: {average}");
+    return average;
 }
 
 int[] createArray()
