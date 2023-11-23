@@ -3,7 +3,11 @@
 if (numArray == null)
     return;
 
-findMinMax(numArray);
+int[] minMax = findMinMax(numArray);
+
+Console.WriteLine($"The minimum number in the array is: {minMax[0]}");
+Console.WriteLine($"The maximum number in the array is: {minMax[1]}");
+
 Console.ReadKey();
 
 int[] createArray()
@@ -34,7 +38,7 @@ int[] createArray()
     return numArray;
 }
 
-void findMinMax(int[] numArray)
+int[] findMinMax(int[] numArray)
 {
     int min = numArray[0];
     int max = numArray[0];
@@ -47,6 +51,5 @@ void findMinMax(int[] numArray)
             max = num;
     }
 
-    Console.WriteLine($"The minimum number in the array is: {min}");
-    Console.WriteLine($"The maximum number in the array is: {max}");
+    return new int[] { min, max };
 }
