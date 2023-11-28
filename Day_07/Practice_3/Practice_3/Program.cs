@@ -2,6 +2,11 @@
 
 printWithSpaces(text);
 
+Console.WriteLine();
+Console.WriteLine();
+
+printWithSpacesJoin(text);
+
 void printWithSpaces(string text)
 {
     char[] textAsChars = text.ToCharArray();
@@ -12,4 +17,16 @@ void printWithSpaces(string text)
         if (c != 32)
             Console.Write($"{c} ");
     }
+}
+
+// this method is using .Join built-in method
+// problem with "printWithSpacesJoin" is that it will treat
+// spaces as symbols and it will print double spaces
+void printWithSpacesJoin(string text)
+{
+    char[] textAsChars = text.ToCharArray();
+
+    string result = String.Join(" ", textAsChars);
+
+    Console.WriteLine(result);
 }
