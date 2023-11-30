@@ -1,36 +1,44 @@
-﻿printNumsTail(1, 13);
+﻿printNumsHead(13); // head
+
+Console.WriteLine();
+Console.WriteLine("-------------------------");
+
+printNumsTail(13); // tail from 13 to 1
+
+Console.WriteLine();
+Console.WriteLine("-------------------------");
+
+printNumsTailReverse(1, 13); // tail from 1 to 13
 
 // head recursion
-int printNumsHead(int num)
+void printNumsHead(int num)
 {
     if (num == 0)
-        return 0;
+        return;
     else
-    {
-        int result = 1 + printNumsHead(num - 1);
-        Console.Write($"{result} ");
-        return result;
-    }
+        printNumsHead(num - 1);
+
+    Console.Write($"{num} ");
 }
 
 // tail recursion from 13 to 1
-int printNumsTailReverse(int num)
+void printNumsTail(int num)
 {
     Console.Write($"{num} ");
 
     if (num == 1)
-        return 1;
+        return;
     else
-        return printNumsTailReverse(num - 1);
+        printNumsTail(num - 1);
 }
 
 // tail recursion from 1 to 13
-int printNumsTail(int startNum, int endNum)
+void printNumsTailReverse(int startNum, int endNum)
 {
-    Console.WriteLine(startNum);
+    Console.Write($"{startNum} ");
 
     if (startNum == endNum)
-        return startNum;
+        return;
     else
-        return printNumsTail(startNum + 1, endNum);
+        printNumsTailReverse(startNum + 1, endNum);
 }
