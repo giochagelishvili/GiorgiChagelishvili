@@ -4,9 +4,9 @@ namespace Practice_1
 {
     public class Triangle : Shape
     {
-        private Point? A { get; set; }
-        private Point? B { get; set; }
-        private Point? C { get; set; }
+        private Point A { get; set; }
+        private Point B { get; set; }
+        private Point C { get; set; }
 
         private double FirstSide { get; set; }
         private double SecondSide { get; set; }

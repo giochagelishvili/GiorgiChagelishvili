@@ -65,7 +65,6 @@ Rectangle CreateRectangle()
     return new Rectangle(a, b, c, d);
 }
 
-
 // Creates and returns triangle object
 Triangle CreateTriangle()
 {
@@ -85,7 +84,6 @@ Triangle CreateTriangle()
 
     return new Triangle(a, b, c);
 }
-
 
 // Creates and returns point object
 Point CreatePoint()

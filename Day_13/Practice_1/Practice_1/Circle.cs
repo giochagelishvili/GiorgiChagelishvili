@@ -24,12 +24,6 @@
             return 2 * Math.PI * Radius;
         }
 
-        // Override ToString() method and return the name of the shape
-        public override string ToString()
-        {
-            return "Circle";
-        }
-
         // calculates distance (length) between 2 coordinates on coordinate plane
         // general formula could be looked up in google
         private double CalculateDistance(Point firstCoordinate, Point secondCoordinate)
@@ -43,5 +37,12 @@
 
             return distance;
         }
+
+        // Override ToString() method and return the name of the shape
+        public override string ToString()
+        {
+            return "Circle";
+        }
+
     }
 }
