@@ -16,6 +16,7 @@ foreach (Shape shape in shapes)
 
     Console.WriteLine($"Perimeter of the {shapeName} is: {perimeter}");
     Console.WriteLine($"Area of the {shapeName} is: {area}");
+    Console.WriteLine("");
 }
 
 string circlePerimeter = circle.Perimeter().ToString("F1");
@@ -35,6 +36,8 @@ Circle CreateCircle()
 
     Console.WriteLine("Enter coordinates of the point on the circle:");
     Point point = CreatePoint();
+
+    Console.WriteLine("");
 
     return new Circle(center, point);
 }
@@ -57,6 +60,8 @@ Rectangle CreateRectangle()
     Console.WriteLine("Enter point D coordinates:");
     Point d = CreatePoint();
 
+    Console.WriteLine("");
+
     return new Rectangle(a, b, c, d);
 }
 
@@ -75,6 +80,8 @@ Triangle CreateTriangle()
 
     Console.WriteLine("Enter point C coordinates:");
     Point c = CreatePoint();
+
+    Console.WriteLine("");
 
     return new Triangle(a, b, c);
 }
