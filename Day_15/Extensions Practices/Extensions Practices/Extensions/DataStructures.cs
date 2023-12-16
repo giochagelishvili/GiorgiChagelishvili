@@ -29,9 +29,8 @@
 
             foreach(int num in numArray)
             {
-                // Check if first element is 0
-                // it's default value for [0]th element so we don't need to add it again
-                if (num == 0 && index == 0)
+                // Default values are 0 so we don't add 0s to array
+                if (num == 0)
                     index++;
 
                 // Add distinct numbers into withoutDuplicates array from numArray

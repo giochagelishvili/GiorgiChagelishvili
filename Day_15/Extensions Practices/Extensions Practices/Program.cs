@@ -54,7 +54,7 @@ namespace Extensions_Practices
 
             // Round one number to the nearest multiple of another number
             double numToRound = 23.5;
-            double multiple = 5.25;
+            double multiple = -5.25;
             double roundedNum = numToRound.RoundToNearestMultiple(multiple);
 
             Console.WriteLine($"{numToRound} rounded to the nearest multiple of {multiple} is: {roundedNum}");
@@ -64,7 +64,7 @@ namespace Extensions_Practices
             //------------------------//
 
             // Remove duplicate values from the array
-            int[] withDuplicates = { 1, 1, 3, 2, 4, 4, 2, 5 };
+            int[] withDuplicates = { -1, 0, 3, 2, 4, 4, 2, 5 };
             int[] withoutDuplicates = withDuplicates.RemoveDuplicates();
 
             Console.Write("Before removing duplicates: ");
