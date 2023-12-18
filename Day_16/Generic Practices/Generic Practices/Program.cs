@@ -1,4 +1,5 @@
-﻿using Generic_Practices.Generics;
+﻿using Generic_Practices.Bonus;
+using Generic_Practices.Generics;
 
 namespace Generic_Practices
 {
@@ -85,6 +86,21 @@ namespace Generic_Practices
             Console.WriteLine($"Pop element {stack.Pop()} from stack.");
 
             Console.WriteLine($"Last added element in stack after popping: {stack.Peek()}");
+
+            //---------------------//
+            // Binary Search Tree //
+            //-------------------//
+
+            BinarySearchTree<int> tree = new BinarySearchTree<int>();
+
+            tree.Add(1);
+            tree.Add(2);
+            tree.Add(9);
+            tree.Add(5);
+            tree.Add(0);
+
+            Console.WriteLine($"Calling find method for node 0: {tree.Find(0).nodeValue}");
+            Console.WriteLine($"Calling find method for node 9: {tree.Find(9).nodeValue}");
         }
     }
 }
