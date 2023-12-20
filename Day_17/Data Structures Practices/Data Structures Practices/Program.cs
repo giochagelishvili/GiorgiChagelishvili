@@ -60,8 +60,19 @@ namespace Data_Structures_Practices
                     Console.Write($"{book.Genre}\n");
                 else
                     Console.Write($"{book.Genre}, ");
+
+            //-------------------//
+            //-- Swap Numbers --//
+            //-----------------//
+            Tuple<double, double> toSwap = new Tuple<double, double>(5.25, -1.2);
+
+            Console.WriteLine($"Before swapping: {toSwap.Item1}, {toSwap.Item2}");
+
+            toSwap = toSwap.Swap();
+
+            Console.WriteLine($"After swapping: {toSwap.Item1}, {toSwap.Item2}");
         }
-        
+
         enum Genres
         {
             Novel,

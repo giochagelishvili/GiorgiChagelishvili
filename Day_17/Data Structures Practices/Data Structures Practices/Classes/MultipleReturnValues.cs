@@ -1,4 +1,6 @@
-﻿namespace Data_Structures_Practices.Classes
+﻿using System.Globalization;
+
+namespace Data_Structures_Practices.Classes
 {
     public static class MultipleReturnValues
     {
@@ -11,6 +13,11 @@
                 return new Tuple<int, bool>(firstNum, true);
 
             return new Tuple<int, bool>(secondNum, true);
+        }
+
+        public static Tuple<T, T> Swap<T>(this Tuple<T, T> toSwap)
+        {
+            return new Tuple<T, T>(toSwap.Item2, toSwap.Item1);
         }
     }
 }
