@@ -1,10 +1,13 @@
-﻿namespace Exception_Practice
+﻿using Exception_Practice.Classes;
+
+namespace Exception_Practice
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            User Giorgi = new User("Giorgi", "Chagelishvili");
+            Giorgi.StartATM();
         }
     }
 }
