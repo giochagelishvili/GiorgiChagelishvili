@@ -14,6 +14,7 @@
             ColumnPosition = columnPosition;
             Color = color;
         }
+
         public abstract void Move(int row = 0, int column = 0);
     }
 }
