@@ -1,5 +1,6 @@
 ﻿using Chess.Classes.Pieces;
 using Chess.Exceptions;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Chess.Classes
 {
@@ -57,25 +58,15 @@ namespace Chess.Classes
 
             do
             {
-                try
-                {
-                    bool userInput = int.TryParse(Console.ReadLine(), out colorInput);
+                bool userInput = int.TryParse(Console.ReadLine(), out colorInput);
 
-                    if (!userInput)
-                        throw new InvalidInputException("Please enter a number.");
-                    else if (colorInput < 1 || colorInput > 2)
-                        throw new InvalidInputException("Please choose one of the above.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                if (!userInput)
+                    Console.WriteLine("Please enter a number.");
+                else if (colorInput < 1 || colorInput > 2)
+                    Console.WriteLine("Please choose one of the above.");
             } while (colorInput < 1 || colorInput > 2);
 
-            if (colorInput == 1)
-                return "White";
-            else
-                return "Black";
+            return colorInput == 1 ? "White" : "Black";
         }
     }
 }
