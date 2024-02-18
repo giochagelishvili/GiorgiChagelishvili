@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             List<Book> books = GenerateBooks();
-            var filteredBooks = DataPipeline<Book>.Process<IEnumerable<BookDto>>(books).ToList();
+            var filteredBooks = DataPipeline.Process(books).ToList();
         }
 
         public static List<Book> GenerateBooks()
@@ -16,11 +16,9 @@
 
             string[] authors = { "F. Scott Fitzgerald", "Harper Lee", "George Orwell", "Jane Austen", "J.D. Salinger", "George Orwell", "Aldous Huxley", "Ray Bradbury", "J.R.R. Tolkien", "J.R.R. Tolkien", "J.K. Rowling", "Suzanne Collins", "Dan Brown", "Paulo Coelho", "Stephen King", "Charles Dickens", "Emily Brontë", "Herman Melville", "Homer", "Leo Tolstoy" };
 
-            Random random = new();
-
             for (int i = 0; i < bookNames.Length; i++)
             {
-                Book book = new(bookNames[i], authors[i], "1234567890123", "Dea Chkoidze Inc.", new DateTime(2023, 12, i + 1), Genre.Detective, 50 * i, true, i + 0.99M);
+                Book book = new(bookNames[i], authors[i], "1234567890123", "Dea Chkoidze Inc.", new DateTime(2022, 12, i + 1), Genre.Detective, 50 * i, true, i + 0.99M);
                 list.Add(book);
             }
 

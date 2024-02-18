@@ -5,14 +5,11 @@ namespace Chess.Classes
     public class Game
     {
         private bool GameOver { get; set; } = false;
-        private List<Piece>? BlackPieces { get; set; }
-        private List<Piece>? WhitePieces { get; set; }
+        private List<Piece>? BlackPieces { get; set; } = Helpers.CreateBlackPieces();
+        private List<Piece>? WhitePieces { get; set; } = Helpers.CreateWhitePieces();
 
         public void Start()
         {
-            BlackPieces = Helpers.CreateBlackPieces();
-            WhitePieces = Helpers.CreateWhitePieces();
-
             do
             {
                 string color = Helpers.GetColor();
@@ -26,17 +23,13 @@ namespace Chess.Classes
 
         private void PlayBlack()
         {
-            int pieceIndex = GetPieceIndex("Black");
-
-            Piece piece = BlackPieces[pieceIndex - 1];
+            Piece piece = BlackPieces[GetPieceIndex("Black") - 1];
 
             if (piece.Name == "Pawn")
                 PlayPawn(piece);
-
-            if (piece.Name == "Knight")
+            else if (piece.Name == "Knight")
                 PlayKnight(piece);            
-            
-            if (piece.Name == "King")
+            else if(piece.Name == "King")
                 PlayKing(piece);
         }
         private void PlayWhite()

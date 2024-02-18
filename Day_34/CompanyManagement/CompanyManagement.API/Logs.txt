@@ -1,0 +1,56 @@
+Time: 2/6/2024 6:02:16 PM
+Trace ID: 40000023-0008-ff00-b63f-84710c7967bb
+Code: CompanyNotFound
+Status: 400
+Exception message: Company not found.
+Log Level: Information
+Instance: /api/Company/7
+Stack trace:    at CompanyManagement.Application.CompanyService.GetCompanyById(Int32 id) in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.Application\CompanyService.cs:line 27
+   at CompanyManagement.API.Controllers.CompanyController.Get(Int32 id) in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.API\Controllers\CompanyController.cs:line 21
+   at lambda_method2(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at CompanyManagement.API.Infrastructure.Middlewares.ExceptionHandlerMiddleware.Invoke(HttpContext httpContext) in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.API\Infrastructure\Middlewares\ExceptionHandlerMiddleware.cs:line 18
+-----------------------------
+Time: 2/6/2024 6:02:45 PM
+Trace ID: 4000001e-000a-ff00-b63f-84710c7967bb
+Code: UserUnauthorized
+Status: 401
+Exception message: User is not authorized for this request.
+Log Level: Information
+Instance: /api/Company
+Stack trace:    at CompanyManagement.Application.CompanyService.AddCompany() in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.Application\CompanyService.cs:line 32
+   at CompanyManagement.API.Controllers.CompanyController.AddCompany() in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.API\Controllers\CompanyController.cs:line 27
+   at lambda_method12(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at CompanyManagement.API.Infrastructure.Middlewares.ExceptionHandlerMiddleware.Invoke(HttpContext httpContext) in C:\Users\user\Desktop\TBC IT Acadaemy\GiorgiChagelishvili\Day_34\CompanyManagement\CompanyManagement.API\Infrastructure\Middlewares\ExceptionHandlerMiddleware.cs:line 18
+-----------------------------
