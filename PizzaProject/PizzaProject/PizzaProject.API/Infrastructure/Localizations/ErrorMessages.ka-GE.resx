@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddressCityEmpty" xml:space="preserve">
+    <value>ქალაქი არის აუცილებელი ველი.</value>
+  </data>
+  <data name="AddressCityLengthInvalid" xml:space="preserve">
+    <value>ქალაქის სახელი უნდა იყოს 16 სიმბოლოზე ნაკლები.</value>
+  </data>
+  <data name="AddressCountryEmpty" xml:space="preserve">
+    <value>ქვეყანა არის აუცილებელი ველი.</value>
+  </data>
+  <data name="AddressCountryLengthInvalid" xml:space="preserve">
+    <value>ქვეყნის სახელი უნდა იყოს 16 სიმბოლოზე ნაკლები.</value>
+  </data>
+  <data name="AddressDescriptionLengthInvalid" xml:space="preserve">
+    <value>მისამართის აღწერა უნდა იყოს 100 სიმბოლოზე ნაკლები.</value>
+  </data>
+  <data name="AddressDoesNotExist" xml:space="preserve">
+    <value>აღნიშნულ მომხმარებელს მსგავსი მისამართი არ აქვს.</value>
+  </data>
+  <data name="AddressNotFound" xml:space="preserve">
+    <value>მისამართი ვერ მოიძებნა.</value>
+  </data>
+  <data name="AddressRegionLengthInvalid" xml:space="preserve">
+    <value>რეგიონის სახელი უნდა იყოს 16 სიმბოლოზე ნაკლები.</value>
+  </data>
+  <data name="AddressUserIdDoesNotExist" xml:space="preserve">
+    <value>ასეთი მომხმარებელი არ არსებობს.</value>
+  </data>
+  <data name="EmailEmpty" xml:space="preserve">
+    <value>ელ. ფოსტა აუცილებელი ველია.</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>ელ. ფოსტა არასწორია.</value>
+  </data>
+  <data name="InvalidRank" xml:space="preserve">
+    <value>შეფასება უნდა იყოს 1-დან 10-ის ჩათვლით.</value>
+  </data>
+  <data name="OrderNotFound" xml:space="preserve">
+    <value>ასეთი შეკვეთა ვერ მოიძებნა.</value>
+  </data>
+  <data name="OrderPizzaListEmpty" xml:space="preserve">
+    <value>პიცების ჩამონათვალი საჭიროა შეკვეთის შესაქმნელად.</value>
+  </data>
+  <data name="OrderUserIdEmpty" xml:space="preserve">
+    <value>მომხმარებლის აიდი სავალდებულო ველია.</value>
+  </data>
+  <data name="PizzaCaloryCountEmpty" xml:space="preserve">
+    <value>კალორიულობა აუცილებელი ველია.</value>
+  </data>
+  <data name="PizzaCaloryCountInvalid" xml:space="preserve">
+    <value>კალორიულობა უნდა იყოს 0-ზე მეტი.</value>
+  </data>
+  <data name="PizzaInvalidDescriptionLength" xml:space="preserve">
+    <value>პიცის აღწერა უნდა იყოს 100 სიმბოლოზე ნაკლები.</value>
+  </data>
+  <data name="PizzaNameEmpty" xml:space="preserve">
+    <value>პიცის სახელი სავალდებულო ველია.</value>
+  </data>
+  <data name="PizzaNameInvalidLength" xml:space="preserve">
+    <value>პიცის სახელი უნდა იყოს მინიმუმ 3 და მაქსიმუმ 20 სიმბოლო.</value>
+  </data>
+  <data name="PizzaNotFound" xml:space="preserve">
+    <value>ასეთი პიცა ვერ მოიძებნა.</value>
+  </data>
+  <data name="PizzaPriceEmpty" xml:space="preserve">
+    <value>პიცის ფასი სავალდებულო ველია.</value>
+  </data>
+  <data name="PizzaPriceInvalid" xml:space="preserve">
+    <value>პიცის ფასი უნდა იყოს 0-ზე მეტი.</value>
+  </data>
+  <data name="RankHistoryInvalidPizzaId" xml:space="preserve">
+    <value>ამ მომხმარებელს ეს პიცა არასდროს შეუკვეთავს.</value>
+  </data>
+  <data name="RankHistoryPizzaIdRequired" xml:space="preserve">
+    <value>პიცის აიდი აუცილებელია შესაფასებლად.</value>
+  </data>
+  <data name="RankHistoryUserIdRequired" xml:space="preserve">
+    <value>მომხმარებელი აუცილებელი ველია.</value>
+  </data>
+  <data name="RankIsRequired" xml:space="preserve">
+    <value>შეფასება აუცილებელი ველია.</value>
+  </data>
+  <data name="RankNotFound" xml:space="preserve">
+    <value>შეფასება ვერ მოიძებნა.</value>
+  </data>
+  <data name="UserFirstNameEmpty" xml:space="preserve">
+    <value>სახელი აუცილებელი ველია.</value>
+  </data>
+  <data name="UserFirstNameInvalidLength" xml:space="preserve">
+    <value>სახელი უნდა შედგებოდეს მინიმუმ 2 და მაქსიმუმ 20 ასოსგან.</value>
+  </data>
+  <data name="UserLastNameEmpty" xml:space="preserve">
+    <value>გვარი აუცილებელი ველია.</value>
+  </data>
+  <data name="UserLastNameInvalidLength" xml:space="preserve">
+    <value>გვარი უნდა შედგებოდეს მინიმუმ 2 და მაქსიმუმ 30 ასოსგან.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>ასეთი მომხმარებელი ვერ მოიძებნა.</value>
+  </data>
+  <data name="UserPhoneNumberEmpty" xml:space="preserve">
+    <value>ტელეფონის ნომერი აუცილებელი ველია.</value>
+  </data>
+  <data name="UserPhoneNumberInvalid" xml:space="preserve">
+    <value>ტელეფონის ნომერი უნდა შედგებოდეს 9 ციფრისგან.</value>
+  </data>
+</root>
