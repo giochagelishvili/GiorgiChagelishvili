@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Forum.API.Extensions.Authorization
+namespace Forum.API.Infrastructure.Authorization
 {
     public static class JWTHelper
     {

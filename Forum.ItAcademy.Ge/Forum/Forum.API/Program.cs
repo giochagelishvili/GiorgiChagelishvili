@@ -1,9 +1,11 @@
-using Forum.API.Extensions.AuthExtensions;
-using Forum.API.Extensions.Swagger;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Forum.API.Infrastructure.Extensions;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Forum.API
 {
@@ -19,6 +21,10 @@ namespace Forum.API
                             .AddEntityFrameworkStores<ForumContext>();
 
             builder.Services.AddTokenAuthorizaion(builder.Configuration);
+
+            builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             builder.Services.AddControllers();
 

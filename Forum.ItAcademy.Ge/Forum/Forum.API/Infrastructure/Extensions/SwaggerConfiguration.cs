@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace Forum.API.Extensions.Swagger
+namespace Forum.API.Infrastructure.Extensions
 {
     public static class SwaggerConfiguration
     {
@@ -28,7 +28,7 @@ namespace Forum.API.Extensions.Swagger
                                     Id = "bearer"
                                 }
                             },
-                            Array.Empty<string>()
+                        Array.Empty<string>()
                     }
                 });
             });

@@ -1,5 +1,6 @@
-﻿using Forum.API.Extensions.Authorization;
+﻿using Forum.API.Infrastructure.Authorization;
 using Forum.Application.Accounts;
+using Forum.Application.Exceptions;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -35,14 +36,25 @@ namespace Forum.API.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
 
             if (user == null)
-                throw new Exception();
+                throw new UserNotFoundException();
 
             var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
             if (!signInResult.Succeeded)
-                throw new Exception();
+                throw new InvalidPasswordException();
 
             return JWTHelper.GenerateToken(user, _config);
+        }
+
+        [HttpPost("register")]
+        public async Task Register(RegisterRequestModel model)
+        {
+            var user = new User { Email = model.Email, UserName = model.Username };
+
+            var registerResult = await _userManager.CreateAsync(user, model.Password);
+
+            if (!registerResult.Succeeded)
+                throw new CouldNotRegisterException();
         }
     }
 }
