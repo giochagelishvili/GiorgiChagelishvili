@@ -1,3 +1,10 @@
+using Forum.API.Extensions.AuthExtensions;
+using Forum.API.Extensions.Swagger;
+using Forum.Domain.Users;
+using Forum.Persistence.Context;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Forum.API
 {
     public class Program
@@ -6,16 +13,19 @@ namespace Forum.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddIdentity<User, IdentityRole>()
+                            .AddEntityFrameworkStores<ForumContext>();
+
+            builder.Services.AddTokenAuthorizaion(builder.Configuration);
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.UseSwaggerConfiguration();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -24,6 +34,7 @@ namespace Forum.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

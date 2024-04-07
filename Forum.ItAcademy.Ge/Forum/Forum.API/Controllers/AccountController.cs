@@ -1,0 +1,48 @@
+﻿using Forum.API.Extensions.Authorization;
+using Forum.Application.Accounts;
+using Forum.Domain.Users;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Forum.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AccountController : ControllerBase
+    {
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IConfiguration _config;
+
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration config)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _config = config;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public string Get()
+        {
+            return "Sagol brat!";
+        }
+
+        [HttpPost("login")]
+        public async Task<string> Login(LoginRequestModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Username);
+
+            if (user == null)
+                throw new Exception();
+
+            var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+
+            if (!signInResult.Succeeded)
+                throw new Exception();
+
+            return JWTHelper.GenerateToken(user, _config);
+        }
+    }
+}
