@@ -16,25 +16,12 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
         public string Message { get; set; } = default!;
         public string Code { get; set; } = default!;
 
-        public string? TraceId
-        {
-            get
-            {
-                if (Extensions.TryGetValue("TraceId", out var traceId))
-                    return (string?)traceId;
-
-                return null;
-            }
-
-            set => Extensions["TraceId"] = value;
-        }
-
         public ApiError(HttpContext httpContext, Exception exception)
         {
             _httpContext = httpContext;
             _exception = exception;
 
-            TraceId = httpContext.TraceIdentifier;
+            Extensions["TraceId"] = httpContext.TraceIdentifier;
             Instance = httpContext.Request.Path;
 
             HandleException((dynamic)exception);

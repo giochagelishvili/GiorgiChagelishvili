@@ -42,7 +42,7 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
             else
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            await httpContext.Response.WriteAsync(message);
+            await httpContext.Response.WriteAsync(log);
         }
     }
 }

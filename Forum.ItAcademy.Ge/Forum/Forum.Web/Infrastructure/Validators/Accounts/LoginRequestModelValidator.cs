@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Forum.Application.Accounts;
 using Forum.Web.Infrastructure.Localizations;
+using Forum.Application.Accounts;
 
-namespace Forum.Web.Infrastructure.Validators.Accounts
+namespace Forum.API.Infrastructure.Validators
 {
     public class LoginRequestModelValidator : AbstractValidator<LoginRequestModel>
     {

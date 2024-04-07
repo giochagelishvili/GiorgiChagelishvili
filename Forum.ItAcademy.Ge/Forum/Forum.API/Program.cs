@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Serilog;
 using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
+using Forum.API.Infrastructure.Middlewares.Culture;
 
 namespace Forum.API
 {
@@ -20,6 +21,8 @@ namespace Forum.API
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
                 .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -38,6 +41,7 @@ namespace Forum.API
 
             var app = builder.Build();
 
+            app.UseMiddleware<CultureMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             if (app.Environment.IsDevelopment())
