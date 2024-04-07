@@ -49,6 +49,16 @@ namespace Forum.API.Controllers
         [HttpPost("register")]
         public async Task Register(RegisterRequestModel model)
         {
+            var result = await _userManager.FindByEmailAsync(model.Email);
+
+            if (result != null)
+                throw new EmailAlreadyExistsException();
+
+            result = await _userManager.FindByNameAsync(model.Username);
+
+            if (result != null)
+                throw new UsernameAlreadyExistsException();
+
             var user = new User { Email = model.Email, UserName = model.Username };
 
             var registerResult = await _userManager.CreateAsync(user, model.Password);

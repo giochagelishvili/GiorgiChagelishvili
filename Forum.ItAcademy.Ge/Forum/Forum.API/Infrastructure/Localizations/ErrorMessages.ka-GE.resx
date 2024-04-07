@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>ეს ელ. ფოსტა უკვე გამოყენებულია სხვა მომხმარებლის მიერ.</value>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>ელ. ფოსტა აუცილებელი ველია.</value>
   </data>
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>ელ. ფოსტა არავალიდურია, გთხოვთ სცადოთ ხელახლა.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>პაროლი არასწორია, გთხოვთ სცადოთ ხელახლა.</value>
   </data>
   <data name="InvalidPasswordFormat" xml:space="preserve">
     <value>პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს, ერთ ციფრს და დიდ ასოს.</value>
@@ -138,10 +144,19 @@
   <data name="PasswordsDoNotMatch" xml:space="preserve">
     <value>პაროლები არ ემთხვევა, გთხოვთ სცადოთ ხელახლა.</value>
   </data>
+  <data name="UnhandledErrorOccurred" xml:space="preserve">
+    <value>მოხდა დაუმუშავებელი შეცდომა, სცადეთ მოგვიანებით.</value>
+  </data>
+  <data name="UsernameAlreadyExists" xml:space="preserve">
+    <value>მომხმარებლის სახელი უკვე დარეგისტრირებულია.</value>
+  </data>
   <data name="UsernameMaxLength" xml:space="preserve">
     <value>მომხმარებლის სახელი უნდა შედგებოდეს მაქსიმუმ 50 სიმბოლოსგან.</value>
   </data>
   <data name="UsernameRequired" xml:space="preserve">
     <value>მომხმარებლის სახელი აუცილებელი ველია.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>მომხმარებელი ვერ მოიძებნა.</value>
   </data>
 </root>
