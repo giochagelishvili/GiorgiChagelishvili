@@ -75,5 +75,12 @@ namespace Forum.Web.Controllers
 
             return RedirectToAction(nameof(Login));
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
