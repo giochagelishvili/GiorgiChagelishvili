@@ -1,4 +1,5 @@
 ﻿using Forum.Application.Accounts;
+using Forum.Application.Exceptions;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace Forum.Web.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
 
             if (user == null)
-                throw new Exception();
+                throw new UserNotFoundException();
 
             var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 

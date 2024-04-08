@@ -61,6 +61,15 @@ namespace Forum.Web.Infrastructure.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User with this email already exists in the database..
+        /// </summary>
+        public static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email is a required field..
         /// </summary>
         public static string EmailRequired {
@@ -75,6 +84,15 @@ namespace Forum.Web.Infrastructure.Localizations {
         public static string InvalidEmailFormat {
             get {
                 return ResourceManager.GetString("InvalidEmailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid password, please try again..
+        /// </summary>
+        public static string InvalidPassword {
+            get {
+                return ResourceManager.GetString("InvalidPassword", resourceCulture);
             }
         }
         
@@ -124,6 +142,24 @@ namespace Forum.Web.Infrastructure.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unhandled error occurred, please try again later..
+        /// </summary>
+        public static string UnhandledErrorOccurred {
+            get {
+                return ResourceManager.GetString("UnhandledErrorOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username already exists in the database..
+        /// </summary>
+        public static string UsernameAlreadyExists {
+            get {
+                return ResourceManager.GetString("UsernameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username must be less than 50 characters..
         /// </summary>
         public static string UsernameMaxLength {
@@ -138,6 +174,15 @@ namespace Forum.Web.Infrastructure.Localizations {
         public static string UsernameRequired {
             get {
                 return ResourceManager.GetString("UsernameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found..
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
     }

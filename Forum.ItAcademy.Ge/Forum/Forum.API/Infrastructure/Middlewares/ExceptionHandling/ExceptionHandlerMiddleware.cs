@@ -27,18 +27,17 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
 
         private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
-            ApiError apiError = new(httpContext, ex);
+            ErrorLog error = new(httpContext, ex);
 
-            var log = JsonConvert.SerializeObject(apiError);
-            var message = JsonConvert.SerializeObject(apiError.Message);
+            var log = JsonConvert.SerializeObject(error);
 
-            Log.Error(message, log);
+            Log.Error(log);
 
             httpContext.Response.Clear();
             httpContext.Response.ContentType = "application/json";
 
-            if (apiError.Status.HasValue)
-                httpContext.Response.StatusCode = apiError.Status.Value;
+            if (error.Status.HasValue)
+                httpContext.Response.StatusCode = error.Status.Value;
             else
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 

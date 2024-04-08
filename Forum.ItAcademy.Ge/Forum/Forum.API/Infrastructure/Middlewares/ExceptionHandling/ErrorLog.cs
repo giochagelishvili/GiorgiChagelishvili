@@ -5,7 +5,7 @@ using System.Net;
 
 namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
 {
-    public class ApiError : ProblemDetails
+    public class ErrorLog : ProblemDetails
     {
         public const string UnhandledErrorCode = "UnhandledError";
 
@@ -16,7 +16,7 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
         public string Message { get; set; } = default!;
         public string Code { get; set; } = default!;
 
-        public ApiError(HttpContext httpContext, Exception exception)
+        public ErrorLog(HttpContext httpContext, Exception exception)
         {
             _httpContext = httpContext;
             _exception = exception;

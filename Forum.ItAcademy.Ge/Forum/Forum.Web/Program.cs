@@ -5,6 +5,8 @@ using Forum.Persistence.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Forum.Web.Infrastructure.Middlewares;
+using Serilog;
 
 namespace Forum.Web
 {
@@ -13,6 +15,12 @@ namespace Forum.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -23,15 +31,21 @@ namespace Forum.Web
 
             builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            builder.Services.AddSession();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+            //if (!app.Environment.IsDevelopment())
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    app.UseHsts();
+            //}
+
+            app.UseSession();
+
+            app.UseExceptionHandlerMiddleware();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
