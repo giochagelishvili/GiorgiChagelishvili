@@ -9,6 +9,7 @@ using System.Reflection;
 using Serilog;
 using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
 using Forum.API.Infrastructure.Middlewares.Culture;
+using Forum.Domain.Roles;
 
 namespace Forum.API
 {
@@ -26,7 +27,7 @@ namespace Forum.API
 
             builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<User, IdentityRole>()
+            builder.Services.AddIdentity<User, Role>()
                             .AddEntityFrameworkStores<ForumContext>();
 
             builder.Services.AddTokenAuthorizaion(builder.Configuration);

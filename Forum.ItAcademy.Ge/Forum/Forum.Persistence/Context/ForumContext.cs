@@ -1,19 +1,30 @@
 ﻿using Forum.Domain.BaseEntities;
+using Forum.Domain.Roles;
 using Forum.Domain.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Persistence.Context
 {
-    public class ForumContext : IdentityDbContext<User>
+    public class ForumContext : IdentityDbContext<User, Role, string>
     {
-        public ForumContext(DbContextOptions<ForumContext> options) : base(options)
+        public ForumContext(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Ignore<IdentityUserToken<string>>();
+            modelBuilder.Ignore<IdentityUserLogin<string>>();
+            modelBuilder.Ignore<IdentityUserClaim<string>>();
+            modelBuilder.Ignore<IdentityRoleClaim<string>>();
+
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ForumContext).Assembly);
         }

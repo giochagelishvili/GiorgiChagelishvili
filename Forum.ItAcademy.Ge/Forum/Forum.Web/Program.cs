@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Forum.Web.Infrastructure.Middlewares;
 using Serilog;
+using Forum.Web.Infrastructure.Extensions;
+using Forum.Domain.Roles;
 
 namespace Forum.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +26,7 @@ namespace Forum.Web
 
             builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<User, IdentityRole>()
+            builder.Services.AddIdentity<User, Role>()
                             .AddEntityFrameworkStores<ForumContext>();
 
             builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
@@ -36,12 +38,6 @@ namespace Forum.Web
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
-
-            //if (!app.Environment.IsDevelopment())
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    app.UseHsts();
-            //}
 
             app.UseSession();
 
@@ -58,6 +54,9 @@ namespace Forum.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            await app.Services.SeedRoles();
+            await app.Services.SeedAdmin();
 
             app.Run();
         }
