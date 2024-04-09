@@ -19,12 +19,13 @@ namespace Forum.Persistence.Context
 
             modelBuilder.Ignore<IdentityUserToken<string>>();
             modelBuilder.Ignore<IdentityUserLogin<string>>();
-            modelBuilder.Ignore<IdentityUserClaim<string>>();
-            modelBuilder.Ignore<IdentityRoleClaim<string>>();
 
             modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ForumContext).Assembly);
         }

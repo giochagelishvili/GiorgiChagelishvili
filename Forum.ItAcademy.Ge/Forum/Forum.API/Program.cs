@@ -3,7 +3,6 @@ using FluentValidation;
 using Forum.API.Infrastructure.Extensions;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Serilog;
