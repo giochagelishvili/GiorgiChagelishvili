@@ -35,6 +35,8 @@ namespace Forum.Web
 
             builder.Services.AddSession();
 
+            builder.Services.AddServices();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

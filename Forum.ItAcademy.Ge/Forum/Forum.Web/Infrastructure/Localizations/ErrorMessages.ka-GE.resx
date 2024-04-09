@@ -130,7 +130,7 @@
     <value>პაროლი არასწორია, გთხოვთ სცადოთ ხელახლა.</value>
   </data>
   <data name="InvalidPasswordFormat" xml:space="preserve">
-    <value>პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს, ერთ ციფრს და დიდ ასოს.</value>
+    <value>პაროლი უნდა შეიცავდეს მინიმუმ 6 ასოს, ერთ სიმბოლოს, ერთ ციფრს და დიდ ასოს.</value>
   </data>
   <data name="PasswordMaxLength" xml:space="preserve">
     <value>პაროლი უნდა შედგებოდეს მაქსიმუმ 30 სიმბოლოსგან.</value>

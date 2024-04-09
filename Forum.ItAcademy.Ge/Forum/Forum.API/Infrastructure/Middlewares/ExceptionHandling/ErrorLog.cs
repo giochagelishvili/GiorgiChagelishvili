@@ -77,6 +77,16 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
             Message = ErrorMessages.UnhandledErrorOccurred;
         }
 
+        private void HandleException(ErrorWhileProcessingException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.Conflict;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.UnhandledErrorOccurred;
+        }
+
         private void HandleException(EmailAlreadyExistsException exception)
         {
             Code = exception.Code;

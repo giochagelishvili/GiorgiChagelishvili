@@ -130,7 +130,7 @@
     <value>Invalid password, please try again.</value>
   </data>
   <data name="InvalidPasswordFormat" xml:space="preserve">
-    <value>Password must be at least 6 characters long, must contain at least one digit and uppercase letter.</value>
+    <value>Password must be at least 6 characters long, must contain at least one digit, one symbol and uppercase letter.</value>
   </data>
   <data name="PasswordMaxLength" xml:space="preserve">
     <value>Password must be less than 30 characters.</value>

@@ -1,24 +1,16 @@
 ﻿using FluentValidation;
-using Forum.Application.Accounts;
+using Forum.Application.Accounts.Updates;
 using Forum.Web.Infrastructure.Localizations;
 
-namespace Forum.Web.Infrastructure.Validators.Accounts
+namespace Forum.Web.Infrastructure.Validators.Updates
 {
-    public class RegisterRequestModelValidator : AbstractValidator<RegisterRequestModel>
+    public class PasswordRequestPutModelValidator : AbstractValidator<PasswordRequestPutModel>
     {
-        public RegisterRequestModelValidator()
+        public PasswordRequestPutModelValidator()
         {
-            RuleFor(model => model.Email)
+            RuleFor(x => x.OldPassword)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.EmailRequired)
-                .Matches(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
-                .WithMessage(ErrorMessages.InvalidEmailFormat);
-
-            RuleFor(model => model.Username)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.UsernameRequired)
-                .MaximumLength(50)
-                .WithMessage(ErrorMessages.UsernameMaxLength);
+                .WithMessage(ErrorMessages.PasswordRequired);
 
             RuleFor(model => model.Password)
                 .NotEmpty()
