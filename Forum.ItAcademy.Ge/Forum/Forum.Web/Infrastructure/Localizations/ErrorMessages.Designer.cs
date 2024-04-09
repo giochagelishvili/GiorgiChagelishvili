@@ -142,6 +142,15 @@ namespace Forum.Web.Infrastructure.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user is unauthorized for this service..
+        /// </summary>
+        public static string Unauthorized {
+            get {
+                return ResourceManager.GetString("Unauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled error occurred, please try again later..
         /// </summary>
         public static string UnhandledErrorOccurred {

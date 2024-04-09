@@ -1,0 +1,20 @@
+﻿@using Forum.Domain.Users;
+@model User;
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile Information</h2>
+
+<div class="flex-column">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <p class="text-danger">@ViewBag.ErrorMessage</p>
+    }
+    <form asp-action="EditUsername" class="flex-row gap-2">
+        <label asp-for="UserName" class="form-label">Username: </label>
+        <input asp-for="UserName" />
+        <input type="submit" value="Update" />
+    </form>
+</div>

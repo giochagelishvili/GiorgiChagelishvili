@@ -57,6 +57,16 @@ namespace Forum.API.Infrastructure.Middlewares.ExceptionHandling
             Message = ErrorMessages.InvalidPassword;
         }
 
+        private void HandleException(UnauthorizedException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.Unauthorized;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7235#section-3.1";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.Unauthorized;
+        }
+
         private void HandleException(CouldNotRegisterException exception)
         {
             Code = exception.Code;

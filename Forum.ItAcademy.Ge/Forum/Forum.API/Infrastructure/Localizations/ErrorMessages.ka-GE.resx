@@ -144,6 +144,9 @@
   <data name="PasswordsDoNotMatch" xml:space="preserve">
     <value>პაროლები არ ემთხვევა, გთხოვთ სცადოთ ხელახლა.</value>
   </data>
+  <data name="Unauthorized" xml:space="preserve">
+    <value>მომხმარებლისთვის ეს სერვისი შეზღუდულია.</value>
+  </data>
   <data name="UnhandledErrorOccurred" xml:space="preserve">
     <value>მოხდა დაუმუშავებელი შეცდომა, სცადეთ მოგვიანებით.</value>
   </data>
