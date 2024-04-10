@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Forum.Application.Accounts;
+using Forum.Application.Accounts.Requests;
 using Forum.Web.Infrastructure.Localizations;
 
 namespace Forum.Web.Infrastructure.Validators.Accounts

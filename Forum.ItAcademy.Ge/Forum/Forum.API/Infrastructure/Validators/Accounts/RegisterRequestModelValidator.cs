@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using Forum.Application.Accounts;
 using Forum.API.Infrastructure.Localizations;
+using Forum.Application.Accounts.Requests;
 
 namespace Forum.Web.Infrastructure.Validators.Accounts
 {

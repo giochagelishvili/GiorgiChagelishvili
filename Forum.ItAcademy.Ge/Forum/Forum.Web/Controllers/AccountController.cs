@@ -1,4 +1,4 @@
-﻿using Forum.Application.Accounts;
+﻿using Forum.Application.Accounts.Requests;
 using Forum.Application.Exceptions;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;

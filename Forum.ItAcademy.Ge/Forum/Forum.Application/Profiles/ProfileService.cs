@@ -1,7 +1,10 @@
-﻿using Forum.Application.Accounts.Updates;
-using Forum.Application.Exceptions;
+﻿using Forum.Application.Exceptions;
 using Forum.Application.Profiles.Interfaces;
+using Forum.Application.Profiles.Requests.Updates;
+using Forum.Application.Profiles.Responses;
+using Forum.Domain;
 using Forum.Domain.Users;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Application.Profiles
@@ -9,25 +12,76 @@ namespace Forum.Application.Profiles
     public class ProfileService : IProfileService
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
 
-        public ProfileService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public ProfileService(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
-        public async Task<bool> UsernameExists(string username, CancellationToken cancellationToken)
+        public async Task<UserResponseModel> GetByUsernameAsync(string username)
+        {
+            var result = await _userManager.FindByNameAsync(username);
+
+            if (result == null || result.Status == Status.Inactive)
+                throw new UserNotFoundException();
+
+            return result.Adapt<UserResponseModel>();
+        }
+
+        public async Task UpdateUsernameAsync(UserRequestPutModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+
+            if (user == null || user.Status == Status.Inactive)
+                throw new UserNotFoundException();
+
+            user.UserName = model.UpdatedUsername;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+                throw new ErrorWhileProcessingException();
+        }
+
+        public async Task UpdateEmailAsync(UserRequestPutModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+
+            if (user == null || user.Status == Status.Inactive)
+                throw new UserNotFoundException();
+
+            user.Email = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+                throw new ErrorWhileProcessingException();
+        }
+
+        public async Task UpdatePasswordAsync(UserRequestPutModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+
+            if (user == null || user.Status == Status.Inactive)
+                throw new UserNotFoundException();
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+                throw new ErrorWhileProcessingException();
+        }
+
+        public async Task<bool> UsernameExists(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null)
+            if (user == null || user.Status == Status.Inactive)
                 return false;
 
             return true;
         }
 
-        public async Task<bool> EmailExists(string email, CancellationToken cancellationToken)
+        public async Task<bool> EmailExists(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -35,65 +89,6 @@ namespace Forum.Application.Profiles
                 return false;
 
             return true;
-        }
-
-        public async Task<User> GetByUsernameAsync(string username, CancellationToken cancellationToken)
-        {
-            return await _userManager.FindByNameAsync(username);
-        }
-
-        public async Task SignInAsync(User user, bool isPersistent)
-        {
-            await _signInManager.SignInAsync(user, isPersistent);
-        }
-
-        public async Task<User> UpdateEmailAsync(string username, EmailRequestPutModel emailModel, CancellationToken cancellationToken)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
-            user.Email = emailModel.Email;
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            return user;
-        }
-
-        public async Task<User> UpdatePasswordAsync(PasswordRequestPutModel passwordModel, string username, CancellationToken cancellationToken)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
-            var result = await _userManager.ChangePasswordAsync(user, passwordModel.OldPassword, passwordModel.Password);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            return user;
-        }
-
-        public async Task<User> UpdateUsernameAsync(string currentUsername, UsernameRequestPutModel usernameModel, CancellationToken cancellationToken)
-        {
-            var user = await _userManager.FindByNameAsync(currentUsername);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
-            user.UserName = usernameModel.Username;
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            return user;
         }
     }
 }

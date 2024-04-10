@@ -1,8 +1,8 @@
-﻿using Forum.Application.Accounts.Updates;
-using Forum.Application.Exceptions;
+﻿using Forum.Application.Exceptions;
 using Forum.Application.Profiles.Interfaces;
-using Forum.Domain.Users;
+using Forum.Application.Profiles.Requests.Updates;
 using Forum.Web.Infrastructure.Localizations;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -19,65 +19,82 @@ namespace Forum.Web.Controllers
             _profileService = profileService;
         }
 
-        public async Task<IActionResult> Profile(CancellationToken cancellationToken)
+        public async Task<IActionResult> Profile()
         {
             if (TempData["ErrorMessage"] is string errorMessage)
                 ViewBag.ErrorMessage = errorMessage;
 
-            var user = await _profileService.GetByUsernameAsync(User.Identity.Name, cancellationToken);
+            var user = await _profileService.GetByUsernameAsync(User.Identity.Name);
 
             return View(user);
         }
 
-        public async Task<IActionResult> UpdateUsername([FromForm] UsernameRequestPutModel usernameModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUsername([FromForm] UsernameRequestPutModel usernameModel)
         {
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            if (await _profileService.UsernameExists(usernameModel.Username, cancellationToken))
+            if (await _profileService.UsernameExists(usernameModel.Username))
             {
                 TempData["ErrorMessage"] = ErrorMessages.UsernameAlreadyExists;
                 return RedirectToAction(nameof(Profile));
             }
 
-            var updatedUser = await _profileService.UpdateUsernameAsync(User.Identity.Name, usernameModel, cancellationToken);
+            var updateModel = new UserRequestPutModel
+            {
+                CurrentUsername = User.Identity.Name,
+                UpdatedUsername = usernameModel.Username
+            };
 
-            await UpdateClaims(updatedUser);
+            await _profileService.UpdateUsernameAsync(updateModel);
+
+            await UpdateUsernameClaim(updateModel.UpdatedUsername);
 
             return RedirectToAction(nameof(Profile));
         }
 
-        public async Task<IActionResult> UpdateEmail([FromForm] EmailRequestPutModel emailModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateEmail([FromForm] EmailRequestPutModel emailModel)
         {
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            if (await _profileService.EmailExists(emailModel.Email, cancellationToken))
+            if (await _profileService.EmailExists(emailModel.Email))
             {
                 TempData["ErrorMessage"] = ErrorMessages.EmailAlreadyExists;
                 return RedirectToAction(nameof(Profile));
             }
 
-            var updatedUser = await _profileService.UpdateEmailAsync(User.Identity.Name, emailModel, cancellationToken);
+            var updateModel = new UserRequestPutModel
+            {
+                CurrentUsername = User.Identity.Name,
+                Email = emailModel.Email
+            };
 
-            await UpdateClaims(updatedUser);
+            await _profileService.UpdateEmailAsync(updateModel);
+
+            await UpdateEmailClaim(updateModel.Email);
 
             return RedirectToAction(nameof(Profile));
         }
 
-        public async Task<IActionResult> UpdatePassword([FromForm] PasswordRequestPutModel passwordModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdatePassword([FromForm] PasswordRequestPutModel passwordModel)
         {
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            var updatedUser = await _profileService.UpdatePasswordAsync(passwordModel, User.Identity.Name, cancellationToken);
+            var updateModel = new UserRequestPutModel
+            {
+                CurrentUsername = User.Identity.Name,
+                CurrentPassword = passwordModel.CurrentPassword,
+                NewPassword = passwordModel.NewPassword
+            };
 
-            await UpdateClaims(updatedUser);
+            await _profileService.UpdatePasswordAsync(updateModel);
 
             return RedirectToAction(nameof(Profile));
         }
 
-        private async Task UpdateClaims(User user)
+        private async Task UpdateUsernameClaim(string username)
         {
             if (User.Identity == null)
                 throw new UnauthorizedException();
@@ -85,21 +102,32 @@ namespace Forum.Web.Controllers
             var identity = (ClaimsIdentity)User.Identity;
 
             var usernameClaim = identity.FindFirst(ClaimTypes.Name);
-            var emailClaim = identity.FindFirst(ClaimTypes.Email);
 
             if (usernameClaim != null)
             {
                 identity.RemoveClaim(usernameClaim);
-                identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Name, username));
             }
+
+            await HttpContext.SignInAsync(User.Identity.AuthenticationType, new ClaimsPrincipal(identity));
+        }
+
+        private async Task UpdateEmailClaim(string email)
+        {
+            if (User.Identity == null)
+                throw new UnauthorizedException();
+
+            var identity = (ClaimsIdentity)User.Identity;
+
+            var emailClaim = identity.FindFirst(ClaimTypes.Email);
 
             if (emailClaim != null)
             {
                 identity.RemoveClaim(emailClaim);
-                identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+                identity.AddClaim(new Claim(ClaimTypes.Email, email));
             }
 
-            await _profileService.SignInAsync(user, true);
+            await HttpContext.SignInAsync(User.Identity.AuthenticationType, new ClaimsPrincipal(identity));
         }
     }
 }

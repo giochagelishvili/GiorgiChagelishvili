@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Forum.Application.Accounts.Updates;
+using Forum.Application.Profiles.Requests.Updates;
 using Forum.Web.Infrastructure.Localizations;
 
 namespace Forum.Web.Infrastructure.Validators.Updates
@@ -8,11 +8,11 @@ namespace Forum.Web.Infrastructure.Validators.Updates
     {
         public PasswordRequestPutModelValidator()
         {
-            RuleFor(x => x.OldPassword)
+            RuleFor(x => x.CurrentPassword)
                 .NotEmpty()
                 .WithMessage(ErrorMessages.PasswordRequired);
 
-            RuleFor(model => model.Password)
+            RuleFor(model => model.NewPassword)
                 .NotEmpty()
                 .WithMessage(ErrorMessages.PasswordRequired)
                 .MinimumLength(6)
@@ -23,7 +23,7 @@ namespace Forum.Web.Infrastructure.Validators.Updates
                 .WithMessage(ErrorMessages.InvalidPasswordFormat);
 
             RuleFor(model => model.ConfirmPassword)
-                .Equal(model => model.Password)
+                .Equal(model => model.NewPassword)
                 .WithMessage(ErrorMessages.PasswordsDoNotMatch);
         }
     }

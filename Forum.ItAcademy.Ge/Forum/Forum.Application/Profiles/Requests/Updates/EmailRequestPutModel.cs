@@ -1,4 +1,4 @@
-﻿namespace Forum.Application.Accounts.Updates
+﻿namespace Forum.Application.Profiles.Requests.Updates
 {
     public class EmailRequestPutModel
     {

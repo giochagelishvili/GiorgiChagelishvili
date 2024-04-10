@@ -1,5 +1,5 @@
-﻿@using Forum.Domain.Users
-@model User;
+﻿@using Forum.Application.Profiles.Responses;
+@model UserResponseModel;
 @{
     ViewData["Title"] = "Profile";
 }
@@ -32,15 +32,15 @@
 
     <form asp-action="UpdatePassword" class="flex-column gap-2">
         <div class="flex-row gap-2">
-            <label asp-for="PasswordHash" class="form-label">Old Password: </label>
-            <input name="OldPassword" type="password" />
+            <label class="form-label">Current Password: </label>
+            <input name="CurrentPassword" type="password" />
         </div>
         <div class="flex-row gap-2">
-            <label asp-for="PasswordHash" class="form-label">Password: </label>
-            <input name="Password" type="password" />
+            <label class="form-label">NewPassword: </label>
+            <input name="NewPassword" type="password" />
         </div>
         <div class="flex-row gap-2">
-            <label asp-for="PasswordHash" class="form-label">Confirm Password: </label>
+            <label class="form-label">Confirm Password: </label>
             <input name="ConfirmPassword" type="password" />
             <input type="submit" value="Update" />
         </div>

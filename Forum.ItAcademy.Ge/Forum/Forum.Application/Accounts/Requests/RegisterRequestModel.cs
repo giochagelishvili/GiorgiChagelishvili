@@ -1,4 +1,4 @@
-﻿namespace Forum.Application.Accounts
+﻿namespace Forum.Application.Accounts.Requests
 {
     public class RegisterRequestModel
     {
