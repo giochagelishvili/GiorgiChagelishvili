@@ -9,6 +9,7 @@ using Serilog;
 using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
 using Forum.API.Infrastructure.Middlewares.Culture;
 using Forum.Domain.Roles;
+using Forum.Web.Infrastructure.Extensions;
 
 namespace Forum.API
 {
@@ -34,6 +35,8 @@ namespace Forum.API
             builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
             builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.Services.AddServices();
 
             builder.Services.AddControllers();
 

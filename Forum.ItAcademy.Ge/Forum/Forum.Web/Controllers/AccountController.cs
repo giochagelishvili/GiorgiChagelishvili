@@ -1,21 +1,17 @@
-﻿using Forum.Application.Accounts.Requests;
-using Forum.Application.Exceptions;
-using Forum.Domain.Users;
-using Microsoft.AspNetCore.Identity;
+﻿using Forum.Application.Accounts.Interfaces;
+using Forum.Application.Accounts.Requests;
+using Forum.Application.Profiles.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Web.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IAccountService _accountService;
 
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(IAccountService accountService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _accountService = accountService;
         }
 
         public ActionResult Login()
@@ -30,19 +26,9 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var user = await _userManager.FindByNameAsync(model.Username);
+            await _accountService.SignInAsync(model);
 
-            if (user == null)
-                throw new UserNotFoundException();
-
-            var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-
-            if (signInResult.Succeeded)
-                return RedirectToAction("Index", "Home");
-
-            ModelState.AddModelError("", "Username or password is incorrect");
-
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
@@ -57,29 +43,14 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var user = new User { Email = model.Email, UserName = model.Username };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-                await _signInManager.SignInAsync(user, false);
-
-            if (!result.Succeeded)
-            {
-                foreach (var err in result.Errors)
-                {
-                    ModelState.AddModelError("", err.Description);
-
-                    return View();
-                }
-            }
+            await _accountService.RegisterAsync(model);
 
             return RedirectToAction(nameof(Login));
         }
 
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _accountService.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
         }

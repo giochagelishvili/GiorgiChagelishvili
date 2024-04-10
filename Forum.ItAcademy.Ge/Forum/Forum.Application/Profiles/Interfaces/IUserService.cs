@@ -3,7 +3,7 @@ using Forum.Application.Profiles.Responses;
 
 namespace Forum.Application.Profiles.Interfaces
 {
-    public interface IProfileService
+    public interface IUserService
     {
         Task<UserResponseModel> GetByUsernameAsync(string username);
         Task UpdateUsernameAsync(UserRequestPutModel user);

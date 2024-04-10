@@ -27,7 +27,7 @@ namespace Forum.Web.Infrastructure.Validators.Accounts
                 .WithMessage(ErrorMessages.PasswordMinLength)
                 .MaximumLength(30)
                 .WithMessage(ErrorMessages.PasswordMaxLength)
-                .Matches(@"^(?=.*[A-Z])(?=.*\d).{6,}$")
+                .Matches(@"^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{6,}$")
                 .WithMessage(ErrorMessages.InvalidPasswordFormat);
 
             RuleFor(model => model.ConfirmPassword)

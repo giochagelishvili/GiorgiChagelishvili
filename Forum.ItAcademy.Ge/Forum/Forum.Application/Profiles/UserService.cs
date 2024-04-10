@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Application.Profiles
 {
-    public class ProfileService : IProfileService
+    public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
 
-        public ProfileService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
@@ -30,6 +30,9 @@ namespace Forum.Application.Profiles
 
         public async Task UpdateUsernameAsync(UserRequestPutModel model)
         {
+            if (await UsernameExists(model.UpdatedUsername))
+                throw new UsernameAlreadyExistsException();
+
             var user = await _userManager.FindByNameAsync(model.CurrentUsername);
 
             if (user == null || user.Status == Status.Inactive)
@@ -45,6 +48,9 @@ namespace Forum.Application.Profiles
 
         public async Task UpdateEmailAsync(UserRequestPutModel model)
         {
+            if (await EmailExists(model.Email))
+                throw new EmailAlreadyExistsException();
+
             var user = await _userManager.FindByNameAsync(model.CurrentUsername);
 
             if (user == null || user.Status == Status.Inactive)

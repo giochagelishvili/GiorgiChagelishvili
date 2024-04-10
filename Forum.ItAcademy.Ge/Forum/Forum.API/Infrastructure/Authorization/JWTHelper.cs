@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Users;
+﻿using Forum.Application.Profiles.Responses;
+using Forum.Domain.Users;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,7 +9,7 @@ namespace Forum.API.Infrastructure.Authorization
 {
     public static class JWTHelper
     {
-        public static string GenerateToken(User user, IConfiguration config)
+        public static string GenerateToken(UserResponseModel user, IConfiguration config)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["AuthConfiguration:SecretKey"]));
 
@@ -18,7 +19,7 @@ namespace Forum.API.Infrastructure.Authorization
 
             var claims = new Claim[]
             {
-                new("Username", user.UserName),
+                new(ClaimTypes.Name, user.UserName),
                 new("Id", user.Id)
             };
 

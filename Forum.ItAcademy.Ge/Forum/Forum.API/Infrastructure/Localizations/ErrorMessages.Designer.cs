@@ -97,7 +97,7 @@ namespace Forum.API.Infrastructure.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password must be at least 6 characters long, must contain at least one digit and uppercase letter..
+        ///   Looks up a localized string similar to Password must be at least 6 characters long, must contain at least one digit, one symbol and one uppercase letter..
         /// </summary>
         public static string InvalidPasswordFormat {
             get {

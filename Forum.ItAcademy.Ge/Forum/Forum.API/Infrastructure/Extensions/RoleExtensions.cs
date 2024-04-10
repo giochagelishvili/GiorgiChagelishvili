@@ -8,7 +8,7 @@ namespace Forum.Web.Infrastructure.Extensions
         public static async Task SeedRoles(this IServiceProvider services)
         {
             using var scope = services.CreateScope();
-            
+
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
 
             var roles = new[] { "Admin", "Member" };
