@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Persistence.Context
 {
-    public class ForumContext : IdentityDbContext<User, Role, string>
+    public class ForumContext : IdentityDbContext<User, Role, int>
     {
         public ForumContext(DbContextOptions options) : base(options)
         {
@@ -17,15 +17,15 @@ namespace Forum.Persistence.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Ignore<IdentityUserToken<string>>();
-            modelBuilder.Ignore<IdentityUserLogin<string>>();
+            modelBuilder.Ignore<IdentityUserToken<int>>();
+            modelBuilder.Ignore<IdentityUserLogin<int>>();
 
             modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserClaim<int>>().ToTable("UserClaims");
 
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserRole<int>>().ToTable("UserRoles");
             modelBuilder.Entity<Role>().ToTable("Roles");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+            modelBuilder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ForumContext).Assembly);
         }

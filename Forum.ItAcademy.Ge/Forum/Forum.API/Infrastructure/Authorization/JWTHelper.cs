@@ -20,7 +20,7 @@ namespace Forum.API.Infrastructure.Authorization
             var claims = new Claim[]
             {
                 new(ClaimTypes.Name, user.UserName),
-                new("Id", user.Id)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var token = new JwtSecurityToken(issuer, audience, claims, expires: DateTime.UtcNow.AddMinutes(exp), signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));

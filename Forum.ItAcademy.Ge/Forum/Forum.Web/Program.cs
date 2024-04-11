@@ -1,14 +1,10 @@
-using FluentValidation.AspNetCore;
-using FluentValidation;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Forum.Web.Infrastructure.Middlewares;
 using Serilog;
-using Forum.Web.Infrastructure.Extensions;
 using Forum.Domain.Roles;
+using Forum.Shared.Extensions;
 
 namespace Forum.Web
 {
@@ -29,9 +25,7 @@ namespace Forum.Web
             builder.Services.AddIdentity<User, Role>()
                             .AddEntityFrameworkStores<ForumContext>();
 
-            builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Services.AddCustomValidators();
 
             builder.Services.AddSession();
 

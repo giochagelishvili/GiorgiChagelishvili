@@ -19,24 +19,7 @@
     <ProjectReference Include="..\Forum.Application\Forum.Application.csproj" />
     <ProjectReference Include="..\Forum.Domain\Forum.Domain.csproj" />
     <ProjectReference Include="..\Forum.Persistence\Forum.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Infrastructure\Localizations\ErrorMessages.Designer.cs">
-      <DependentUpon>ErrorMessages.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Infrastructure\Localizations\ErrorMessages.ka-GE.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Infrastructure\Localizations\ErrorMessages.resx">
-      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Forum.Shared\Forum.Shared.csproj" />
   </ItemGroup>
 
 </Project>

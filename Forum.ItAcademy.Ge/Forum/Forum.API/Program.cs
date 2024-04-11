@@ -1,21 +1,18 @@
-using FluentValidation.AspNetCore;
-using FluentValidation;
 using Forum.API.Infrastructure.Extensions;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Serilog;
 using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
 using Forum.API.Infrastructure.Middlewares.Culture;
 using Forum.Domain.Roles;
-using Forum.Web.Infrastructure.Extensions;
+using Forum.Shared.Extensions;
 
 namespace Forum.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +29,7 @@ namespace Forum.API
 
             builder.Services.AddTokenAuthorizaion(builder.Configuration);
 
-            builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Services.AddCustomValidators();
 
             builder.Services.AddServices();
 
@@ -52,6 +47,9 @@ namespace Forum.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            await app.Services.SeedRoles();
+            await app.Services.SeedAdmin();
 
             app.UseHttpsRedirection();
 

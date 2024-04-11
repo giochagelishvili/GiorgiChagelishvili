@@ -2,6 +2,7 @@
 using Forum.Application.Profiles.Requests.Updates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Forum.API.Controllers
 {
@@ -20,9 +21,11 @@ namespace Forum.API.Controllers
         [HttpPost("update/username")]
         public async Task UpdateUsername(UsernameRequestPutModel usernameModel)
         {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 UpdatedUsername = usernameModel.Username
             };
 
@@ -32,9 +35,11 @@ namespace Forum.API.Controllers
         [HttpPost("update/email")]
         public async Task UpdateEmail(EmailRequestPutModel emailModel)
         {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 Email = emailModel.Email
             };
 
@@ -44,9 +49,11 @@ namespace Forum.API.Controllers
         [HttpPost("update/password")]
         public async Task UpdatePassword(PasswordRequestPutModel passwordModel)
         {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 CurrentPassword = passwordModel.CurrentPassword,
                 NewPassword = passwordModel.NewPassword
             };

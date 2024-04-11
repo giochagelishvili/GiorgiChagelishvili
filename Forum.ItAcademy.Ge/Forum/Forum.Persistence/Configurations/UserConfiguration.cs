@@ -43,7 +43,7 @@ namespace Forum.Persistence.Configurations
             // Ignored properties
             builder.Ignore(user => user.EmailConfirmed);
 
-            builder.Ignore(user => user.SecurityStamp);
+            //builder.Ignore(user => user.SecurityStamp);
 
             builder.Ignore(user => user.ConcurrencyStamp);
 

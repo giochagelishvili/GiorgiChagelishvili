@@ -1,7 +1,5 @@
 ﻿using Forum.Application.Profiles.Interfaces;
 using Forum.Application.Profiles.Requests.Updates;
-using Forum.Web.Infrastructure.Localizations;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -23,7 +21,9 @@ namespace Forum.Web.Controllers
             if (TempData["ErrorMessage"] is string errorMessage)
                 ViewBag.ErrorMessage = errorMessage;
 
-            var user = await _userService.GetByUsernameAsync(User.Identity.Name);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userService.GetByIdAsync(id);
 
             return View(user);
         }
@@ -33,15 +33,15 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 UpdatedUsername = usernameModel.Username
             };
 
             await _userService.UpdateUsernameAsync(updateModel);
-
-            await UpdateUsernameClaim(updateModel.UpdatedUsername);
 
             return RedirectToAction(nameof(Profile));
         }
@@ -51,15 +51,15 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 Email = emailModel.Email
             };
 
             await _userService.UpdateEmailAsync(updateModel);
-
-            await UpdateEmailClaim(updateModel.Email);
 
             return RedirectToAction(nameof(Profile));
         }
@@ -69,9 +69,11 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var updateModel = new UserRequestPutModel
             {
-                CurrentUsername = User.Identity.Name,
+                UserId = id,
                 CurrentPassword = passwordModel.CurrentPassword,
                 NewPassword = passwordModel.NewPassword
             };
@@ -79,36 +81,6 @@ namespace Forum.Web.Controllers
             await _userService.UpdatePasswordAsync(updateModel);
 
             return RedirectToAction(nameof(Profile));
-        }
-
-        private async Task UpdateUsernameClaim(string username)
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-
-            var usernameClaim = identity.FindFirst(ClaimTypes.Name);
-
-            if (usernameClaim != null)
-            {
-                identity.RemoveClaim(usernameClaim);
-                identity.AddClaim(new Claim(ClaimTypes.Name, username));
-            }
-
-            await HttpContext.SignInAsync(User.Identity.AuthenticationType, new ClaimsPrincipal(identity));
-        }
-
-        private async Task UpdateEmailClaim(string email)
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-
-            var emailClaim = identity.FindFirst(ClaimTypes.Email);
-
-            if (emailClaim != null)
-            {
-                identity.RemoveClaim(emailClaim);
-                identity.AddClaim(new Claim(ClaimTypes.Email, email));
-            }
-
-            await HttpContext.SignInAsync(User.Identity.AuthenticationType, new ClaimsPrincipal(identity));
         }
     }
 }

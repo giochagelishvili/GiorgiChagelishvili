@@ -12,10 +12,22 @@ namespace Forum.Application.Profiles
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public async Task<UserResponseModel> GetByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            return user.Adapt<UserResponseModel>();
         }
 
         public async Task<UserResponseModel> GetByUsernameAsync(string username)
@@ -33,7 +45,7 @@ namespace Forum.Application.Profiles
             if (await UsernameExists(model.UpdatedUsername))
                 throw new UsernameAlreadyExistsException();
 
-            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+            var user = await _userManager.FindByIdAsync(model.UserId);
 
             if (user == null || user.Status == Status.Inactive)
                 throw new UserNotFoundException();
@@ -44,6 +56,8 @@ namespace Forum.Application.Profiles
 
             if (!result.Succeeded)
                 throw new ErrorWhileProcessingException();
+
+            await _signInManager.RefreshSignInAsync(user);
         }
 
         public async Task UpdateEmailAsync(UserRequestPutModel model)
@@ -51,7 +65,7 @@ namespace Forum.Application.Profiles
             if (await EmailExists(model.Email))
                 throw new EmailAlreadyExistsException();
 
-            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+            var user = await _userManager.FindByIdAsync(model.UserId);
 
             if (user == null || user.Status == Status.Inactive)
                 throw new UserNotFoundException();
@@ -62,11 +76,13 @@ namespace Forum.Application.Profiles
 
             if (!result.Succeeded)
                 throw new ErrorWhileProcessingException();
+
+            await _signInManager.RefreshSignInAsync(user);
         }
 
         public async Task UpdatePasswordAsync(UserRequestPutModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.CurrentUsername);
+            var user = await _userManager.FindByIdAsync(model.UserId);
 
             if (user == null || user.Status == Status.Inactive)
                 throw new UserNotFoundException();
@@ -75,6 +91,8 @@ namespace Forum.Application.Profiles
 
             if (!result.Succeeded)
                 throw new ErrorWhileProcessingException();
+
+            await _signInManager.RefreshSignInAsync(user);
         }
 
         public async Task<bool> UsernameExists(string username)

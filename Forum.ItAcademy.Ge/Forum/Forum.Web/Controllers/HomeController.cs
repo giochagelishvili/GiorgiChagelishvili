@@ -1,4 +1,4 @@
-﻿using Forum.Web.Infrastructure.Localizations;
+﻿using Forum.Shared.Localizations;
 using Forum.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
