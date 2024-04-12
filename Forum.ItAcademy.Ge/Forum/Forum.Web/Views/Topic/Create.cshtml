@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Create Topic";
+}
+
+<h2>Create New Topic</h2>
+
+<div class="flex-column">
+    <div asp-validation-summary=All class="text-danger"></div>
+
+    <form asp-action="Create" class="flex-column gap-2">
+        <div class="flex-row gap-2">
+            <label for="Title" class="form-label">Title: </label>
+            <input name="Title" />
+        </div>
+        <div class="flex-column align-items-start">
+            <label for=Description class="form-label">Description: </label>
+            <textarea name="Description" class="form-text"></textarea>
+        </div>
+        <input type="submit" value="Create" />
+    </form>
+</div>

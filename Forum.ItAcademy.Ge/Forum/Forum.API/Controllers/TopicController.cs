@@ -1,4 +1,4 @@
-﻿using Forum.API.Models.Topics;
+﻿using Forum.Shared.Models.Topics;
 using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
