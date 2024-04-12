@@ -26,9 +26,14 @@ namespace Forum.Application.Topics
             return result.Adapt<List<TopicResponseModel>>();
         }
 
-        public Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await _topicRepository.GetAsync(id, cancellationToken);
+
+            if (result == null)
+                throw new TopicNotFoundException();
+
+            return result.Adapt<TopicResponseModel>();
         }
 
         public async Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
@@ -36,21 +41,6 @@ namespace Forum.Application.Topics
             var entity = topic.Adapt<Topic>();
 
             await _topicRepository.CreateAsync(entity, cancellationToken);
-        }
-
-        public Task DeleteAsync(int id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Exists(int id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Topic topic, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
     }
 }

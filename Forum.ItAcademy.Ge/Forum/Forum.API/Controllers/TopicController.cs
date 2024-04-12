@@ -27,6 +27,12 @@ namespace Forum.API.Controllers
             return await _topicService.GetAllAsync(cancellationToken);
         }
 
+        [HttpGet("{id}")]
+        public async Task<TopicResponseModel> Get(int id, CancellationToken cancellationToken)
+        {
+            return await _topicService.GetAsync(id, cancellationToken);
+        }
+
         [HttpPost]
         public async Task Create(TopicRequestPresentationModel requestModel, CancellationToken cancellationToken)
         {
