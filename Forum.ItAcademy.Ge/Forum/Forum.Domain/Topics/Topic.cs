@@ -10,6 +10,7 @@ namespace Forum.Domain.Topics
         public string Description { get; set; } = default!;
         public int AuthorId { get; set; } = default!;
         public State State { get; set; }
+        public Status Status { get; set; }
 
         // Navigation property
         public List<Comment>? Comments { get; set; }

@@ -1,5 +1,4 @@
-﻿using Forum.Domain;
-using Forum.Domain.Users;
+﻿using Forum.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -35,10 +34,6 @@ namespace Forum.Persistence.Configurations
 
             builder.Property(user => user.ModifiedAt)
                 .IsRequired();
-
-            builder.Property(user => user.Status)
-                .IsRequired()
-                .HasDefaultValue(Status.Active);
 
             // Ignored properties
             builder.Ignore(user => user.EmailConfirmed);

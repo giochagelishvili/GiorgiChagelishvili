@@ -51,5 +51,15 @@ namespace Forum.Web.Controllers
 
             return RedirectToAction(nameof(Profile));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteGender()
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+
+            await _userService.DeleteGenderAsync(id);
+
+            return RedirectToAction(nameof(Profile));
+        }
     }
 }

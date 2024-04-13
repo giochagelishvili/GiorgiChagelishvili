@@ -17,10 +17,6 @@ namespace Forum.Persistence.Configurations
             builder.Property(role => role.ModifiedAt)
                 .IsRequired();
 
-            builder.Property(role => role.Status)
-                .IsRequired()
-                .HasDefaultValue(Status.Active);
-
             // Ignored properties
             builder.Ignore(role => role.ConcurrencyStamp);
         }

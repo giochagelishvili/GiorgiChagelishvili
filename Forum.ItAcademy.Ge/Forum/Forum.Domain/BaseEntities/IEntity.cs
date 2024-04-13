@@ -4,6 +4,5 @@
     {
         DateTime CreatedAt { get; set; }
         DateTime ModifiedAt { get; set; }
-        Status Status { get; set; }
     }
 }

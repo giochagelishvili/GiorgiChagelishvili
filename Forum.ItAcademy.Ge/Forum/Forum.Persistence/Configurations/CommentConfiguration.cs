@@ -20,10 +20,6 @@ namespace Forum.Persistence.Configurations
 
             builder.Property(comment => comment.ModifiedAt)
                 .IsRequired();
-
-            builder.Property(comment => comment.Status)
-                .IsRequired()
-                .HasDefaultValue(Status.Active);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Forum.Domain.Users
     {
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        public Status Status { get; set; }
+        public bool? Gender { get; set; }
 
         // Navigation properties
         public List<Topic>? Topics { get; set; }

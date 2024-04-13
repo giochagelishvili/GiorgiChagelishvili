@@ -2,7 +2,6 @@
 using Forum.Application.Profiles.Interfaces;
 using Forum.Application.Profiles.Requests.Updates;
 using Forum.Application.Profiles.Responses;
-using Forum.Domain;
 using Forum.Domain.Users;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +48,9 @@ namespace Forum.Application.Profiles
             if (updateModel.UpdatedUsername != null)
                 user.UserName = updateModel.UpdatedUsername;
 
+            if (updateModel.Gender != null)
+                user.Gender = updateModel.Gender;
+
             await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
@@ -68,17 +70,29 @@ namespace Forum.Application.Profiles
         {
             var result = await _userManager.FindByNameAsync(username);
 
-            if (result == null || result.Status == Status.Inactive)
+            if (result == null)
                 throw new UserNotFoundException();
 
             return result.Adapt<UserResponseModel>();
+        }
+
+        public async Task DeleteGenderAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            user.Gender = null;
+
+            await _userManager.UpdateAsync(user);
         }
 
         public async Task<bool> UsernameExists(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null || user.Status == Status.Inactive)
+            if (user == null)
                 return false;
 
             return true;

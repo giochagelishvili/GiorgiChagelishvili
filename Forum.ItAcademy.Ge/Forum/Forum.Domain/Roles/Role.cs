@@ -7,6 +7,5 @@ namespace Forum.Domain.Roles
     {
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        public Status Status { get; set; }
     }
 }

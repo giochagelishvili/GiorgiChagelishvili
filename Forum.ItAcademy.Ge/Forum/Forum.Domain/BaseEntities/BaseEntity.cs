@@ -6,6 +6,5 @@ namespace Forum.Domain.BaseEntities
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        public Status Status { get; set; }
     }
 }

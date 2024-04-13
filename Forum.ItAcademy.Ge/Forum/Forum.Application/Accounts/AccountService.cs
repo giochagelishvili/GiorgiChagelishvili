@@ -1,7 +1,6 @@
 ﻿using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
 using Forum.Application.Exceptions;
-using Forum.Domain;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,7 +21,7 @@ namespace Forum.Application.Accounts
         {
             var user = await _userManager.FindByNameAsync(model.Username);
 
-            if (user == null || user.Status == Status.Inactive)
+            if (user == null)
                 throw new UserNotFoundException();
 
             var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, false);
@@ -43,7 +42,7 @@ namespace Forum.Application.Accounts
             if (result != null)
                 throw new UsernameAlreadyExistsException();
 
-            var user = new User { Email = model.Email, UserName = model.Username };
+            var user = new User { Email = model.Email, UserName = model.Username, Gender = model.Gender };
 
             var registerResult = await _userManager.CreateAsync(user, model.Password);
 
