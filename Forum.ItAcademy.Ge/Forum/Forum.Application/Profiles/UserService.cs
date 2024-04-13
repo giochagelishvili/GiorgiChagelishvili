@@ -20,6 +20,33 @@ namespace Forum.Application.Profiles
             _signInManager = signInManager;
         }
 
+        public async Task UpdateAsync(UserRequestPutModel updateModel, string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            if (updateModel.Email != null && await EmailExists(updateModel.Email))
+                throw new EmailAlreadyExistsException();
+
+            if (updateModel.UpdatedUsername != null && await UsernameExists(updateModel.UpdatedUsername))
+                throw new UsernameAlreadyExistsException();
+
+            if (updateModel.CurrentPassword != null && updateModel.NewPassword != null)
+                await _userManager.ChangePasswordAsync(user, updateModel.CurrentPassword, updateModel.NewPassword);
+
+            if (updateModel.Email != null)
+                user.Email = updateModel.Email;
+
+            if (updateModel.UpdatedUsername != null)
+                user.UserName = updateModel.UpdatedUsername;
+
+            await _userManager.UpdateAsync(user);
+
+            await _signInManager.RefreshSignInAsync(user);
+        }
+
         public async Task<UserResponseModel> GetByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -38,61 +65,6 @@ namespace Forum.Application.Profiles
                 throw new UserNotFoundException();
 
             return result.Adapt<UserResponseModel>();
-        }
-
-        public async Task UpdateUsernameAsync(UserRequestPutModel model)
-        {
-            if (await UsernameExists(model.UpdatedUsername))
-                throw new UsernameAlreadyExistsException();
-
-            var user = await _userManager.FindByIdAsync(model.UserId);
-
-            if (user == null || user.Status == Status.Inactive)
-                throw new UserNotFoundException();
-
-            user.UserName = model.UpdatedUsername;
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            await _signInManager.RefreshSignInAsync(user);
-        }
-
-        public async Task UpdateEmailAsync(UserRequestPutModel model)
-        {
-            if (await EmailExists(model.Email))
-                throw new EmailAlreadyExistsException();
-
-            var user = await _userManager.FindByIdAsync(model.UserId);
-
-            if (user == null || user.Status == Status.Inactive)
-                throw new UserNotFoundException();
-
-            user.Email = model.Email;
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            await _signInManager.RefreshSignInAsync(user);
-        }
-
-        public async Task UpdatePasswordAsync(UserRequestPutModel model)
-        {
-            var user = await _userManager.FindByIdAsync(model.UserId);
-
-            if (user == null || user.Status == Status.Inactive)
-                throw new UserNotFoundException();
-
-            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-            if (!result.Succeeded)
-                throw new ErrorWhileProcessingException();
-
-            await _signInManager.RefreshSignInAsync(user);
         }
 
         public async Task<bool> UsernameExists(string username)

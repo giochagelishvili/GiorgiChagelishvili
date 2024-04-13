@@ -1,48 +1,37 @@
-﻿@using Forum.Application.Profiles.Responses;
-@model UserResponseModel;
+﻿@using Forum.Application.Profiles.Requests.Updates;
+@model UserRequestPutModel;
 @{
     ViewData["Title"] = "Profile";
 }
 
 <h2>Profile Information</h2>
 
-<div class="flex-column">
-    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-    {
-        <p class="text-danger">@ViewBag.ErrorMessage</p>
-    }
+<hr />
 
+<div class="col-md-4">
     <div asp-validation-summary=All class="text-danger"></div>
 
-    <form asp-action="UpdateEmail" class="flex-column gap-2">
-        <div class="flex-row gap-2">
-            <label asp-for="Email" class="form-label">Email: </label>
-            <input asp-for="Email" />
-            <input type="submit" value="Update" />
+    <form asp-action="Update" class="d-flex flex-column gap-4">
+        <div class="form-group">
+            <label asp-for="Email" class="control-label">Email: </label>
+            <input asp-for="Email" class="form-control" placeholder="updated@example.com" />
         </div>
-    </form>
-
-    <form asp-action="UpdateUsername" class="flex-column gap-2">
-        <div class="flex-row gap-2">
-            <label asp-for="UserName" class="form-label">Username: </label>
-            <input asp-for="UserName" />
-            <input type="submit" value="Update" />
+        <div class="form-group">
+            <label asp-for="UpdatedUsername" class="control-label">Username: </label>
+            <input asp-for="UpdatedUsername" class="form-control" placeholder="New Username" />
         </div>
-    </form>
-
-    <form asp-action="UpdatePassword" class="flex-column gap-2">
-        <div class="flex-row gap-2">
-            <label class="form-label">Current Password: </label>
-            <input name="CurrentPassword" type="password" />
+        <div class="form-group">
+            <label asp-for="CurrentPassword" class="control-label">Current Password: </label>
+            <input asp-for="CurrentPassword" type="password" class="form-control" />
         </div>
-        <div class="flex-row gap-2">
-            <label class="form-label">NewPassword: </label>
-            <input name="NewPassword" type="password" />
+        <div class="form-group">
+            <label asp-for="NewPassword" class="control-label">NewPassword: </label>
+            <input asp-for="NewPassword" type="password" class="form-control" />
         </div>
-        <div class="flex-row gap-2">
-            <label class="form-label">Confirm Password: </label>
-            <input name="ConfirmPassword" type="password" />
-            <input type="submit" value="Update" />
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label">Confirm Password: </label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" />
         </div>
+        <button type="submit" class="btn btn-success">Update</button>
     </form>
 </div>

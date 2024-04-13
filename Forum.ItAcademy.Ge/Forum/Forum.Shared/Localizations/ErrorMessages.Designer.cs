@@ -61,6 +61,24 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Both current and new passwords must be provided in order to update the password..
+        /// </summary>
+        public static string BothPasswordsRequired {
+            get {
+                return ResourceManager.GetString("BothPasswordsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password is a required field..
+        /// </summary>
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description is a required field..
         /// </summary>
         public static string DescriptionRequired {
@@ -111,6 +129,15 @@ namespace Forum.Shared.Localizations {
         public static string InvalidPasswordFormat {
             get {
                 return ResourceManager.GetString("InvalidPasswordFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one field is required..
+        /// </summary>
+        public static string OneFieldRequired {
+            get {
+                return ResourceManager.GetString("OneFieldRequired", resourceCulture);
             }
         }
         

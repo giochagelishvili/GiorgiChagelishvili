@@ -18,47 +18,12 @@ namespace Forum.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost("update/username")]
-        public async Task UpdateUsername(UsernameRequestPutModel usernameModel)
+        [HttpPost]
+        public async Task Update(UserRequestPutModel putModel)
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
-            var updateModel = new UserRequestPutModel
-            {
-                UserId = id,
-                UpdatedUsername = usernameModel.Username
-            };
-
-            await _userService.UpdateUsernameAsync(updateModel);
-        }
-
-        [HttpPost("update/email")]
-        public async Task UpdateEmail(EmailRequestPutModel emailModel)
-        {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var updateModel = new UserRequestPutModel
-            {
-                UserId = id,
-                Email = emailModel.Email
-            };
-
-            await _userService.UpdateEmailAsync(updateModel);
-        }
-
-        [HttpPost("update/password")]
-        public async Task UpdatePassword(PasswordRequestPutModel passwordModel)
-        {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var updateModel = new UserRequestPutModel
-            {
-                UserId = id,
-                CurrentPassword = passwordModel.CurrentPassword,
-                NewPassword = passwordModel.NewPassword
-            };
-
-            await _userService.UpdatePasswordAsync(updateModel);
+            await _userService.UpdateAsync(putModel, id);
         }
     }
 }

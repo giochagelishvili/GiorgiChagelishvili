@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BothPasswordsRequired" xml:space="preserve">
+    <value>პაროლის გასაახლებლად საჭიროა ახლანდელი და ახალი პაროლი.</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>პაროლის დადასტურება სავალდებულო ველია.</value>
+  </data>
   <data name="DescriptionRequired" xml:space="preserve">
     <value>აღწერა აუცილებელი ველია.</value>
   </data>
@@ -134,6 +140,9 @@
   </data>
   <data name="InvalidPasswordFormat" xml:space="preserve">
     <value>პაროლი უნდა შეიცავდეს მინიმუმ 6 ასოს, ერთ სიმბოლოს, ერთ ციფრს და დიდ ასოს.</value>
+  </data>
+  <data name="OneFieldRequired" xml:space="preserve">
+    <value>მინიმუმ ერთი ველი შევსებული უნდა იყოს.</value>
   </data>
   <data name="PasswordMaxLength" xml:space="preserve">
     <value>პაროლი უნდა შედგებოდეს მაქსიმუმ 30 სიმბოლოსგან.</value>

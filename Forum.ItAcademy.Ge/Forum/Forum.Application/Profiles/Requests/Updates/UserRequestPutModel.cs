@@ -2,10 +2,10 @@
 {
     public class UserRequestPutModel
     {
-        public string UserId { get; set; } = default!;
         public string? Email { get; set; }
         public string? UpdatedUsername { get; set; }
         public string? CurrentPassword { get; set; }
         public string? NewPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
     }
 }
