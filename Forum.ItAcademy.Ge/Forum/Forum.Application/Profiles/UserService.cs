@@ -20,6 +20,16 @@ namespace Forum.Application.Profiles
             _signInManager = signInManager;
         }
 
+        public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            await _userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.NewPassword);
+        }
+
         public async Task UpdateAsync(UserRequestPutModel updateModel, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -32,9 +42,6 @@ namespace Forum.Application.Profiles
 
             if (updateModel.UpdatedUsername != null && await UsernameExists(updateModel.UpdatedUsername))
                 throw new UsernameAlreadyExistsException();
-
-            if (updateModel.CurrentPassword != null && updateModel.NewPassword != null)
-                await _userManager.ChangePasswordAsync(user, updateModel.CurrentPassword, updateModel.NewPassword);
 
             if (updateModel.Email != null)
                 user.Email = updateModel.Email;

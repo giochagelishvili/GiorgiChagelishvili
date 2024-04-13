@@ -16,16 +16,27 @@ namespace Forum.Web.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile()
         {
-            if (TempData["ErrorMessage"] is string errorMessage)
-                ViewBag.ErrorMessage = errorMessage;
-
-            //var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            //var user = await _userService.GetByIdAsync(id);
-
             return View();
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromForm] PasswordRequestPutModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+
+            await _userService.ChangePasswordAsync(model, id);
+
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpPost]
@@ -40,60 +51,5 @@ namespace Forum.Web.Controllers
 
             return RedirectToAction(nameof(Profile));
         }
-
-        //public async Task<IActionResult> UpdateUsername([FromForm] UsernameRequestPutModel usernameModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(nameof(Profile));
-
-        //    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    var updateModel = new UserRequestPutModel
-        //    {
-        //        UserId = id,
-        //        UpdatedUsername = usernameModel.Username
-        //    };
-
-        //    await _userService.UpdateUsernameAsync(updateModel);
-
-        //    return RedirectToAction(nameof(Profile));
-        //}
-
-        //public async Task<IActionResult> UpdateEmail([FromForm] EmailRequestPutModel emailModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(nameof(Profile));
-
-        //    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    var updateModel = new UserRequestPutModel
-        //    {
-        //        UserId = id,
-        //        Email = emailModel.Email
-        //    };
-
-        //    await _userService.UpdateEmailAsync(updateModel);
-
-        //    return RedirectToAction(nameof(Profile));
-        //}
-
-        //public async Task<IActionResult> UpdatePassword([FromForm] PasswordRequestPutModel passwordModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(nameof(Profile));
-
-        //    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    var updateModel = new UserRequestPutModel
-        //    {
-        //        UserId = id,
-        //        CurrentPassword = passwordModel.CurrentPassword,
-        //        NewPassword = passwordModel.NewPassword
-        //    };
-
-        //    await _userService.UpdatePasswordAsync(updateModel);
-
-        //    return RedirectToAction(nameof(Profile));
-        //}
     }
 }

@@ -61,11 +61,11 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Both current and new passwords must be provided in order to update the password..
+        ///   Looks up a localized string similar to All password fields should be filled in order to update the password..
         /// </summary>
-        public static string BothPasswordsRequired {
+        public static string AllPasswordsRequired {
             get {
-                return ResourceManager.GetString("BothPasswordsRequired", resourceCulture);
+                return ResourceManager.GetString("AllPasswordsRequired", resourceCulture);
             }
         }
         

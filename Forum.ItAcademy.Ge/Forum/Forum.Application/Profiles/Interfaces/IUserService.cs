@@ -8,6 +8,7 @@ namespace Forum.Application.Profiles.Interfaces
         Task<UserResponseModel> GetByIdAsync(string id);
         Task<UserResponseModel> GetByUsernameAsync(string username);
         Task UpdateAsync(UserRequestPutModel updateModel, string id);
+        Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id);
         Task<bool> UsernameExists(string username);
         Task<bool> EmailExists(string email);
     }

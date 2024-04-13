@@ -20,25 +20,6 @@ namespace Forum.Shared.Validators.Users
                 .WithMessage(ErrorMessages.UsernameRequired)
                 .MaximumLength(50).When(model => model.UpdatedUsername != null)
                 .WithMessage(ErrorMessages.UsernameMaxLength);
-
-            RuleFor(model => model.CurrentPassword)
-                .NotEmpty().When(model => model.CurrentPassword != null && model.NewPassword != null)
-                .WithMessage(ErrorMessages.BothPasswordsRequired);
-
-            RuleFor(model => model.NewPassword)
-                .NotEmpty().When(model => model.NewPassword != null && model.CurrentPassword != null)
-                .WithMessage(ErrorMessages.BothPasswordsRequired)
-                .MaximumLength(30).When(model => model.NewPassword != null)
-                .WithMessage(ErrorMessages.PasswordMaxLength)
-                .Matches(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$")
-                .When(model => model.NewPassword != null)
-                .WithMessage(ErrorMessages.InvalidPasswordFormat);
-
-            RuleFor(model => model.ConfirmPassword)
-                .NotEmpty().When(model => model.ConfirmPassword != null && model.NewPassword != null)
-                .WithMessage(ErrorMessages.ConfirmPasswordRequired)
-                .Equal(model => model.NewPassword)
-                .WithMessage(ErrorMessages.PasswordsDoNotMatch);
         }
     }
 }
