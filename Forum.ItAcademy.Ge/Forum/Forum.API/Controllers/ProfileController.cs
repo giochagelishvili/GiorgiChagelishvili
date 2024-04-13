@@ -18,12 +18,20 @@ namespace Forum.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("update")]
         public async Task Update(UserRequestPutModel putModel)
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
             await _userService.UpdateAsync(putModel, id);
+        }
+
+        [HttpPost("changepassword")]
+        public async Task ChangePassword(PasswordRequestPutModel putModel)
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+
+            await _userService.ChangePasswordAsync(putModel, id);
         }
     }
 }
