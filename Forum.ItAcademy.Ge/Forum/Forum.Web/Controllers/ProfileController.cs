@@ -52,7 +52,7 @@ namespace Forum.Web.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> DeleteGender()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();

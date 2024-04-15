@@ -16,14 +16,14 @@ namespace Forum.Application.Topics
             _topicRepository = topicRepository;
         }
 
-        public async Task<List<TopicResponseModel>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _topicRepository.GetAllAsync(cancellationToken);
 
-            if (result == null)
+            if (result == null || result.Count() <= 0)
                 throw new TopicNotFoundException();
 
-            return result.Adapt<List<TopicResponseModel>>();
+            return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
         public async Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken)

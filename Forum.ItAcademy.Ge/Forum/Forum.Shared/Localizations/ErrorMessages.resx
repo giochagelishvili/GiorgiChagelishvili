@@ -120,6 +120,12 @@
   <data name="AllPasswordsRequired" xml:space="preserve">
     <value>All password fields should be filled in order to update the password.</value>
   </data>
+  <data name="CommentBodyRequired" xml:space="preserve">
+    <value>Comment body is a required field.</value>
+  </data>
+  <data name="CommentNotFound" xml:space="preserve">
+    <value>Comment not found.</value>
+  </data>
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>Confirm password is a required field.</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="TitleRequired" xml:space="preserve">
     <value>Title is a required field.</value>
+  </data>
+  <data name="TopicIdRequired" xml:space="preserve">
+    <value>Topic Id is a required field.</value>
   </data>
   <data name="TopicNotFound" xml:space="preserve">
     <value>Topic not found.</value>

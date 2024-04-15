@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
+using Forum.API.Infrastructure.Models.Topics;
 using Forum.Shared.Localizations;
-using Forum.Shared.Models.Topics;
 
-namespace Forum.Shared.Validators.Topics
+namespace Forum.API.Infrastructure.Validators.Topics
 {
-    public class TopicRequestPresentationModelValidator : AbstractValidator<TopicRequestPresentationModel>
+    public class TopicRequestPostApiModelValidator : AbstractValidator<TopicRequestPostApiModel>
     {
-        public TopicRequestPresentationModelValidator()
+        public TopicRequestPostApiModelValidator()
         {
             RuleFor(model => model.Title)
                 .NotEmpty()

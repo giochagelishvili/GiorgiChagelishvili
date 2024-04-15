@@ -120,6 +120,12 @@
   <data name="AllPasswordsRequired" xml:space="preserve">
     <value>პაროლის გასაახლებლად საჭიროა სამივე ველის შევსება.</value>
   </data>
+  <data name="CommentBodyRequired" xml:space="preserve">
+    <value>კომენტარის ტექსტი აუცილებელი ველია.</value>
+  </data>
+  <data name="CommentNotFound" xml:space="preserve">
+    <value>კომენტარი ვერ მოიძებნა.</value>
+  </data>
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>პაროლის დადასტურება სავალდებულო ველია.</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="TitleRequired" xml:space="preserve">
     <value>სათაური აუცილებელი ველია.</value>
+  </data>
+  <data name="TopicIdRequired" xml:space="preserve">
+    <value>თემის აიდი აუცილებელი ველია.</value>
   </data>
   <data name="TopicNotFound" xml:space="preserve">
     <value>თემა ვერ მოიძებნა.</value>

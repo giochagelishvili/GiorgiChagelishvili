@@ -2,8 +2,8 @@
 {
     public class TopicRequestPostModel
     {
-        public string Title { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public int AuthorId { get; set; } = default!;
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public int? AuthorId { get; set; }
     }
 }

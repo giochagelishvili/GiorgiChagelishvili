@@ -1,8 +1,39 @@
-﻿@{
+﻿@using Forum.Application.Topics.Responses;
+@using Forum.Domain;
+@model List<TopicResponseNewsFeedModel>;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>News Feed</h2>
+
+<hr />
+
+@if (Model != null && Model.Any())
+{
+    <div class="list-group gap-4">
+        @foreach (var topic in Model)
+        {
+            <a href="topic/@topic.Id" class="list-group-item list-group-item-action flex-column align-items-start border-top">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@topic.Title</h5>
+                    @if (topic.Status == Status.Active)
+                    {
+                        <small class="text-success">@topic.Status.ToString()</small>
+                    }
+                    else
+                    {
+                        <small class="text-warning">@topic.Status.ToString()</small>
+                    }
+                </div>
+                <p class="mb-1">@topic.Description</p>
+                <small>Comments (@topic.CommentsCount)</small>
+            </a>
+        }
+    </div>
+}
+else
+{
+    <p>No topics found.</p>
+}

@@ -33,5 +33,13 @@ namespace Forum.API.Controllers
 
             await _userService.ChangePasswordAsync(putModel, id);
         }
+
+        [HttpDelete("deletegender")]
+        public async Task DeleteGender()
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+
+            await _userService.DeleteGenderAsync(id);
+        }
     }
 }

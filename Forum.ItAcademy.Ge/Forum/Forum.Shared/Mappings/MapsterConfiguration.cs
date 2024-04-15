@@ -11,6 +11,10 @@ namespace Forum.Shared.Mappings
         {
             TypeAdapterConfig<Topic, TopicResponseModel>
                 .NewConfig();
+
+            TypeAdapterConfig<Topic, TopicResponseNewsFeedModel>
+                .NewConfig()
+                .Map(dest => dest.CommentsCount, src => src.Comments.Count());
         }
     }
 }

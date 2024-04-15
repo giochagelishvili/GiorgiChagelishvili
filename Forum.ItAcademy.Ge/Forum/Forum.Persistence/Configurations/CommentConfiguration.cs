@@ -1,7 +1,7 @@
-﻿using Forum.Domain;
-using Forum.Domain.Comments;
+﻿using Forum.Domain.Comments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Runtime.InteropServices;
 
 namespace Forum.Persistence.Configurations
 {
@@ -20,6 +20,15 @@ namespace Forum.Persistence.Configurations
 
             builder.Property(comment => comment.ModifiedAt)
                 .IsRequired();
+
+            builder.Property(comment => comment.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.HasOne(comment => comment.Author)
+                .WithMany(user => user.Comments)
+                .HasForeignKey(comment => comment.AuthorId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

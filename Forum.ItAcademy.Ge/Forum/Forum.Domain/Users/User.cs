@@ -1,4 +1,5 @@
 ﻿using Forum.Domain.BaseEntities;
+using Forum.Domain.Comments;
 using Forum.Domain.Topics;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,5 +13,6 @@ namespace Forum.Domain.Users
 
         // Navigation properties
         public List<Topic>? Topics { get; set; }
+        public List<Comment>? Comments { get; set; }
     }
 }

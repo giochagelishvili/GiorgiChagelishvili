@@ -1,4 +1,5 @@
-﻿using Forum.Shared.Localizations;
+﻿using Forum.Application.Topics.Interfaces;
+using Forum.Shared.Localizations;
 using Forum.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -7,9 +8,18 @@ namespace DemoProject.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ITopicService _topicService;
+
+        public HomeController(ITopicService topicService)
         {
-            return View();
+            _topicService = topicService;
+        }
+
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        {
+            var topics = await _topicService.GetAllAsync(cancellationToken);
+
+            return View(topics);
         }
 
         public IActionResult Privacy()

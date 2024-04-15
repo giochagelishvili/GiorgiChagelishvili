@@ -70,6 +70,24 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment body is a required field..
+        /// </summary>
+        public static string CommentBodyRequired {
+            get {
+                return ResourceManager.GetString("CommentBodyRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment not found..
+        /// </summary>
+        public static string CommentNotFound {
+            get {
+                return ResourceManager.GetString("CommentNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm password is a required field..
         /// </summary>
         public static string ConfirmPasswordRequired {
@@ -192,6 +210,15 @@ namespace Forum.Shared.Localizations {
         public static string TitleRequired {
             get {
                 return ResourceManager.GetString("TitleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Id is a required field..
+        /// </summary>
+        public static string TopicIdRequired {
+            get {
+                return ResourceManager.GetString("TopicIdRequired", resourceCulture);
             }
         }
         

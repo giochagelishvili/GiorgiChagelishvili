@@ -1,6 +1,6 @@
-﻿namespace Forum.Shared.Models.Topics
+﻿namespace Forum.API.Infrastructure.Models.Topics
 {
-    public class TopicRequestPresentationModel
+    public class TopicRequestPostApiModel
     {
         public string? Title { get; set; }
         public string? Description { get; set; }

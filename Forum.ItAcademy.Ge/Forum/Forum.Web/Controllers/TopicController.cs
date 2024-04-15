@@ -1,7 +1,5 @@
 ﻿using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
-using Forum.Shared.Models.Topics;
-using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -16,26 +14,36 @@ namespace Forum.Web.Controllers
             _topicService = topicService;
         }
 
+        [HttpGet("topic/{id}")]
+        public async Task<IActionResult> Topic(int id, CancellationToken cancellationToken)
+        {
+            if (TempData.ContainsKey("Error"))
+                ViewBag.Error = TempData["Error"];
+
+            var topic = await _topicService.GetAsync(id, cancellationToken);
+
+            return View(topic);
+        }
+
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromForm] TopicRequestPresentationModel topic, CancellationToken cancellationToken)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromForm] TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var postModel = topic.Adapt<TopicRequestPostModel>();
-
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            postModel.AuthorId = userId;
+            topic.AuthorId = userId;
 
-            await _topicService.CreateAsync(postModel, cancellationToken);
+            await _topicService.CreateAsync(topic, cancellationToken);
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

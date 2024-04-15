@@ -1,4 +1,4 @@
-﻿using Forum.Shared.Models.Topics;
+﻿using Forum.API.Infrastructure.Models.Topics;
 using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
@@ -21,12 +21,14 @@ namespace Forum.API.Controllers
             _topicService = topicService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<List<TopicResponseModel>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAll(CancellationToken cancellationToken)
         {
             return await _topicService.GetAllAsync(cancellationToken);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<TopicResponseModel> Get(int id, CancellationToken cancellationToken)
         {
@@ -34,15 +36,15 @@ namespace Forum.API.Controllers
         }
 
         [HttpPost]
-        public async Task Create(TopicRequestPresentationModel requestModel, CancellationToken cancellationToken)
+        public async Task Create(TopicRequestPostApiModel apiModel, CancellationToken cancellationToken)
         {
-            var model = requestModel.Adapt<TopicRequestPostModel>();
+            var topic = apiModel.Adapt<TopicRequestPostModel>();
 
             var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            model.AuthorId = id;
+            topic.AuthorId = id;
 
-            await _topicService.CreateAsync(model, cancellationToken);
+            await _topicService.CreateAsync(topic, cancellationToken);
         }
     }
 }

@@ -7,6 +7,8 @@ using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
 using Forum.API.Infrastructure.Middlewares.Culture;
 using Forum.Domain.Roles;
 using Forum.Shared.Extensions;
+using System.Reflection;
+using FluentValidation;
 
 namespace Forum.API
 {
@@ -30,6 +32,8 @@ namespace Forum.API
             builder.Services.AddTokenAuthorizaion(builder.Configuration);
 
             builder.Services.AddCustomValidators();
+
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             builder.Services.AddServices();
 
