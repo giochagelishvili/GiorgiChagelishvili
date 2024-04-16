@@ -11,12 +11,14 @@ namespace Forum.Infrastructure.Topics
         {
         }
 
-        public new async Task<List<Topic>> GetAllAsync(CancellationToken cancellationToken)
+        public new async Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _dbSet.Include(x => x.Author)
-                               .Include(x => x.Comments.Where(comment => !comment.IsDeleted))
-                               .OrderByDescending(x => x.ModifiedAt)
-                               .ToListAsync(cancellationToken);
+            return await _dbSet.Include(topic => topic.Author)
+                               .Select(topic => new TopicCommentsCount
+                               {
+                                   Topic = topic,
+                                   CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
+                               }).ToListAsync(cancellationToken);
         }
 
         public new async Task<Topic?> GetAsync(int id, CancellationToken cancellationToken)

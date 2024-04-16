@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@{
+    var userId = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,7 +35,7 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Profile" asp-action="Profile">@User.Identity.Name</a>
+                                <a class="nav-link" href="/user/@userId">@User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Topic" asp-action="Create">Create Topic</a>

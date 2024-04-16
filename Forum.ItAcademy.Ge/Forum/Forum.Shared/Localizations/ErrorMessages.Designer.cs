@@ -124,6 +124,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bio should not be empty in order to be updated..
+        /// </summary>
+        public static string EmptyBio {
+            get {
+                return ResourceManager.GetString("EmptyBio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email format, please try again..
         /// </summary>
         public static string InvalidEmailFormat {

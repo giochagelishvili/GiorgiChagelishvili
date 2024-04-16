@@ -10,9 +10,10 @@ namespace Forum.Domain.Users
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public bool? Gender { get; set; }
+        public string? Bio { get; set; }
 
         // Navigation properties
-        public List<Topic>? Topics { get; set; }
-        public List<Comment>? Comments { get; set; }
+        public ICollection<Topic>? Topics { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 }

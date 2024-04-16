@@ -16,7 +16,17 @@ namespace Forum.Web.Controllers
             _userService = userService;
         }
 
-        public IActionResult Profile()
+        [AllowAnonymous]
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> Profile(string id)
+        {
+            var user = await _userService.GetByIdAsync(id);
+
+            return View(user);
+        }
+
+        [HttpGet("editprofile")]
+        public IActionResult EditProfile()
         {
             return View();
         }
@@ -32,11 +42,11 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
-            await _userService.ChangePasswordAsync(model, id);
+            await _userService.ChangePasswordAsync(model, userId);
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(Profile), new { id = userId });
         }
 
         [HttpPost]
@@ -45,21 +55,21 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
-            await _userService.UpdateAsync(updateModel, id);
+            await _userService.UpdateAsync(updateModel, userId);
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(Profile), new { id = userId });
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteGender()
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
-            await _userService.DeleteGenderAsync(id);
+            await _userService.DeleteGenderAsync(userId);
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(Profile), new { id = userId });
         }
     }
 }

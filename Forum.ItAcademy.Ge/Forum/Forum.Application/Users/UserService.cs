@@ -51,6 +51,9 @@ namespace Forum.Application.Profiles
             if (updateModel.Gender != null)
                 user.Gender = updateModel.Gender;
 
+            if (updateModel.Bio != null)
+                user.Bio = updateModel.Bio;
+
             await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);

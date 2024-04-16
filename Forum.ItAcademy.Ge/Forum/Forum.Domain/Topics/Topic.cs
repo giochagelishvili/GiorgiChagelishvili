@@ -13,7 +13,7 @@ namespace Forum.Domain.Topics
         public Status Status { get; set; }
 
         // Navigation property
-        public List<Comment> Comments { get; set; } = default!;
+        public ICollection<Comment> Comments { get; set; } = default!;
         public User Author { get; set; } = default!;
     }
 }

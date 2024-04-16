@@ -16,10 +16,14 @@ namespace Forum.Shared.Validators.Users
                 .WithMessage(ErrorMessages.InvalidEmailFormat);
 
             RuleFor(model => model.UpdatedUsername)
-                .NotEmpty().When(model => model.Email != null)
+                .NotEmpty().When(model => model.UpdatedUsername != null)
                 .WithMessage(ErrorMessages.UsernameRequired)
                 .MaximumLength(50).When(model => model.UpdatedUsername != null)
                 .WithMessage(ErrorMessages.UsernameMaxLength);
+
+            RuleFor(model => model.Bio)
+                .NotEmpty().When(model => model.Bio != null)
+                .WithMessage(ErrorMessages.EmptyBio);
         }
     }
 }

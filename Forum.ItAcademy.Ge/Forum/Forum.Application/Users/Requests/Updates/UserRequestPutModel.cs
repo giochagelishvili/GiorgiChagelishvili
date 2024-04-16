@@ -8,5 +8,6 @@
         public string? NewPassword { get; set; }
         public string? ConfirmPassword { get; set; }
         public bool? Gender { get; set; }
+        public string? Bio { get; set; }
     }
 }
