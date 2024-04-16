@@ -5,7 +5,7 @@ namespace Forum.Application.Profiles.Interfaces
 {
     public interface IUserService
     {
-        Task<UserResponseModel> GetByIdAsync(string id);
+        Task<UserResponseModel> GetByIdAsync(int id);
         Task<UserResponseModel> GetByUsernameAsync(string username);
         Task UpdateAsync(UserRequestPutModel updateModel, string id);
         Task DeleteGenderAsync(string id);

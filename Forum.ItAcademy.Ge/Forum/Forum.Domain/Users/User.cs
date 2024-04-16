@@ -1,5 +1,6 @@
 ﻿using Forum.Domain.BaseEntities;
 using Forum.Domain.Comments;
+using Forum.Domain.Images;
 using Forum.Domain.Topics;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,5 +16,6 @@ namespace Forum.Domain.Users
         // Navigation properties
         public ICollection<Topic>? Topics { get; set; }
         public ICollection<Comment>? Comments { get; set; }
+        public Image? Image { get; set; }
     }
 }

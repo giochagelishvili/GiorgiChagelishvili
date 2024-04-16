@@ -5,6 +5,7 @@ using Forum.Application.Profiles.Responses;
 using Forum.Domain.Users;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Application.Profiles
 {
@@ -59,9 +60,11 @@ namespace Forum.Application.Profiles
             await _signInManager.RefreshSignInAsync(user);
         }
 
-        public async Task<UserResponseModel> GetByIdAsync(string id)
+        public async Task<UserResponseModel> GetByIdAsync(int id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.Users
+                .Include(user => user.Image)
+                .FirstOrDefaultAsync(user => user.Id == id);
 
             if (user == null)
                 throw new UserNotFoundException();
@@ -71,12 +74,14 @@ namespace Forum.Application.Profiles
 
         public async Task<UserResponseModel> GetByUsernameAsync(string username)
         {
-            var result = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.Users
+                .Include(user => user.Image)
+                .FirstOrDefaultAsync(user => user.UserName == username);
 
-            if (result == null)
+            if (user == null)
                 throw new UserNotFoundException();
 
-            return result.Adapt<UserResponseModel>();
+            return user.Adapt<UserResponseModel>();
         }
 
         public async Task DeleteGenderAsync(string id)

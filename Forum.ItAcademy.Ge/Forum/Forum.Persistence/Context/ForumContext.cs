@@ -1,5 +1,8 @@
 ﻿using Forum.Domain.BaseEntities;
+using Forum.Domain.Comments;
+using Forum.Domain.Images;
 using Forum.Domain.Roles;
+using Forum.Domain.Topics;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -26,6 +29,10 @@ namespace Forum.Persistence.Context
             modelBuilder.Entity<IdentityUserRole<int>>().ToTable("UserRoles");
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims");
+
+            modelBuilder.Entity<Image>().ToTable("Images");
+            modelBuilder.Entity<Topic>().ToTable("Topics");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ForumContext).Assembly);
         }

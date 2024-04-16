@@ -11,6 +11,16 @@
 <div class="col-md-4">
     <div asp-validation-summary=All class="text-danger"></div>
 
+    <form asp-action="Upload" class="mb-4" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="control-label">Profile Picture</label>
+            <div class="input-group">
+                <input type="file" name="image" class="form-control" aria-label="Upload" required>
+                <button class="btn btn-outline-secondary" type="submit">Upload</button>
+            </div>
+        </div>
+    </form>
+
     <form asp-action="Update" class="d-flex flex-column gap-4">
         <div class="form-group">
             <label asp-for="Email" class="control-label"></label>
