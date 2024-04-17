@@ -41,19 +41,6 @@ namespace Forum.Infrastructure
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        //public async Task DeleteAsync(int id, CancellationToken cancellationToken)
-        //{
-        //    var entity = await GetAsync(id, cancellationToken);
-
-        //    if (entity == null) return;
-
-        //    entity.Status = Status.Inactive;
-
-        //    _dbSet.Update(entity);
-
-        //    await _context.SaveChangesAsync(cancellationToken);
-        //}
-
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
             return await _dbSet.AnyAsync(predicate, cancellationToken);

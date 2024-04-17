@@ -144,6 +144,9 @@
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>Invalid email format, please try again.</value>
   </data>
+  <data name="InvalidFileExtension" xml:space="preserve">
+    <value>This file is not supported. Valid files: ".jpg", ".png", ".jpeg", ".webp", ".ico".</value>
+  </data>
   <data name="InvalidPassword" xml:space="preserve">
     <value>Invalid password, please try again.</value>
   </data>

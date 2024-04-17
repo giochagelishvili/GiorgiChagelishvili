@@ -7,6 +7,7 @@ namespace Forum.Domain.Images
     {
         public string Url { get; set; } = default!;
         public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
 
         // Navigation property
         public User User { get; set; } = default!;

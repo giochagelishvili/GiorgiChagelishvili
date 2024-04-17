@@ -142,6 +142,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This file is not supported. Valid files: &quot;.jpg&quot;, &quot;.png&quot;, &quot;.jpeg&quot;, &quot;.webp&quot;, &quot;.ico&quot;..
+        /// </summary>
+        public static string InvalidFileExtension {
+            get {
+                return ResourceManager.GetString("InvalidFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid password, please try again..
         /// </summary>
         public static string InvalidPassword {

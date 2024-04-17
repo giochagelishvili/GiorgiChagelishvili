@@ -99,6 +99,16 @@ namespace Forum.Shared.Middlewares.ExceptionHandler
             Message = ErrorMessages.UnhandledErrorOccurred;
         }
 
+        private void HandleException(InvalidExtensionException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.Conflict;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.InvalidFileExtension;
+        }
+
         private void HandleException(ErrorWhileProcessingException exception)
         {
             Code = exception.Code;

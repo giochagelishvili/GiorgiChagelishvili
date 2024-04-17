@@ -69,6 +69,9 @@ namespace Forum.Application.Profiles
             if (user == null)
                 throw new UserNotFoundException();
 
+            if (user.Image != null && user.Image.IsDeleted)
+                user.Image = null;
+
             return user.Adapt<UserResponseModel>();
         }
 

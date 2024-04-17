@@ -11,15 +11,18 @@
 <div class="col-md-4">
     <div asp-validation-summary=All class="text-danger"></div>
 
-    <form asp-action="Upload" class="mb-4" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label class="control-label">Profile Picture</label>
-            <div class="input-group">
-                <input type="file" name="image" class="form-control" aria-label="Upload" required>
-                <button class="btn btn-outline-secondary" type="submit">Upload</button>
+    <div class="d-flex flex-row align-items-center gap-2">
+        <form asp-action="Upload" asp-controller="Image" class="mb-4" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label">Profile Picture</label>
+                <div class="input-group">
+                    <input type="file" name="image" class="form-control" aria-label="Upload" required>
+                    <button class="btn btn-outline-secondary" type="submit">Upload</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+        <a asp-action="Delete" asp-controller="Image" class="btn btn-danger">Delete</a>
+    </div>
 
     <form asp-action="Update" class="d-flex flex-column gap-4">
         <div class="form-group">
