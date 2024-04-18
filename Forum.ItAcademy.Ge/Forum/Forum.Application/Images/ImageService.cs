@@ -11,8 +11,8 @@ namespace Forum.Application.Images
     public class ImageService : IImageService
     {
         private readonly IImageRepository _imageRepository;
-        private readonly UserManager<User> _userManager;
         private readonly IConfiguration _config;
+        private readonly UserManager<User> _userManager;
 
         public ImageService(IImageRepository imageRepository, UserManager<User> userManager, IConfiguration config)
         {
@@ -21,19 +21,11 @@ namespace Forum.Application.Images
             _config = config;
         }
 
-        public async Task<byte[]> GetAsync(int userId, CancellationToken cancellationToken)
+        public async Task<string> GetAsync(int userId, CancellationToken cancellationToken)
         {
             var image = await _imageRepository.GetAsync(userId, cancellationToken);
 
-            if (!File.Exists(image.Url))
-                throw new FileNotFoundException();
-
-            using var fileStream = new FileStream(image.Url, FileMode.Open);
-            using var memoryStream = new MemoryStream();
-
-            await fileStream.CopyToAsync(memoryStream, cancellationToken);
-
-            return memoryStream.ToArray();
+            return image.Url;
         }
 
         public async Task UploadAsync(IFormFile image, string userId, CancellationToken cancellationToken)
@@ -59,10 +51,11 @@ namespace Forum.Application.Images
 
         private async Task<string> SaveImage(IFormFile image, CancellationToken cancellationToken)
         {
-            var path = _config.GetValue<string>("Constants:UploadPath");
+            var uploadPath = _config.GetValue<string>("Constants:UploadPath");
+            var requestPath = _config.GetValue<string>("Constants:RequestPath");
 
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            if (!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
 
             var ext = Path.GetExtension(image.FileName).ToLower();
             var validExtensions = new string[] { ".jpg", ".png", ".jpeg", ".webp", ".ico" };
@@ -72,14 +65,14 @@ namespace Forum.Application.Images
 
             var guid = Guid.NewGuid().ToString();
             var imageName = guid + ext;
-            var imagePath = Path.Combine(path, imageName);
+            var imagePath = Path.Combine(uploadPath, imageName);
 
             using var stream = new FileStream(imagePath, FileMode.Create);
 
             await image.CopyToAsync(stream, cancellationToken);
             await stream.FlushAsync(cancellationToken);
 
-            return imagePath;
+            return $"{requestPath}/{imageName}";
         }
 
         public async Task DeleteAsync(int userId, CancellationToken cancellationToken)

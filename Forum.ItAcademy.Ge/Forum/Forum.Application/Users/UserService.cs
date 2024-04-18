@@ -20,6 +20,51 @@ namespace Forum.Application.Profiles
             _signInManager = signInManager;
         }
 
+        public async Task<UserResponseModel> GetByIdAsync(int id)
+        {
+            var user = await _userManager.Users
+                .Include(user => user.Image)
+                .FirstOrDefaultAsync(user => user.Id == id);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            if (user.Image != null && user.Image.IsDeleted)
+                user.Image = null;
+
+            return user.Adapt<UserResponseModel>();
+        }
+
+        public async Task<UserResponseModel> GetByUsernameAsync(string username)
+        {
+            var user = await _userManager.Users
+                .Include(user => user.Image)
+                .FirstOrDefaultAsync(user => user.UserName == username);
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            if (user.Image != null && user.Image.IsDeleted)
+                user.Image = null;
+
+            return user.Adapt<UserResponseModel>();
+        }
+
+        public async Task<UserResponseModel> GetByEmailAsync(string email)
+        {
+            var user = await _userManager.Users
+                .Include(user => user.Image)
+                .FirstOrDefaultAsync(user => user.NormalizedEmail == email.ToUpper());
+
+            if (user == null)
+                throw new UserNotFoundException();
+
+            if (user.Image != null && user.Image.IsDeleted)
+                user.Image = null;
+
+            return user.Adapt<UserResponseModel>();
+        }
+
         public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -58,33 +103,6 @@ namespace Forum.Application.Profiles
             await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
-        }
-
-        public async Task<UserResponseModel> GetByIdAsync(int id)
-        {
-            var user = await _userManager.Users
-                .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.Id == id);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
-            if (user.Image != null && user.Image.IsDeleted)
-                user.Image = null;
-
-            return user.Adapt<UserResponseModel>();
-        }
-
-        public async Task<UserResponseModel> GetByUsernameAsync(string username)
-        {
-            var user = await _userManager.Users
-                .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.UserName == username);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
-            return user.Adapt<UserResponseModel>();
         }
 
         public async Task DeleteGenderAsync(string id)

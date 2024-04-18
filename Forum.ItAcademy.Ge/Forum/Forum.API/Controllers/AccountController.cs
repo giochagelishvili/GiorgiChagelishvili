@@ -2,7 +2,6 @@
 using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
 using Forum.Application.Profiles.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.API.Controllers
@@ -20,13 +19,6 @@ namespace Forum.API.Controllers
             _accountService = accountService;
             _userService = userService;
             _config = config;
-        }
-
-        [Authorize]
-        [HttpGet]
-        public string Get()
-        {
-            return "Sagol brat!";
         }
 
         [HttpPost("login")]

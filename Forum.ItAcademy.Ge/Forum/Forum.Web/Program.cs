@@ -5,6 +5,7 @@ using Forum.Web.Infrastructure.Middlewares;
 using Serilog;
 using Forum.Domain.Roles;
 using Forum.Shared.Extensions;
+using Microsoft.Extensions.FileProviders;
 
 namespace Forum.Web
 {
@@ -40,7 +41,12 @@ namespace Forum.Web
             app.UseExceptionHandlerMiddleware();
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(builder.Configuration.GetValue<string>("Constants:UploadPath")),
+                RequestPath = builder.Configuration.GetValue<string>("Constants:RequestPath")
+            });
 
             app.UseRouting();
 

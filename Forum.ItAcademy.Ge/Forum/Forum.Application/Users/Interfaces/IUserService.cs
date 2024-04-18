@@ -7,6 +7,7 @@ namespace Forum.Application.Profiles.Interfaces
     {
         Task<UserResponseModel> GetByIdAsync(int id);
         Task<UserResponseModel> GetByUsernameAsync(string username);
+        Task<UserResponseModel> GetByEmailAsync(string email);
         Task UpdateAsync(UserRequestPutModel updateModel, string id);
         Task DeleteGenderAsync(string id);
         Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id);

@@ -13,11 +13,11 @@
         <div class="d-flex border border-1 flex-column justify-content-center align-items-center">
             @if (Model.ImageUrl == null)
             {
-                <img src="~/default.webp" height="100" width="100" />
+                <img src="/resources/default.webp" height="100" width="100" />
             }
             else
             {
-                <img src="@Url.Action("Get", "Image")" height="100" width="100" />
+                <img src="@Model.ImageUrl" height="100" width="100" />
             }
         </div>
 

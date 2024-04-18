@@ -1,10 +1,14 @@
 ﻿using Forum.Application.Images.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.Web.Controllers
+namespace Forum.API.Controllers
 {
-    public class ImageController : Controller
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ImageController : ControllerBase
     {
         private readonly IImageService _imageService;
 
@@ -13,23 +17,28 @@ namespace Forum.Web.Controllers
             _imageService = imageService;
         }
 
+        [HttpGet]
+        public async Task<string> Get(CancellationToken cancellationToken)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return await _imageService.GetAsync(userId, cancellationToken);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Upload([FromForm] IFormFile image, CancellationToken cancellationToken)
+        public async Task Upload(IFormFile image, CancellationToken cancellationToken)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await _imageService.UploadAsync(image, userId, cancellationToken);
-
-            return RedirectToAction("Profile", "Profile", new { id = userId });
         }
 
-        public async Task<IActionResult> Delete(CancellationToken cancellationToken)
+        [HttpDelete]
+        public async Task Delete(CancellationToken cancellationToken)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _imageService.DeleteAsync(userId, cancellationToken);
-
-            return RedirectToAction("Profile", "Profile", new { id = userId });
         }
     }
 }

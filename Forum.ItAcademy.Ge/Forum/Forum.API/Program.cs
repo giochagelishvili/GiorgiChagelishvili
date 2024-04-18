@@ -9,6 +9,7 @@ using Forum.Domain.Roles;
 using Forum.Shared.Extensions;
 using System.Reflection;
 using FluentValidation;
+using Microsoft.Extensions.FileProviders;
 
 namespace Forum.API
 {
@@ -56,6 +57,12 @@ namespace Forum.API
             await app.Services.SeedAdmin();
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(builder.Configuration.GetValue<string>("Constants:UploadPath")),
+                RequestPath = "/" + builder.Configuration.GetValue<string>("Constants:RequestPath")
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
