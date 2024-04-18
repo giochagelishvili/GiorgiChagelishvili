@@ -17,6 +17,15 @@ namespace Forum.Web.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> GetByEmail([FromForm] string email)
+        {
+            var user = await _userService.GetByEmailAsync(email);
+
+            return View(nameof(Profile), user);
+        }
+
+        [AllowAnonymous]
         [HttpGet("user/{id}")]
         public async Task<IActionResult> Profile(int id)
         {

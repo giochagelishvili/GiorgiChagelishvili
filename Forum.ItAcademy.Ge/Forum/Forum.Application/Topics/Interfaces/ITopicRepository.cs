@@ -4,6 +4,7 @@ namespace Forum.Application.Topics.Interfaces
 {
     public interface ITopicRepository
     {
+        Task<List<TopicCommentsCount>> GetUserTopics(int userId, CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken);
         Task<Topic?> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(Topic topic, CancellationToken cancellationToken);

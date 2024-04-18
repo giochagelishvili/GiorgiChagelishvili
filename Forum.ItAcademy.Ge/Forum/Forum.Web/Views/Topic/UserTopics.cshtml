@@ -3,21 +3,10 @@
 @model List<TopicResponseNewsFeedModel>;
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "User Topics";
 }
 
-<div class="d-flex flex-row align-items-center w-100 justify-content-between">
-    <h2>News Feed</h2>
-    <form method="post" asp-action="GetByEmail" asp-controller="Profile">
-        <div class="d-flex flex-row align-items-center gap-2">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text">@@</span>
-                <input class="form-control" placeholder="Email" name="email" />
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </form>
-</div>
+<h2>Topics</h2>
 
 <hr />
 
@@ -26,7 +15,7 @@
     <div class="list-group gap-4">
         @foreach (var topic in Model)
         {
-            <a href="topic/@topic.TopicId" class="list-group-item list-group-item-action flex-column align-items-start border-top">
+            <a href="/topic/@topic.TopicId" class="list-group-item list-group-item-action flex-column align-items-start border-top">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@topic.TopicTitle</h5>
                     @if (topic.TopicStatus == Status.Active)

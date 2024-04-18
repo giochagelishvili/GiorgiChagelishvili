@@ -22,6 +22,13 @@ namespace Forum.API.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("user/{userId}")]
+        public async Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken)
+        {
+            return await _topicService.GetUserTopics(userId, cancellationToken);
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<List<TopicResponseNewsFeedModel>> GetAll(CancellationToken cancellationToken)
         {

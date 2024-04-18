@@ -5,6 +5,7 @@ namespace Forum.Application.Topics.Interfaces
 {
     public interface ITopicService
     {
+        Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken);
         Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken);
         Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken);

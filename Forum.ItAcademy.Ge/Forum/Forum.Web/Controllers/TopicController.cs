@@ -14,6 +14,14 @@ namespace Forum.Web.Controllers
             _topicService = topicService;
         }
 
+        [HttpGet("topics/user/{userId}")]
+        public async Task<IActionResult> UserTopics(int userId, CancellationToken cancellationToken)
+        {
+            var result = await _topicService.GetUserTopics(userId, cancellationToken);
+
+            return View(result);
+        }
+
         [HttpGet("topic/{id}")]
         public async Task<IActionResult> Topic(int id, CancellationToken cancellationToken)
         {

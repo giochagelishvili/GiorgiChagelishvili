@@ -11,6 +11,17 @@ namespace Forum.Infrastructure.Topics
         {
         }
 
+        public async Task<List<TopicCommentsCount>> GetUserTopics(int userId, CancellationToken cancellationToken)
+        {
+            return await _dbSet.Include(topic => topic.Author)
+                .Where(topic => topic.AuthorId == userId)
+                .Select(topic => new TopicCommentsCount
+                {
+                    Topic = topic,
+                    CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
+                }).ToListAsync(cancellationToken);
+        }
+
         public new async Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _dbSet.Include(topic => topic.Author)

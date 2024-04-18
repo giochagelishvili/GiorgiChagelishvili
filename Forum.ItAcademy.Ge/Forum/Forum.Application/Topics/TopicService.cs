@@ -16,6 +16,13 @@ namespace Forum.Application.Topics
             _topicRepository = topicRepository;
         }
 
+        public async Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken)
+        {
+            var result = await _topicRepository.GetUserTopics(userId, cancellationToken);
+
+            return result.Adapt<List<TopicResponseNewsFeedModel>>();
+        }
+
         public async Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _topicRepository.GetAllAsync(cancellationToken);

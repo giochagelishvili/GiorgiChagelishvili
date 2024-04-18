@@ -22,47 +22,47 @@ namespace Forum.Application.Profiles
 
         public async Task<UserResponseModel> GetByIdAsync(int id)
         {
-            var user = await _userManager.Users
+            var result = await _userManager.Users
                 .Include(user => user.Image)
                 .FirstOrDefaultAsync(user => user.Id == id);
 
-            if (user == null)
+            if (result == null)
                 throw new UserNotFoundException();
 
-            if (user.Image != null && user.Image.IsDeleted)
-                user.Image = null;
+            if (result.Image != null && result.Image.IsDeleted)
+                result.Image = null;
 
-            return user.Adapt<UserResponseModel>();
+            return result.Adapt<UserResponseModel>();
         }
 
         public async Task<UserResponseModel> GetByUsernameAsync(string username)
         {
-            var user = await _userManager.Users
+            var result = await _userManager.Users
                 .Include(user => user.Image)
                 .FirstOrDefaultAsync(user => user.UserName == username);
 
-            if (user == null)
+            if (result == null)
                 throw new UserNotFoundException();
 
-            if (user.Image != null && user.Image.IsDeleted)
-                user.Image = null;
+            if (result.Image != null && result.Image.IsDeleted)
+                result.Image = null;
 
-            return user.Adapt<UserResponseModel>();
+            return result.Adapt<UserResponseModel>();
         }
 
         public async Task<UserResponseModel> GetByEmailAsync(string email)
         {
-            var user = await _userManager.Users
+            var result = await _userManager.Users
                 .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.NormalizedEmail == email.ToUpper());
+                .FirstOrDefaultAsync(user => user.Email == email);
 
-            if (user == null)
+            if (result == null)
                 throw new UserNotFoundException();
 
-            if (user.Image != null && user.Image.IsDeleted)
-                user.Image = null;
+            if (result.Image != null && result.Image.IsDeleted)
+                result.Image = null;
 
-            return user.Adapt<UserResponseModel>();
+            return result.Adapt<UserResponseModel>();
         }
 
         public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
