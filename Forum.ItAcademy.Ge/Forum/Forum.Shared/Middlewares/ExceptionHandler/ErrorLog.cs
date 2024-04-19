@@ -59,6 +59,26 @@ namespace Forum.Shared.Middlewares.ExceptionHandler
             Message = ErrorMessages.TopicNotFound;
         }
 
+        private void HandleException(InvalidStatusException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.NotFound;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.InvalidStatus;
+        }
+
+        private void HandleException(InvalidStateException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.NotFound;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.InvalidState;
+        }
+
         private void HandleException(CommentNotFoundException exception)
         {
             Code = exception.Code;

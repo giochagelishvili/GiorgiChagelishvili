@@ -1,4 +1,4 @@
-﻿using Forum.Application.Profiles.Responses;
+﻿using Forum.Application.Users.Responses;
 
 namespace Forum.Application.Comments.Responses
 {

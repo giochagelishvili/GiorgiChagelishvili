@@ -1,6 +1,7 @@
 ﻿@using System.Security.Claims
 @{
     var userId = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var isAdmin = User.IsInRole("Admin");
 }
 
 <!DOCTYPE html>
@@ -24,9 +25,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @if (isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Topic" asp-action="Topics">Topics</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Users">Users</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -34,9 +48,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/user/@userId">@User.Identity.Name</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Topic" asp-action="Create">Create Topic</a>
-                            </li>
+                            @if (!isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Topic" asp-action="Create">Create Topic</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>

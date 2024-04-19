@@ -28,22 +28,17 @@ namespace Forum.Application.Images
             return image.Url;
         }
 
-        public async Task UploadAsync(IFormFile image, string userId, CancellationToken cancellationToken)
+        public async Task UploadAsync(IFormFile image, int userId, CancellationToken cancellationToken)
         {
             var url = await SaveImage(image, cancellationToken);
 
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-                throw new UserNotFoundException();
-
             var entity = new Image
             {
-                UserId = int.Parse(userId),
+                UserId = userId,
                 Url = url
             };
 
-            if (await _imageRepository.ExistsAsync(int.Parse(userId), cancellationToken))
+            if (await _imageRepository.ExistsAsync(userId, cancellationToken))
                 await _imageRepository.UpdateAsync(entity, cancellationToken);
             else
                 await _imageRepository.CreateAsync(entity, cancellationToken);

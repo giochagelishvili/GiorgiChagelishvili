@@ -1,30 +1,46 @@
 ﻿using Forum.Application.Exceptions;
-using Forum.Application.Profiles.Interfaces;
-using Forum.Application.Profiles.Requests.Updates;
-using Forum.Application.Profiles.Responses;
-using Forum.Domain.Users;
+using Forum.Application.Users.Interfaces;
+using Forum.Application.Users.Requests.Updates;
+using Forum.Application.Users.Responses;
 using Mapster;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace Forum.Application.Profiles
+namespace Forum.Application.Users
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserService(IUserRepository userRepository)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userRepository = userRepository;
+        }
+
+        public async Task UnbanUser(string id)
+        {
+            if (!await _userRepository.Exists(id))
+                throw new UserNotFoundException();
+
+            await _userRepository.UnbanUser(id);
+        }
+
+        public async Task BanUser(string id)
+        {
+            if (!await _userRepository.Exists(id))
+                throw new UserNotFoundException();
+
+            await _userRepository.BanUser(id);
+        }
+
+        public async Task<List<UserResponseAdminModel>> GetAllAsync()
+        {
+            var result = await _userRepository.GetAllAsync();
+
+            return result.Adapt<List<UserResponseAdminModel>>();
         }
 
         public async Task<UserResponseModel> GetByIdAsync(int id)
         {
-            var result = await _userManager.Users
-                .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.Id == id);
+            var result = await _userRepository.GetByIdAsync(id);
 
             if (result == null)
                 throw new UserNotFoundException();
@@ -37,9 +53,7 @@ namespace Forum.Application.Profiles
 
         public async Task<UserResponseModel> GetByUsernameAsync(string username)
         {
-            var result = await _userManager.Users
-                .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.UserName == username);
+            var result = await _userRepository.GetByUsernameAsync(username);
 
             if (result == null)
                 throw new UserNotFoundException();
@@ -52,9 +66,7 @@ namespace Forum.Application.Profiles
 
         public async Task<UserResponseModel> GetByEmailAsync(string email)
         {
-            var result = await _userManager.Users
-                .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.Email == email);
+            var result = await _userRepository.GetByEmailAsync(email);
 
             if (result == null)
                 throw new UserNotFoundException();
@@ -67,25 +79,23 @@ namespace Forum.Application.Profiles
 
         public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null)
+            if (!await _userRepository.Exists(id))
                 throw new UserNotFoundException();
 
-            await _userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.NewPassword);
+            await _userRepository.ChangePasswordAsync(passwordModel, id);
         }
 
-        public async Task UpdateAsync(UserRequestPutModel updateModel, string id)
+        public async Task UpdateAsync(UserRequestPutModel updateModel, int id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
             if (user == null)
                 throw new UserNotFoundException();
 
-            if (updateModel.Email != null && await EmailExists(updateModel.Email))
+            if (updateModel.Email != null && await _userRepository.EmailExists(updateModel.Email))
                 throw new EmailAlreadyExistsException();
 
-            if (updateModel.UpdatedUsername != null && await UsernameExists(updateModel.UpdatedUsername))
+            if (updateModel.UpdatedUsername != null && await _userRepository.UsernameExists(updateModel.UpdatedUsername))
                 throw new UsernameAlreadyExistsException();
 
             if (updateModel.Email != null)
@@ -100,41 +110,19 @@ namespace Forum.Application.Profiles
             if (updateModel.Bio != null)
                 user.Bio = updateModel.Bio;
 
-            await _userManager.UpdateAsync(user);
-
-            await _signInManager.RefreshSignInAsync(user);
+            await _userRepository.UpdateAsync(user);
         }
 
-        public async Task DeleteGenderAsync(string id)
+        public async Task DeleteGenderAsync(int id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
             if (user == null)
                 throw new UserNotFoundException();
 
             user.Gender = null;
 
-            await _userManager.UpdateAsync(user);
-        }
-
-        public async Task<bool> UsernameExists(string username)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-
-            if (user == null)
-                return false;
-
-            return true;
-        }
-
-        public async Task<bool> EmailExists(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user == null)
-                return false;
-
-            return true;
+            await _userRepository.UpdateAsync(user);
         }
     }
 }

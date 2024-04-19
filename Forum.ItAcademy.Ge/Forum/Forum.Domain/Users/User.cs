@@ -12,6 +12,7 @@ namespace Forum.Domain.Users
         public DateTime ModifiedAt { get; set; }
         public bool? Gender { get; set; }
         public string? Bio { get; set; }
+        public bool IsBanned { get; set; }
 
         // Navigation properties
         public ICollection<Topic>? Topics { get; set; }

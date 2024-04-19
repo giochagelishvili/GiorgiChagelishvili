@@ -4,13 +4,14 @@ using Forum.Application.Comments;
 using Forum.Application.Comments.Interfaces;
 using Forum.Application.Images;
 using Forum.Application.Images.Interfaces;
-using Forum.Application.Profiles;
-using Forum.Application.Profiles.Interfaces;
+using Forum.Application.Users;
+using Forum.Application.Users.Interfaces;
 using Forum.Application.Topics;
 using Forum.Application.Topics.Interfaces;
 using Forum.Infrastructure.Comments;
 using Forum.Infrastructure.Images;
 using Forum.Infrastructure.Topics;
+using Forum.Infrastructure.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Forum.Shared.Extensions
@@ -29,6 +30,7 @@ namespace Forum.Shared.Extensions
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

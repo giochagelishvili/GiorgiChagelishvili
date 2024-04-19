@@ -1,7 +1,7 @@
 ﻿using Forum.API.Infrastructure.Authorization;
 using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
-using Forum.Application.Profiles.Interfaces;
+using Forum.Application.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.API.Controllers

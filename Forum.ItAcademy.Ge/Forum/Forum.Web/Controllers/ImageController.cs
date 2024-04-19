@@ -16,7 +16,7 @@ namespace Forum.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload([FromForm] IFormFile image, CancellationToken cancellationToken)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _imageService.UploadAsync(image, userId, cancellationToken);
 

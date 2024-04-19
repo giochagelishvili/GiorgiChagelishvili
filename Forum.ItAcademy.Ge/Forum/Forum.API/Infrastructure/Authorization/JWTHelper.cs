@@ -1,4 +1,4 @@
-﻿using Forum.Application.Profiles.Responses;
+﻿using Forum.Application.Users.Responses;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

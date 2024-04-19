@@ -153,6 +153,12 @@
   <data name="InvalidPasswordFormat" xml:space="preserve">
     <value>Password must be at least 6 characters long, must contain at least one digit, one symbol and uppercase letter.</value>
   </data>
+  <data name="InvalidState" xml:space="preserve">
+    <value>Such state doesn't exist.</value>
+  </data>
+  <data name="InvalidStatus" xml:space="preserve">
+    <value>Such status doesn't exist.</value>
+  </data>
   <data name="OneFieldRequired" xml:space="preserve">
     <value>At least one field is required.</value>
   </data>

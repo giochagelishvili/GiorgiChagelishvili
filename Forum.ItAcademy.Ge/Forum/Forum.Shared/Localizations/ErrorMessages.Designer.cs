@@ -169,6 +169,24 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Such state doesn&apos;t exist..
+        /// </summary>
+        public static string InvalidState {
+            get {
+                return ResourceManager.GetString("InvalidState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Such status doesn&apos;t exist..
+        /// </summary>
+        public static string InvalidStatus {
+            get {
+                return ResourceManager.GetString("InvalidStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one field is required..
         /// </summary>
         public static string OneFieldRequired {

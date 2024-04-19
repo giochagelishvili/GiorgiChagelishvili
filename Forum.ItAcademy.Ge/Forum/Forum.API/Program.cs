@@ -64,6 +64,8 @@ namespace Forum.API
                 RequestPath = "/" + builder.Configuration.GetValue<string>("Constants:RequestPath")
             });
 
+            app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

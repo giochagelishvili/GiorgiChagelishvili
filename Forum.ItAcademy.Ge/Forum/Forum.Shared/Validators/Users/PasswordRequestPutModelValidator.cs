@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Forum.Application.Profiles.Requests.Updates;
+using Forum.Application.Users.Requests.Updates;
 using Forum.Shared.Localizations;
 
 namespace Forum.Shared.Validators.Users

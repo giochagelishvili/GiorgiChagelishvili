@@ -191,6 +191,11 @@ namespace Forum.Persistence.Migrations
                     b.Property<bool?>("Gender")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsBanned")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 

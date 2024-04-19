@@ -1,4 +1,4 @@
-﻿namespace Forum.Application.Profiles.Responses
+﻿namespace Forum.Application.Users.Responses
 {
     public class UserResponseModel
     {

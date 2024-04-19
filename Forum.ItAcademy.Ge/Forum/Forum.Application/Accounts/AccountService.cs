@@ -1,6 +1,7 @@
 ﻿using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
 using Forum.Application.Exceptions;
+using Forum.Domain;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,6 +16,13 @@ namespace Forum.Application.Accounts
         {
             _signInManager = signInManager;
             _userManager = userManager;
+        }
+
+        public async Task<bool> IsAdminAsync(string username, UserRole role)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            return await _userManager.IsInRoleAsync(user, role.ToString());
         }
 
         public async Task SignInAsync(LoginRequestModel model)

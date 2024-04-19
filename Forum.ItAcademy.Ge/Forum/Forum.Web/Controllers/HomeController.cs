@@ -17,6 +17,9 @@ namespace DemoProject.Web.Controllers
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("Topics", "Topic", new { area = "Admin" });
+
             var topics = await _topicService.GetAllAsync(cancellationToken);
 
             return View(topics);

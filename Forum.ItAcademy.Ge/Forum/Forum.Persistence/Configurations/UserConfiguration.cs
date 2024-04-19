@@ -26,6 +26,10 @@ namespace Forum.Persistence.Configurations
                 .HasMaxLength(100)
                 .IsRequired();
 
+            builder.Property(user => user.IsBanned)
+                .IsRequired()
+                .HasDefaultValue(false);
+
             builder.Property(user => user.PasswordHash)
                 .IsRequired();
 

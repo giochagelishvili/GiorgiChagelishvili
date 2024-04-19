@@ -1,4 +1,4 @@
-﻿using Forum.Application.Profiles.Responses;
+﻿using Forum.Application.Users.Responses;
 using Forum.Application.Topics.Responses;
 using Forum.Domain.Topics;
 using Forum.Domain.Users;

@@ -1,4 +1,4 @@
-﻿namespace Forum.Application.Profiles.Requests.Updates
+﻿namespace Forum.Application.Users.Requests.Updates
 {
     public class UserRequestPutModel
     {

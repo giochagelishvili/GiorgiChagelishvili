@@ -1,6 +1,6 @@
-﻿using Forum.Application.Profiles.Interfaces;
-using Forum.Application.Profiles.Requests.Updates;
-using Forum.Application.Profiles.Responses;
+﻿using Forum.Application.Users.Interfaces;
+using Forum.Application.Users.Requests.Updates;
+using Forum.Application.Users.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -36,7 +36,7 @@ namespace Forum.API.Controllers
         [HttpPost("update")]
         public async Task Update(UserRequestPutModel putModel)
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _userService.UpdateAsync(putModel, id);
         }
@@ -52,7 +52,7 @@ namespace Forum.API.Controllers
         [HttpDelete("deletegender")]
         public async Task DeleteGender()
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _userService.DeleteGenderAsync(id);
         }

@@ -153,6 +153,12 @@
   <data name="InvalidPasswordFormat" xml:space="preserve">
     <value>პაროლი უნდა შეიცავდეს მინიმუმ 6 ასოს, ერთ სიმბოლოს, ერთ ციფრს და დიდ ასოს.</value>
   </data>
+  <data name="InvalidState" xml:space="preserve">
+    <value>ასეთი მდგომარეობა არ არსებობს.</value>
+  </data>
+  <data name="InvalidStatus" xml:space="preserve">
+    <value>ასეთი სტატუსი არ არსებობს.</value>
+  </data>
   <data name="OneFieldRequired" xml:space="preserve">
     <value>მინიმუმ ერთი ველი შევსებული უნდა იყოს.</value>
   </data>

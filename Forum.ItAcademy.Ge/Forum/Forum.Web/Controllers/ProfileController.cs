@@ -1,5 +1,5 @@
-﻿using Forum.Application.Profiles.Interfaces;
-using Forum.Application.Profiles.Requests.Updates;
+﻿using Forum.Application.Users.Interfaces;
+using Forum.Application.Users.Requests.Updates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -64,7 +64,7 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _userService.UpdateAsync(updateModel, userId);
 
@@ -74,7 +74,7 @@ namespace Forum.Web.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteGender()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             await _userService.DeleteGenderAsync(userId);
 

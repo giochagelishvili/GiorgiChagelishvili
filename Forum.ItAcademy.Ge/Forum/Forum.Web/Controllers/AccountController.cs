@@ -1,6 +1,6 @@
 ﻿using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
-using Forum.Application.Profiles.Interfaces;
+using Forum.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Web.Controllers
@@ -27,6 +27,9 @@ namespace Forum.Web.Controllers
                 return View();
 
             await _accountService.SignInAsync(model);
+
+            if (await _accountService.IsAdminAsync(model.Username, UserRole.Admin))
+                return RedirectToAction("Topics", "Topic", new { area = "Admin" });
 
             return RedirectToAction("Index", "Home");
         }

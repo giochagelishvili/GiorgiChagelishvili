@@ -5,6 +5,10 @@ namespace Forum.Application.Topics.Interfaces
 {
     public interface ITopicService
     {
+        Task UpdateStatusAsync(TopicStatusPutModel status, CancellationToken cancellationToken);
+        Task UpdateStateAsync(TopicStatePutModel state, CancellationToken cancellationToken);
+        Task<TopicResponseAdminModel> GetAdminTopic(int id, CancellationToken cancellationToken);
+        Task<List<TopicResponseAdminFeedModel>> GetAdminTopics(CancellationToken cancellationToken);
         Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken);
         Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken);
         Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken);

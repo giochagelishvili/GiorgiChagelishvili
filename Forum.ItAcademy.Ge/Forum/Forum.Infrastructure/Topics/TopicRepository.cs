@@ -1,4 +1,5 @@
 ﻿using Forum.Application.Topics.Interfaces;
+using Forum.Application.Topics.Requests;
 using Forum.Domain.Topics;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,28 @@ namespace Forum.Infrastructure.Topics
     {
         public TopicRepository(ForumContext context) : base(context)
         {
+        }
+
+        public async Task UpdateStatusAsync(TopicStatusPutModel model, CancellationToken cancellationToken)
+        {
+            var topic = await _dbSet.FirstOrDefaultAsync(topic => topic.Id == model.Id, cancellationToken);
+
+            topic.Status = model.Status;
+
+            _dbSet.Update(topic);
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task UpdateStateAsync(TopicStatePutModel model, CancellationToken cancellationToken)
+        {
+            var topic = await _dbSet.FirstOrDefaultAsync(topic => topic.Id == model.Id, cancellationToken);
+
+            topic.State = model.State;
+
+            _dbSet.Update(topic);
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<List<TopicCommentsCount>> GetUserTopics(int userId, CancellationToken cancellationToken)
