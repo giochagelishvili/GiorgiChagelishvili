@@ -187,6 +187,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user should have at least 3 comments written, in order to create a new topic..
+        /// </summary>
+        public static string NotEnoughComments {
+            get {
+                return ResourceManager.GetString("NotEnoughComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one field is required..
         /// </summary>
         public static string OneFieldRequired {

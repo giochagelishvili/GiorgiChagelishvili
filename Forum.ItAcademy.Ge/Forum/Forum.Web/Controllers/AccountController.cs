@@ -31,7 +31,7 @@ namespace Forum.Web.Controllers
             if (await _accountService.IsAdminAsync(model.Username, UserRole.Admin))
                 return RedirectToAction("Topics", "Topic", new { area = "Admin" });
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Topics", "Topic");
         }
 
         public ActionResult Register()
@@ -55,7 +55,7 @@ namespace Forum.Web.Controllers
         {
             await _accountService.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Topics", "Topic");
         }
     }
 }

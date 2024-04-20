@@ -13,6 +13,7 @@ namespace Forum.Application.Users.Interfaces
         Task<User?> GetByEmailAsync(string email);
         Task UpdateAsync(User updatedUser);
         Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id);
+        Task RefreshSignInAsync(User user);
         Task<bool> UsernameExists(string username);
         Task<bool> EmailExists(string email);
         Task<bool> Exists(string id);

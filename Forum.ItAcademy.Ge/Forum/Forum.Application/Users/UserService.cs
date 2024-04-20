@@ -111,6 +111,8 @@ namespace Forum.Application.Users
                 user.Bio = updateModel.Bio;
 
             await _userRepository.UpdateAsync(user);
+
+            await _userRepository.RefreshSignInAsync(user);
         }
 
         public async Task DeleteGenderAsync(int id)

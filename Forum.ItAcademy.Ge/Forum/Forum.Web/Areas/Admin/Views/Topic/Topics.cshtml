@@ -39,28 +39,6 @@
             }
         </tbody>
     </table>
-    @*
-    <div class="list-group gap-4">
-        @foreach (var topic in Model)
-        {
-            <a href="topic/@topic.TopicId" class="list-group-item list-group-item-action flex-column align-items-start border-top">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@topic.TopicTitle</h5>
-                    @if (topic.TopicStatus == Status.Active)
-                    {
-                        <small class="text-success">@topic.TopicStatus.ToString()</small>
-                    }
-                    else
-                    {
-                        <small class="text-warning">@topic.TopicStatus.ToString()</small>
-                    }
-                    <small>@topic.TopicState.ToString()</small>
-                </div>
-                <p class="mb-1">@topic.TopicDescription</p>
-                <small>Comments (@topic.CommentCount)</small>
-            </a>
-        }
-    </div> *@
 }
 else
 {

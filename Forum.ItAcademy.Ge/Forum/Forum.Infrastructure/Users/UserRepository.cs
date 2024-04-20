@@ -86,8 +86,11 @@ namespace Forum.Infrastructure.Users
         public async Task UpdateAsync(User updatedUser)
         {
             await _userManager.UpdateAsync(updatedUser);
+        }
 
-            await _signInManager.RefreshSignInAsync(updatedUser);
+        public async Task RefreshSignInAsync(User user)
+        {
+            await _signInManager.RefreshSignInAsync(user);
         }
     }
 }

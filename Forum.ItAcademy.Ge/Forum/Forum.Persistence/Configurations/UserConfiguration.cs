@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Users;
+﻿using Forum.Domain.Roles;
+using Forum.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

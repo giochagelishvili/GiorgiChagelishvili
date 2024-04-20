@@ -159,6 +159,9 @@
   <data name="InvalidStatus" xml:space="preserve">
     <value>Such status doesn't exist.</value>
   </data>
+  <data name="NotEnoughComments" xml:space="preserve">
+    <value>The user should have at least 3 comments written, in order to create a new topic.</value>
+  </data>
   <data name="OneFieldRequired" xml:space="preserve">
     <value>At least one field is required.</value>
   </data>

@@ -11,6 +11,11 @@ namespace Forum.Infrastructure.Comments
         {
         }
 
+        public async Task<int> GetUserCommentCountAsync(int userId, CancellationToken cancellationToken)
+        {
+            return await _dbSet.Where(comment => comment.AuthorId == userId && !comment.IsDeleted).CountAsync(cancellationToken);
+        }
+
         public new async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
         {
             return await _dbSet.FirstOrDefaultAsync(comment => comment.Id == id && !comment.IsDeleted);

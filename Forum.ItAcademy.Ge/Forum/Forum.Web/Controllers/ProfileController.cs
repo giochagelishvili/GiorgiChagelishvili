@@ -26,7 +26,7 @@ namespace Forum.Web.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("user/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Profile(int id)
         {
             var user = await _userService.GetByIdAsync(id);
@@ -34,7 +34,7 @@ namespace Forum.Web.Controllers
             return View(user);
         }
 
-        [HttpGet("editprofile")]
+        [HttpGet]
         public IActionResult EditProfile()
         {
             return View();
@@ -71,7 +71,7 @@ namespace Forum.Web.Controllers
             return RedirectToAction(nameof(Profile), new { id = userId });
         }
 
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteGender()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));

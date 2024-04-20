@@ -1,7 +1,5 @@
 ﻿using Forum.Application.Topics.Interfaces;
-using Forum.Application.Topics.Requests;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Forum.Web.Controllers
 {
@@ -14,15 +12,26 @@ namespace Forum.Web.Controllers
             _topicService = topicService;
         }
 
-        [HttpGet("topics/user/{userId}")]
-        public async Task<IActionResult> UserTopics(int userId, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> Topics(CancellationToken cancellationToken)
         {
-            var result = await _topicService.GetUserTopics(userId, cancellationToken);
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("Topics", "Topic", new { area = "Admin" });
+
+            var topics = await _topicService.GetAllAsync(cancellationToken);
+
+            return View(topics);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserTopics(int id, CancellationToken cancellationToken)
+        {
+            var result = await _topicService.GetUserTopics(id, cancellationToken);
 
             return View(result);
         }
 
-        [HttpGet("topic/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Topic(int id, CancellationToken cancellationToken)
         {
             if (TempData.ContainsKey("Error"))
@@ -31,27 +40,6 @@ namespace Forum.Web.Controllers
             var topic = await _topicService.GetAsync(id, cancellationToken);
 
             return View(topic);
-        }
-
-        [HttpGet("create")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost("create")]
-        public async Task<IActionResult> Create([FromForm] TopicRequestPostModel topic, CancellationToken cancellationToken)
-        {
-            if (!ModelState.IsValid)
-                return View();
-
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            topic.AuthorId = userId;
-
-            await _topicService.CreateAsync(topic, cancellationToken);
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }

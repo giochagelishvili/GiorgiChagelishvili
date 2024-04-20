@@ -64,7 +64,7 @@ namespace Forum.Web
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Topic}/{action=Topics}/{id?}");
             });
 
             await app.Services.SeedRoles();

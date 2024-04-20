@@ -1,11 +1,14 @@
 ﻿using Forum.Application.Comments.Interfaces;
 using Forum.Application.Comments.Requests;
 using Forum.Shared.Localizations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.Web.Controllers
+namespace Forum.Web.Areas.User.Controllers
 {
+    [Area("User")]
+    [Authorize(Roles = "Member")]
     public class CommentController : Controller
     {
         private readonly ICommentService _commentService;
@@ -15,6 +18,7 @@ namespace Forum.Web.Controllers
             _commentService = commentService;
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromForm] CommentRequestPostModel comment, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -32,6 +36,7 @@ namespace Forum.Web.Controllers
             return RedirectToAction("Topic", "Topic", new { id = comment.TopicId });
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(int commentId, int topicId, CancellationToken cancellationToken)
         {
             var authorId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));

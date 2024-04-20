@@ -159,6 +159,9 @@
   <data name="InvalidStatus" xml:space="preserve">
     <value>ასეთი სტატუსი არ არსებობს.</value>
   </data>
+  <data name="NotEnoughComments" xml:space="preserve">
+    <value>მომხმარებელს დაწერილი უნდა ქონდეს მინიმუმ 3 კომენტარი იმისათვის, რომ შეეძლოს თემის შექმნა.</value>
+  </data>
   <data name="OneFieldRequired" xml:space="preserve">
     <value>მინიმუმ ერთი ველი შევსებული უნდა იყოს.</value>
   </data>

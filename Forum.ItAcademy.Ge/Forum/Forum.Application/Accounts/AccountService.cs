@@ -56,6 +56,8 @@ namespace Forum.Application.Accounts
 
             if (!registerResult.Succeeded)
                 throw new CouldNotRegisterException();
+
+            await _userManager.AddToRoleAsync(user, UserRole.Member.ToString());
         }
 
         public async Task SignOutAsync()
