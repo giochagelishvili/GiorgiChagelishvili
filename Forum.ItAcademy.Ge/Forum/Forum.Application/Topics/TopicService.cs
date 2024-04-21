@@ -1,5 +1,4 @@
-﻿using Forum.Application.Comments.Interfaces;
-using Forum.Application.Exceptions;
+﻿using Forum.Application.Exceptions;
 using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
@@ -14,14 +13,24 @@ namespace Forum.Application.Topics
     public class TopicService : ITopicService
     {
         private readonly ITopicRepository _topicRepository;
-        private readonly ICommentRepository _commentRepository;
+        private readonly IUserService _userService;
         private readonly IConfiguration _config;
 
-        public TopicService(ITopicRepository topicRepository, ICommentRepository commentRepository, IConfiguration config)
+        public TopicService(ITopicRepository topicRepository, IUserService userService, IConfiguration config)
         {
             _topicRepository = topicRepository;
-            _commentRepository = commentRepository;
+            _userService = userService;
             _config = config;
+        }
+
+        public async Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _topicRepository.IsActiveAsync(id, cancellationToken);
+        }
+
+        public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _topicRepository.ExistsAsync(id, cancellationToken);
         }
 
         public async Task UpdateStatusAsync(TopicStatusPutModel model, CancellationToken cancellationToken)
@@ -89,7 +98,7 @@ namespace Forum.Application.Topics
 
         public async Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
-            var userCommentCount = await _commentRepository.GetUserCommentCountAsync(topic.AuthorId, cancellationToken);
+            var userCommentCount = await _userService.GetUserCommentCountAsync(topic.AuthorId);
             var minCommentsRequired = _config.GetValue<int>("Constants:MinimumCommentsRequired");
 
             if (userCommentCount < minCommentsRequired)

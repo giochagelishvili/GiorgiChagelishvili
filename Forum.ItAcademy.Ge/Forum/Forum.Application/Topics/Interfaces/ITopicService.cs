@@ -13,5 +13,7 @@ namespace Forum.Application.Topics.Interfaces
         Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken);
         Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken);
+        Task<bool> ExistsAsync(int id, CancellationToken cancellationToken);
+        Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken);
     }
 }

@@ -18,6 +18,15 @@ namespace Forum.Infrastructure.Users
             _signInManager = signInManager;
         }
 
+        public async Task<int> GetUserCommentCountAsync(int userId)
+        {
+            return await _userManager.Users
+                .Where(user => user.Id == userId)
+                .Include(user => user.Comments)
+                .Select(user => user.Comments.Where(comment => !comment.IsDeleted).Count())
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<List<string>> GetUserRolesAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -45,9 +54,11 @@ namespace Forum.Infrastructure.Users
             await _userManager.UpdateAsync(user);
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync(int callerUserId)
         {
-            return await _userManager.Users.ToListAsync();
+            return await _userManager.Users
+                .Where(user => user.Id != callerUserId)
+                .ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)

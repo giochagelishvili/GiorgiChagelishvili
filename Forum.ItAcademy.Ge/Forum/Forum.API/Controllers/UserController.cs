@@ -10,21 +10,46 @@ namespace Forum.API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfileController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public ProfileController(IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("unban/{id}")]
+        public async Task UnbanUser(string id)
+        {
+            await _userService.UnbanUser(id);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("ban/{id}")]
+        public async Task BanUser(string id)
+        {
+            await _userService.BanUser(id);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin/users")]
+        public async Task<List<UserResponseAdminModel>> GetAllUsersAdmin()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return await _userService.GetAllAsync(userId);
+        }
+
+        [AllowAnonymous]
         [HttpGet("user/{email}")]
         public async Task<UserResponseModel> GetByEmail(string email)
         {
             return await _userService.GetByEmailAsync(email);
         }
 
+        [AllowAnonymous]
         [HttpGet("profile")]
         public async Task<UserResponseModel> Profile()
         {

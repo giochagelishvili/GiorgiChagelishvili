@@ -15,6 +15,11 @@ namespace Forum.Application.Users
             _userRepository = userRepository;
         }
 
+        public async Task<int> GetUserCommentCountAsync(int userId)
+        {
+            return await _userRepository.GetUserCommentCountAsync(userId);
+        }
+
         public async Task<List<string>> GetUserRolesAsync(string id)
         {
             if (!await _userRepository.Exists(id))
@@ -39,9 +44,9 @@ namespace Forum.Application.Users
             await _userRepository.BanUser(id);
         }
 
-        public async Task<List<UserResponseAdminModel>> GetAllAsync()
+        public async Task<List<UserResponseAdminModel>> GetAllAsync(int callerUserId)
         {
-            var result = await _userRepository.GetAllAsync();
+            var result = await _userRepository.GetAllAsync(callerUserId);
 
             return result.Adapt<List<UserResponseAdminModel>>();
         }

@@ -10,20 +10,20 @@ namespace Forum.Application.Comments
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
-        private readonly ITopicRepository _topicRepository;
+        private readonly ITopicService _topicService;
 
-        public CommentService(ICommentRepository commentRepository, ITopicRepository topicRepository)
+        public CommentService(ICommentRepository commentRepository, ITopicService topicService)
         {
             _commentRepository = commentRepository;
-            _topicRepository = topicRepository;
+            _topicService = topicService;
         }
 
         public async Task CreateAsync(CommentRequestPostModel comment, CancellationToken cancellationToken)
         {
-            if (!await _topicRepository.ExistsAsync(comment.TopicId, cancellationToken))
+            if (!await _topicService.ExistsAsync(comment.TopicId, cancellationToken))
                 throw new TopicNotFoundException();
 
-            if (!await _topicRepository.IsActiveAsync(comment.TopicId, cancellationToken))
+            if (!await _topicService.IsActiveAsync(comment.TopicId, cancellationToken))
                 throw new InactiveTopicException();
 
             var entity = comment.Adapt<Comment>();
