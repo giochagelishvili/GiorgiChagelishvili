@@ -41,6 +41,13 @@ namespace Forum.API.Controllers
             return await _topicService.GetAdminTopics(cancellationToken);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin/topic/{topicId}")]
+        public async Task<TopicResponseAdminModel> GetAdminTopic(int topicId, CancellationToken cancellationToken)
+        {
+            return await _topicService.GetAdminTopic(topicId, cancellationToken);
+        }
+
         [HttpGet("user/{userId}")]
         public async Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken)
         {
