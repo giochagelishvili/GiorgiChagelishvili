@@ -86,9 +86,14 @@ namespace Forum.Infrastructure.Topics
                                .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<bool> Exists(int id, CancellationToken cancellationToken)
+        public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken)
         {
             return await AnyAsync(topic => topic.Id == id, cancellationToken);
+        }
+
+        public async Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken)
+        {
+            return await AnyAsync(topic => topic.Status == Status.Active, cancellationToken);
         }
     }
 }

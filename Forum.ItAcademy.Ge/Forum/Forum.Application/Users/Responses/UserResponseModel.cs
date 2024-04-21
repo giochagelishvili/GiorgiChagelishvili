@@ -1,4 +1,7 @@
-﻿namespace Forum.Application.Users.Responses
+﻿using Forum.Domain;
+using Forum.Domain.Roles;
+
+namespace Forum.Application.Users.Responses
 {
     public class UserResponseModel
     {

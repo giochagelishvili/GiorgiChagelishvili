@@ -13,6 +13,7 @@ namespace Forum.Application.Topics.Interfaces
         Task<Topic?> GetAdminAsync(int id, CancellationToken cancellationToken);
         Task<Topic?> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(Topic topic, CancellationToken cancellationToken);
-        Task<bool> Exists(int id, CancellationToken cancellationToken);
+        Task<bool> ExistsAsync(int id, CancellationToken cancellationToken);
+        Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken);
     }
 }

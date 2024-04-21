@@ -26,7 +26,7 @@ namespace Forum.Application.Topics
 
         public async Task UpdateStatusAsync(TopicStatusPutModel model, CancellationToken cancellationToken)
         {
-            if (!await _topicRepository.Exists(model.Id, cancellationToken))
+            if (!await _topicRepository.ExistsAsync(model.Id, cancellationToken))
                 throw new TopicNotFoundException();
 
             if (!Enum.IsDefined(typeof(Status), model.Status))
@@ -37,7 +37,7 @@ namespace Forum.Application.Topics
 
         public async Task UpdateStateAsync(TopicStatePutModel model, CancellationToken cancellationToken)
         {
-            if (!await _topicRepository.Exists(model.Id, cancellationToken))
+            if (!await _topicRepository.ExistsAsync(model.Id, cancellationToken))
                 throw new TopicNotFoundException();
 
             if (model.State != State.Show && model.State != State.Hide)

@@ -15,6 +15,14 @@ namespace Forum.Application.Users
             _userRepository = userRepository;
         }
 
+        public async Task<List<string>> GetUserRolesAsync(string id)
+        {
+            if (!await _userRepository.Exists(id))
+                throw new UserNotFoundException();
+
+            return await _userRepository.GetUserRolesAsync(id);
+        }
+
         public async Task UnbanUser(string id)
         {
             if (!await _userRepository.Exists(id))

@@ -3,6 +3,7 @@ using Forum.Application.Users.Interfaces;
 using Forum.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Mapster;
 
 namespace Forum.Infrastructure.Users
 {
@@ -15,6 +16,15 @@ namespace Forum.Infrastructure.Users
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public async Task<List<string>> GetUserRolesAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return roles.Adapt<List<string>>();
         }
 
         public async Task UnbanUser(string id)

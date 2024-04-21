@@ -79,6 +79,16 @@ namespace Forum.Shared.Middlewares.ExceptionHandler
             Message = ErrorMessages.NotEnoughComments;
         }
 
+        private void HandleException(InactiveTopicException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.Forbidden;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.InactiveTopic;
+        }
+
         private void HandleException(InvalidStateException exception)
         {
             Code = exception.Code;

@@ -141,6 +141,9 @@
   <data name="EmptyBio" xml:space="preserve">
     <value>ბიო არ უნდა იყოს ცარიელი.</value>
   </data>
+  <data name="InactiveTopic" xml:space="preserve">
+    <value>არააქტიურ თემებზე ახალი კომენტარების დაწერა აკრძალულია.</value>
+  </data>
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>ელ. ფოსტა არავალიდურია, გთხოვთ სცადოთ ხელახლა.</value>
   </data>

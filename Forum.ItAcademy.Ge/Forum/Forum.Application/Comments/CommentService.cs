@@ -20,8 +20,11 @@ namespace Forum.Application.Comments
 
         public async Task CreateAsync(CommentRequestPostModel comment, CancellationToken cancellationToken)
         {
-            if (!await _topicRepository.Exists(comment.TopicId, cancellationToken))
+            if (!await _topicRepository.ExistsAsync(comment.TopicId, cancellationToken))
                 throw new TopicNotFoundException();
+
+            if (!await _topicRepository.IsActiveAsync(comment.TopicId, cancellationToken))
+                throw new InactiveTopicException();
 
             var entity = comment.Adapt<Comment>();
 

@@ -141,6 +141,9 @@
   <data name="EmptyBio" xml:space="preserve">
     <value>Bio should not be empty in order to be updated.</value>
   </data>
+  <data name="InactiveTopic" xml:space="preserve">
+    <value>New comments are not allowed on inactive topics.</value>
+  </data>
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>Invalid email format, please try again.</value>
   </data>

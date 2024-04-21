@@ -28,7 +28,9 @@ namespace Forum.API.Controllers
 
             var user = await _userService.GetByUsernameAsync(model.Username);
 
-            return JWTHelper.GenerateToken(user, _config);
+            var userRoles = await _userService.GetUserRolesAsync(user.Id.ToString());
+
+            return JWTHelper.GenerateToken(user, userRoles, _config);
         }
 
         [HttpPost("register")]

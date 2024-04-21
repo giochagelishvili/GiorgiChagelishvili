@@ -5,6 +5,7 @@ namespace Forum.Application.Users.Interfaces
 {
     public interface IUserRepository
     {
+        Task<List<string>> GetUserRolesAsync(string userId);
         Task UnbanUser(string id);
         Task BanUser(string id);
         Task<List<User>> GetAllAsync();

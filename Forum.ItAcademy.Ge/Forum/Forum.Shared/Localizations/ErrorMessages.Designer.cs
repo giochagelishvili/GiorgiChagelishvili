@@ -133,6 +133,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New comments are not allowed on inactive topics..
+        /// </summary>
+        public static string InactiveTopic {
+            get {
+                return ResourceManager.GetString("InactiveTopic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email format, please try again..
         /// </summary>
         public static string InvalidEmailFormat {
