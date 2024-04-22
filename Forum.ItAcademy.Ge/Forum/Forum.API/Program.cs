@@ -1,15 +1,8 @@
 using Forum.API.Infrastructure.Extensions;
-using Forum.Domain.Users;
-using Forum.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Forum.API.Infrastructure.Middlewares.ExceptionHandling;
 using Forum.API.Infrastructure.Middlewares.Culture;
-using Forum.Domain.Roles;
 using Forum.Shared.Extensions;
-using System.Reflection;
-using FluentValidation;
-using Microsoft.Extensions.FileProviders;
 
 namespace Forum.API
 {
@@ -25,16 +18,11 @@ namespace Forum.API
 
             builder.Host.UseSerilog();
 
-            builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddIdentity<User, Role>()
-                            .AddEntityFrameworkStores<ForumContext>();
+            builder.Services.AddDbContextAndIdentity(builder.Configuration);
 
             builder.Services.AddTokenAuthorizaion(builder.Configuration);
 
             builder.Services.AddCustomValidators();
-
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             builder.Services.AddServices();
 
@@ -58,13 +46,7 @@ namespace Forum.API
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(builder.Configuration.GetValue<string>("Constants:UploadPath")),
-                RequestPath = "/" + builder.Configuration.GetValue<string>("Constants:RequestPath")
-            });
-
-            app.UseStaticFiles();
+            app.UseConfiguredStaticFiles(builder.Configuration);
 
             app.UseAuthentication();
             app.UseAuthorization();

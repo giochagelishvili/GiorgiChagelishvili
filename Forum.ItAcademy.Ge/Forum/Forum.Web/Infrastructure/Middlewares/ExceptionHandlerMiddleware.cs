@@ -1,4 +1,4 @@
-﻿using Forum.Shared.Middlewares.ExceptionHandler;
+﻿using Forum.Shared.Classes;
 using Newtonsoft.Json;
 using Serilog;
 using System.Text;
