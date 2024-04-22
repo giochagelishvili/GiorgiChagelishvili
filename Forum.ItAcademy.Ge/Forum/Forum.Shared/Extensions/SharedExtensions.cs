@@ -22,8 +22,6 @@ using Forum.Domain.Roles;
 using Microsoft.Extensions.Configuration;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.FileProviders;
 
 namespace Forum.Shared.Extensions
 {
@@ -90,14 +88,19 @@ namespace Forum.Shared.Extensions
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<ForumContext>();
         }
 
-        public static void UseConfiguredStaticFiles(this IApplicationBuilder builder, IConfiguration configuration)
+        public static IHealthChecksBuilder AddCommonHealthChecks(this IServiceCollection services, IConfiguration config)
         {
-            builder.UseStaticFiles(new StaticFileOptions
+            var health = services.AddHealthChecks()
+                .AddSqlServer(config.GetConnectionString("DefaultConnection"));
+
+            services.AddHealthChecksUI(opts =>
             {
-                FileProvider = new PhysicalFileProvider(configuration.GetValue<string>("Constants:UploadPath")),
-                RequestPath = configuration.GetValue<string>("Constants:RequestPath")
-            });
-            builder.UseStaticFiles();
+                opts.SetEvaluationTimeInSeconds(10);
+                opts.SetApiMaxActiveRequests(1);
+                opts.AddHealthCheckEndpoint("Feedback", config.GetValue<string>("Constants:HealthChecksPath"));
+            }).AddInMemoryStorage();
+
+            return health;
         }
     }
 }

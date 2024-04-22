@@ -1,6 +1,7 @@
 using Forum.Web.Infrastructure.Middlewares;
 using Serilog;
 using Forum.Shared.Extensions;
+using Forum.Web.Infrastructure.Extensions;
 
 namespace Forum.Web
 {
@@ -18,6 +19,8 @@ namespace Forum.Web
 
             builder.Services.AddDbContextAndIdentity(builder.Configuration);
 
+            builder.Services.AddCustomHealthChecks(builder.Configuration);
+
             builder.Services.AddCustomValidators();
 
             builder.Services.AddSession();
@@ -34,6 +37,8 @@ namespace Forum.Web
 
             app.UseHttpsRedirection();
 
+            app.UseConfiguredHealthChecks(builder.Configuration);
+            app.UseConfiguredHealthChecksUI(builder.Configuration);
             app.UseConfiguredStaticFiles(builder.Configuration);
 
             app.UseRouting();

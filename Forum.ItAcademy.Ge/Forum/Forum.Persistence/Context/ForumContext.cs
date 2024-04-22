@@ -12,7 +12,7 @@ namespace Forum.Persistence.Context
 {
     public class ForumContext : IdentityDbContext<User, Role, int>
     {
-        public ForumContext(DbContextOptions options) : base(options)
+        public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
 

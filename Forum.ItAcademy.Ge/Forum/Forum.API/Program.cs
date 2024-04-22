@@ -20,6 +20,8 @@ namespace Forum.API
 
             builder.Services.AddDbContextAndIdentity(builder.Configuration);
 
+            builder.Services.AddCustomHealthChecks(builder.Configuration);
+
             builder.Services.AddTokenAuthorizaion(builder.Configuration);
 
             builder.Services.AddCustomValidators();
@@ -46,6 +48,8 @@ namespace Forum.API
 
             app.UseHttpsRedirection();
 
+            app.UseConfiguredHealthChecks(builder.Configuration);
+            app.UseConfiguredHealthChecksUI(builder.Configuration);
             app.UseConfiguredStaticFiles(builder.Configuration);
 
             app.UseAuthentication();
