@@ -1,6 +1,5 @@
 ﻿using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
-using Forum.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

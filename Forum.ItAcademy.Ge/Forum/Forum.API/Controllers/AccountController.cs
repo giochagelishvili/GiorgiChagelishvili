@@ -22,11 +22,11 @@ namespace Forum.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<string> Login(LoginRequestModel model)
+        public async Task<string> Login(LoginRequestModel model, CancellationToken cancellationToken)
         {
             await _accountService.SignInAsync(model);
 
-            var user = await _userService.GetByUsernameAsync(model.Username);
+            var user = await _userService.GetByUsernameAsync(model.Username, cancellationToken);
 
             var userRoles = await _userService.GetUserRolesAsync(user.Id.ToString());
 

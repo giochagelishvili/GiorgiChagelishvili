@@ -7,6 +7,7 @@ namespace Forum.Application.Topics.Interfaces
     {
         Task UpdateStatusAsync(TopicStatusPutModel status, CancellationToken cancellationToken);
         Task UpdateStateAsync(TopicStatePutModel state, CancellationToken cancellationToken);
+        Task<List<TopicResponseWorkerModel>> GetTopicWorkerAsync(CancellationToken cancellationToken);
         Task<TopicResponseAdminModel> GetAdminTopic(int id, CancellationToken cancellationToken);
         Task<List<TopicResponseAdminFeedModel>> GetAdminTopics(CancellationToken cancellationToken);
         Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken);

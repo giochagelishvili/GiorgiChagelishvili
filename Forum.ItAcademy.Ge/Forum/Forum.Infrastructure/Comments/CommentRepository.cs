@@ -16,9 +16,9 @@ namespace Forum.Infrastructure.Comments
             return await _dbSet.Where(comment => comment.AuthorId == userId && !comment.IsDeleted).CountAsync(cancellationToken);
         }
 
-        public new async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
         {
-            return await _dbSet.FirstOrDefaultAsync(comment => comment.Id == id && !comment.IsDeleted);
+            return await _dbSet.FirstOrDefaultAsync(comment => comment.Id == id && !comment.IsDeleted, cancellationToken);
         }
 
         public async Task DeleteAsync(int commentId, CancellationToken cancellationToken)

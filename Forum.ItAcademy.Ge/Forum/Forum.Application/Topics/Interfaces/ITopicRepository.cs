@@ -7,6 +7,7 @@ namespace Forum.Application.Topics.Interfaces
     {
         Task UpdateStatusAsync(TopicStatusPutModel status, CancellationToken cancellationToken);
         Task UpdateStateAsync(TopicStatePutModel model, CancellationToken cancellationToken);
+        Task<List<TopicWithLatestComment>> GetTopicWithLatestComment(CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetUserTopics(int userId, CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetAllAdminAsync(CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken);

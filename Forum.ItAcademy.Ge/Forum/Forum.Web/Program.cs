@@ -21,7 +21,7 @@ namespace Forum.Web
 
             builder.Host.UseSerilog();
 
-            builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<ForumContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), contextLifetime: ServiceLifetime.Scoped);
 
             builder.Services.AddIdentity<User, Role>()
                             .AddEntityFrameworkStores<ForumContext>();

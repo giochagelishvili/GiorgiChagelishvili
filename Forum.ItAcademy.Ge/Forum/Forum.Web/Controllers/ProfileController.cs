@@ -18,18 +18,18 @@ namespace Forum.Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> GetByEmail([FromForm] string email)
+        public async Task<IActionResult> GetByEmail([FromForm] string email, CancellationToken cancellationToken)
         {
-            var user = await _userService.GetByEmailAsync(email);
+            var user = await _userService.GetByEmailAsync(email, cancellationToken);
 
             return View(nameof(Profile), user);
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Profile(int id)
+        public async Task<IActionResult> Profile(int id, CancellationToken cancellationToken)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id, cancellationToken);
 
             return View(user);
         }
@@ -64,7 +64,7 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
                 return View(nameof(Profile));
 
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await _userService.UpdateAsync(updateModel, userId);
 
@@ -74,7 +74,7 @@ namespace Forum.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteGender()
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await _userService.DeleteGenderAsync(userId);
 

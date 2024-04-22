@@ -1,6 +1,7 @@
 ﻿using Forum.Application.Users.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Forum.Web.Areas.Admin.Controllers
 {
@@ -16,9 +17,11 @@ namespace Forum.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Users()
+        public async Task<IActionResult> Users(CancellationToken cancellationToken)
         {
-            var users = await _userService.GetAllAsync();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var users = await _userService.GetAllAdminAsync(userId, cancellationToken);
 
             return View(users);
         }

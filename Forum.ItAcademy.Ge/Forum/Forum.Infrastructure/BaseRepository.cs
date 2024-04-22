@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Forum.Infrastructure
 {
-    public class BaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> where T : class
     {
         protected readonly ForumContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -21,10 +21,9 @@ namespace Forum.Infrastructure
             return await _dbSet.ToListAsync(cancellationToken);
         }
 
-        public async Task<T?> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<T?> GetAsync(CancellationToken cancellationToken, params object[] key)
         {
-            return await _dbSet.Where(x => x.Id == id)
-                               .FirstOrDefaultAsync(cancellationToken);
+            return await _dbSet.FindAsync(key, cancellationToken);
         }
 
         public async Task CreateAsync(T entity, CancellationToken cancellationToken)

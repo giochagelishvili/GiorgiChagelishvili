@@ -1,23 +1,14 @@
-﻿using Forum.Application.Users.Requests.Updates;
-using Forum.Domain.Users;
+﻿using Forum.Domain.Users;
 
 namespace Forum.Application.Users.Interfaces
 {
     public interface IUserRepository
     {
-        Task<int> GetUserCommentCountAsync(int userId);
-        Task<List<string>> GetUserRolesAsync(string userId);
-        Task UnbanUser(string id);
-        Task BanUser(string id);
-        Task<List<User>> GetAllAsync(int callerUserId);
-        Task<User?> GetByIdAsync(int id);
-        Task<User?> GetByUsernameAsync(string username);
-        Task<User?> GetByEmailAsync(string email);
-        Task UpdateAsync(User updatedUser);
-        Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id);
-        Task RefreshSignInAsync(User user);
-        Task<bool> UsernameExists(string username);
-        Task<bool> EmailExists(string email);
-        Task<bool> Exists(string id);
+        Task<int> GetUserCommentCountAsync(int userId, CancellationToken cancellationToken);
+        Task<List<User>> GetAllAsync(CancellationToken cancellationToken);
+        Task<List<User>> GetAllAdminAsync(int callerUserId, CancellationToken cancellationToken);
+        Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken);
+        Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
     }
 }

@@ -11,7 +11,7 @@ namespace Forum.Infrastructure.Images
         {
         }
 
-        public new async Task<Image?> GetAsync(int userId, CancellationToken cancellationToken)
+        public async Task<Image?> GetAsync(int userId, CancellationToken cancellationToken)
         {
             return await _dbSet.FirstOrDefaultAsync(image => image.UserId == userId && !image.IsDeleted, cancellationToken);
         }

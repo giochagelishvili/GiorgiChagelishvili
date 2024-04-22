@@ -23,6 +23,13 @@ namespace Forum.Application.Topics
             _config = config;
         }
 
+        public async Task<List<TopicResponseWorkerModel>> GetTopicWorkerAsync(CancellationToken cancellationToken)
+        {
+            var result = await _topicRepository.GetTopicWithLatestComment(cancellationToken);
+
+            return result.Adapt<List<TopicResponseWorkerModel>>();
+        }
+
         public async Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken)
         {
             return await _topicRepository.IsActiveAsync(id, cancellationToken);
@@ -98,7 +105,7 @@ namespace Forum.Application.Topics
 
         public async Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
-            var userCommentCount = await _userService.GetUserCommentCountAsync(topic.AuthorId);
+            var userCommentCount = await _userService.GetUserCommentCountAsync(topic.AuthorId, cancellationToken);
             var minCommentsRequired = _config.GetValue<int>("Constants:MinimumCommentsRequired");
 
             if (userCommentCount < minCommentsRequired)

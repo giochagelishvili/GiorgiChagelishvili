@@ -35,33 +35,33 @@ namespace Forum.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet("admin/users")]
-        public async Task<List<UserResponseAdminModel>> GetAllUsersAdmin()
+        public async Task<List<UserResponseAdminModel>> GetAllUsersAdmin(CancellationToken cancellationToken)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            return await _userService.GetAllAsync(userId);
+            return await _userService.GetAllAdminAsync(userId, cancellationToken);
         }
 
         [AllowAnonymous]
         [HttpGet("user/{email}")]
-        public async Task<UserResponseModel> GetByEmail(string email)
+        public async Task<UserResponseModel> GetByEmail(string email, CancellationToken cancellationToken)
         {
-            return await _userService.GetByEmailAsync(email);
+            return await _userService.GetByEmailAsync(email, cancellationToken);
         }
 
         [AllowAnonymous]
         [HttpGet("profile")]
-        public async Task<UserResponseModel> Profile()
+        public async Task<UserResponseModel> Profile(CancellationToken cancellationToken)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            return await _userService.GetByIdAsync(userId);
+            return await _userService.GetByIdAsync(userId, cancellationToken);
         }
 
         [HttpPost("update")]
         public async Task Update(UserRequestPutModel putModel)
         {
-            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await _userService.UpdateAsync(putModel, id);
         }
@@ -77,7 +77,7 @@ namespace Forum.API.Controllers
         [HttpDelete("deletegender")]
         public async Task DeleteGender()
         {
-            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             await _userService.DeleteGenderAsync(id);
         }

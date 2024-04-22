@@ -7,5 +7,6 @@ namespace Forum.Application.Comments.Responses
         public int Id { get; set; }
         public string Body { get; set; } = default!;
         public UserResponseModel Author { get; set; } = default!;
+        public DateTime CreatedAt { get; set; }
     }
 }

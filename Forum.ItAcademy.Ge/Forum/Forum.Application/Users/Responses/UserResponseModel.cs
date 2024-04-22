@@ -1,7 +1,4 @@
-﻿using Forum.Domain;
-using Forum.Domain.Roles;
-
-namespace Forum.Application.Users.Responses
+﻿namespace Forum.Application.Users.Responses
 {
     public class UserResponseModel
     {
@@ -12,5 +9,7 @@ namespace Forum.Application.Users.Responses
         public bool? Gender { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? ImageUrl { get; set; }
+        public bool IsBanned { get; set; }
+        public DateTime BannedUntil { get; set; }
     }
 }

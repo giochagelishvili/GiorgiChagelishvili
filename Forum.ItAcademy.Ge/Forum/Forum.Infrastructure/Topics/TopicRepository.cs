@@ -13,6 +13,19 @@ namespace Forum.Infrastructure.Topics
         {
         }
 
+        public async Task<List<TopicWithLatestComment>> GetTopicWithLatestComment(CancellationToken cancellationToken)
+        {
+            return await _dbSet.AsNoTracking()
+                .Where(x => x.State != State.Pending)
+                .Select(x => new TopicWithLatestComment
+                {
+                    TopicId = x.Id,
+                    LatestComment = x.Comments.OrderByDescending(x => x.CreatedAt).FirstOrDefault(),
+                    ModifiedAt = x.ModifiedAt
+                })
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task UpdateStatusAsync(TopicStatusPutModel model, CancellationToken cancellationToken)
         {
             var topic = await _dbSet.FirstOrDefaultAsync(topic => topic.Id == model.Id, cancellationToken);
@@ -59,7 +72,7 @@ namespace Forum.Infrastructure.Topics
                 .ToListAsync(cancellationToken);
         }
 
-        public new async Task<Topic?> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<Topic?> GetAsync(int id, CancellationToken cancellationToken)
         {
             return await _dbSet.Where(x => x.Id == id && x.State == State.Show)
                                .Include(x => x.Author)

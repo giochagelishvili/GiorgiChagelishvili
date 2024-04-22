@@ -1,117 +1,56 @@
-﻿using Forum.Application.Users.Requests.Updates;
-using Forum.Application.Users.Interfaces;
+﻿using Forum.Application.Users.Interfaces;
 using Forum.Domain.Users;
-using Microsoft.AspNetCore.Identity;
+using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using Mapster;
 
 namespace Forum.Infrastructure.Users
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserRepository(ForumContext context) : base(context)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
 
-        public async Task<int> GetUserCommentCountAsync(int userId)
+        public async Task<int> GetUserCommentCountAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
+            return await _dbSet
                 .Where(user => user.Id == userId)
-                .Include(user => user.Comments)
                 .Select(user => user.Comments.Where(comment => !comment.IsDeleted).Count())
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<List<string>> GetUserRolesAsync(string id)
+        public new async Task<List<User>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-            return roles.Adapt<List<string>>();
+            return await _dbSet.AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task UnbanUser(string id)
+        public async Task<List<User>> GetAllAdminAsync(int callerUserId, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            user.IsBanned = false;
-
-            await _userManager.UpdateAsync(user);
-        }
-
-        public async Task BanUser(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            user.IsBanned = true;
-
-            await _userManager.UpdateAsync(user);
-        }
-
-        public async Task<List<User>> GetAllAsync(int callerUserId)
-        {
-            return await _userManager.Users
+            return await _dbSet
                 .Where(user => user.Id != callerUserId)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<User?> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
+            return await _dbSet
                 .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.Id == id);
+                .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
         }
 
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
+            return await _dbSet
                 .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.Email == email);
+                .FirstOrDefaultAsync(user => user.Email == email, cancellationToken);
         }
 
-        public async Task<User?> GetByUsernameAsync(string username)
+        public async Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
+            return await _dbSet
                 .Include(user => user.Image)
-                .FirstOrDefaultAsync(user => user.UserName == username);
-        }
-
-        public async Task<bool> UsernameExists(string username)
-        {
-            return await _userManager.FindByNameAsync(username) != null;
-        }
-
-        public async Task<bool> EmailExists(string email)
-        {
-            return await _userManager.FindByEmailAsync(email) != null;
-        }
-
-        public async Task<bool> Exists(string id)
-        {
-            return await _userManager.FindByIdAsync(id) != null;
-        }
-
-        public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            await _userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.NewPassword);
-        }
-
-        public async Task UpdateAsync(User updatedUser)
-        {
-            await _userManager.UpdateAsync(updatedUser);
-        }
-
-        public async Task RefreshSignInAsync(User user)
-        {
-            await _signInManager.RefreshSignInAsync(user);
+                .FirstOrDefaultAsync(user => user.UserName == username, cancellationToken);
         }
     }
 }
