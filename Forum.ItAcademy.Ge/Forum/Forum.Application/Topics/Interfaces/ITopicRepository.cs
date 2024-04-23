@@ -10,7 +10,8 @@ namespace Forum.Application.Topics.Interfaces
         Task<List<TopicWithLatestComment>> GetTopicWithLatestComment(CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetUserTopics(int userId, CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetAllAdminAsync(CancellationToken cancellationToken);
-        Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken);
+        Task<List<TopicCommentsCount>> GetAllAsync(int itemsToSkip, int itemsToTake, CancellationToken cancellationToken);
+        Task<int> GetTotalCountAsync(CancellationToken cancellationToken);
         Task<Topic?> GetAdminAsync(int id, CancellationToken cancellationToken);
         Task<Topic?> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(Topic topic, CancellationToken cancellationToken);

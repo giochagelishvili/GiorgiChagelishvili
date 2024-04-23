@@ -11,7 +11,8 @@ namespace Forum.Application.Topics.Interfaces
         Task<TopicResponseAdminModel> GetAdminTopic(int id, CancellationToken cancellationToken);
         Task<List<TopicResponseAdminFeedModel>> GetAdminTopics(CancellationToken cancellationToken);
         Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken);
-        Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken);
+        Task<List<TopicResponseNewsFeedModel>> GetAllAsync(int page, int itemsPerPage, CancellationToken cancellationToken);
+        Task<int> GetTotalCountAsync(CancellationToken cancellationToken);
         Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken);
         Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken);
         Task<bool> ExistsAsync(int id, CancellationToken cancellationToken);

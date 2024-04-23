@@ -6,19 +6,28 @@ namespace Forum.Web.Controllers
     public class TopicController : Controller
     {
         private readonly ITopicService _topicService;
+        private readonly IConfiguration _config;
 
-        public TopicController(ITopicService topicService)
+        public TopicController(ITopicService topicService, IConfiguration config)
         {
             _topicService = topicService;
+            _config = config;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Topics(CancellationToken cancellationToken)
+        public async Task<IActionResult> Topics(CancellationToken cancellationToken, int page = 1)
         {
             if (User.IsInRole("Admin"))
                 return RedirectToAction("Topics", "Topic", new { area = "Admin" });
 
-            var topics = await _topicService.GetAllAsync(cancellationToken);
+            var itemsPerPage = _config.GetValue<int>("Constants:ItemsPerPage");
+
+            var topics = await _topicService.GetAllAsync(page, itemsPerPage, cancellationToken);
+            var totalCount = await _topicService.GetTotalCountAsync(cancellationToken);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalCount = totalCount;
+            ViewBag.ItemsPerPage = itemsPerPage;
 
             return View(topics);
         }

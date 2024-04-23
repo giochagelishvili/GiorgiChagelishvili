@@ -50,12 +50,12 @@ namespace Forum.Web
             {
                 endpoints.MapControllerRoute(
                   name: "areas",
-                  pattern: "{area:exists}/{controller=Topic}/{action=Topics}/{id?}"
+                  pattern: "{area:exists}/{controller=Topic}/{action=Topics}"
                 );
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Topic}/{action=Topics}/{id?}");
+                    pattern: "{controller=Topic}/{action=Topics}");
             });
 
             await app.Services.SeedRoles();

@@ -5,6 +5,9 @@
 @{
     ViewData["Title"] = "Home Page";
     var isMember = User?.IsInRole("Member");
+    var currentPage = ViewBag.CurrentPage;
+    var totalCount = ViewBag.TotalCount;
+    var itemsPerPage = ViewBag.ItemsPerPage;
 }
 
 <div class="d-flex flex-row align-items-center w-100 justify-content-between">
@@ -26,6 +29,30 @@
 
 @if (Model != null && Model.Any())
 {
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a asp-area="" asp-controller="Topic" asp-action="Topics" asp-route-page="@(currentPage - 1)" class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            <li class="page-item"><a class="page-link">@currentPage</a></li>
+
+            @if (currentPage * itemsPerPage < totalCount)
+            {
+                <li class="page-item">
+                    <a asp-area="" asp-controller="Topic" asp-action="Topics" asp-route-page="@(currentPage + 1)" class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
     <div class="list-group gap-4">
         @foreach (var topic in Model)
         {

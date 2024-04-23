@@ -86,11 +86,18 @@ namespace Forum.Application.Topics
             return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
-        public async Task<List<TopicResponseNewsFeedModel>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllAsync(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            var result = await _topicRepository.GetAllAsync(cancellationToken);
+            int itemsToSkip = (page - 1) * itemsPerPage;
+
+            var result = await _topicRepository.GetAllAsync(itemsToSkip, itemsPerPage, cancellationToken);
 
             return result.Adapt<List<TopicResponseNewsFeedModel>>();
+        }
+
+        public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken)
+        {
+            return await _topicRepository.GetTotalCountAsync(cancellationToken);
         }
 
         public async Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken)

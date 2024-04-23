@@ -59,17 +59,25 @@ namespace Forum.Infrastructure.Topics
                 }).ToListAsync(cancellationToken);
         }
 
-        public new async Task<List<TopicCommentsCount>> GetAllAsync(CancellationToken cancellationToken)
+        public new async Task<List<TopicCommentsCount>> GetAllAsync(int itemsToSkip, int itemsToTake, CancellationToken cancellationToken)
         {
-            return await _dbSet.Include(topic => topic.Author)
+            return await _dbSet
                 .Where(topic => topic.State == State.Show)
                 .OrderByDescending(topic => topic.CreatedAt)
+                .Skip(itemsToSkip)
+                .Take(itemsToTake)
+                .Include(topic => topic.Author)
                 .Select(topic => new TopicCommentsCount
                 {
                     Topic = topic,
                     CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
                 })
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken)
+        {
+            return await _dbSet.Where(topic => topic.State == State.Show).CountAsync(cancellationToken);
         }
 
         public async Task<Topic?> GetAsync(int id, CancellationToken cancellationToken)
