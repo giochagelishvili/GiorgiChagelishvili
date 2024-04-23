@@ -4,14 +4,54 @@
 
 @{
     ViewData["Title"] = "Admin Panel";
+    var currentPage = ViewBag.CurrentPage;
+    var totalCount = ViewBag.TotalCount;
+    var itemsPerPage = ViewBag.ItemsPerPage;
 }
 
-<h2>Topics</h2>
+<div class="d-flex flex-row align-items-center w-100 justify-content-between">
+    <h2>Topics</h2>
+
+    <form method="post" asp-area="Admin" asp-action="GetByEmail" asp-controller="User">
+        <div class="d-flex flex-row align-items-center gap-2">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text">@@</span>
+                <input class="form-control" placeholder="Email" name="email" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
 
 <hr />
 
 @if (Model != null && Model.Any())
 {
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a asp-area="Admin" asp-controller="Topic" asp-action="Topics" asp-route-page="@(currentPage - 1)" class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            <li class="page-item"><a class="page-link">@currentPage</a></li>
+
+            @if (currentPage * itemsPerPage < totalCount)
+            {
+                <li class="page-item">
+                    <a asp-area="Admin" asp-controller="Topic" asp-action="Topics" asp-route-page="@(currentPage + 1)" class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
     <table class="table table-dark table-hover">
         <thead>
             <tr>
@@ -31,7 +71,9 @@
                     <td>@topic.TopicTitle</td>
                     <td>@topic.CommentCount</td>
                     <td>@topic.TopicCreatedAt</td>
-                    <td>@topic.TopicAuthor.UserName</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="User" asp-action="Profile" asp-route-userId="@topic.TopicAuthor.Id">@topic.TopicAuthor.UserName</a>
+                    </td>
                     <td>@topic.TopicState</td>
                     <td>@topic.TopicStatus</td>
                     <td><a asp-action="Edit" asp-route-id="@topic.TopicId" class="btn btn-primary">Edit</a></td>

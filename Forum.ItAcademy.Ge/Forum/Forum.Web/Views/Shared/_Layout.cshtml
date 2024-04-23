@@ -43,6 +43,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Topic" asp-action="Topics">Home</a>
                             </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area=@(isAdmin ? "Admin" : "") asp-controller="Topic" asp-action="Archive">Archive</a>
+                        </li>
                     </ul>
 
                     <ul class="navbar-nav">

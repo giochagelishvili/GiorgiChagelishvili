@@ -2,6 +2,7 @@
 using Forum.Application.Comments.Requests;
 using Forum.Application.Exceptions;
 using Forum.Application.Topics.Interfaces;
+using Forum.Application.Topics.Interfaces.Services;
 using Forum.Domain.Comments;
 using Mapster;
 

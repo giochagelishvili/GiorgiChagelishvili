@@ -1,5 +1,6 @@
 ﻿@using Forum.Application.Topics.Responses;
 @using System.Security.Claims
+@using Forum.Domain
 @model TopicResponseModel;
 
 @{
@@ -22,13 +23,20 @@
 
         <hr class="my-4">
 
-        <p>You must be logged in to add a comment.</p>
+        @if (Model.Status == Status.Active)
+        {
+            <p>You must be logged in to add a comment.</p>
 
-        <div class="d-flex flex-row gap-4 align-items-center">
-            <a asp-action="Login" asp-controller="Account" class="btn btn-primary">Login</a>
+            <div class="d-flex flex-row gap-4 align-items-center">
+                <a asp-action="Login" asp-controller="Account" class="btn btn-primary">Login</a>
 
-            <a asp-action="Register" asp-controller="Account" class="btn btn-dark">Register</a>
-        </div>
+                <a asp-action="Register" asp-controller="Account" class="btn btn-dark">Register</a>
+            </div>
+        }
+        else
+        {
+            <p>You can't comment on inactive topic.</p>
+        }
     </div>
 
     @if (Model.Comments == null || Model.Comments.Count <= 0)

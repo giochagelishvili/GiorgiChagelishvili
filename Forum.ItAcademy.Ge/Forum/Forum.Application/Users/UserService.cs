@@ -1,11 +1,11 @@
 ﻿using Forum.Application.Exceptions;
-using Forum.Application.Users.Interfaces;
+using Forum.Application.Users.Interfaces.Repositories;
+using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Requests.Updates;
 using Forum.Application.Users.Responses;
 using Forum.Domain.Users;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 
 namespace Forum.Application.Users
 {
@@ -14,14 +14,12 @@ namespace Forum.Application.Users
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IConfiguration _config;
 
-        public UserService(IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration config)
+        public UserService(IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _signInManager = signInManager;
-            _config = config;
         }
 
         public async Task<List<string>> GetUserRolesAsync(string id)
@@ -33,27 +31,6 @@ namespace Forum.Application.Users
             return roles.Adapt<List<string>>();
         }
 
-        public async Task UnbanUser(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            user.IsBanned = false;
-            user.BannedUntil = null;
-
-            await _userManager.UpdateAsync(user);
-        }
-
-        public async Task BanUser(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-            var banDuration = _config.GetValue<int>("Constants:BanDuration");
-
-            user.IsBanned = true;
-            user.BannedUntil = DateTime.UtcNow.AddDays(banDuration);
-
-            await _userManager.UpdateAsync(user);
-        }
-
         public async Task UpdateAsync(UserRequestPutModel updateModel, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -61,10 +38,10 @@ namespace Forum.Application.Users
             if (user == null)
                 throw new UserNotFoundException();
 
-            if (updateModel.Email != null && await EmailExists(updateModel.Email))
+            if (updateModel.Email != null && await _userManager.FindByEmailAsync(updateModel.Email) != null)
                 throw new EmailAlreadyExistsException();
 
-            if (updateModel.UpdatedUsername != null && await UsernameExists(updateModel.UpdatedUsername))
+            if (updateModel.UpdatedUsername != null && await _userManager.FindByNameAsync(updateModel.UpdatedUsername) != null)
                 throw new UsernameAlreadyExistsException();
 
             if (updateModel.Email != null)
@@ -96,35 +73,11 @@ namespace Forum.Application.Users
             await _userManager.UpdateAsync(user);
         }
 
-        public async Task<bool> UsernameExists(string username)
-        {
-            return await _userManager.FindByNameAsync(username) != null;
-        }
-
-        public async Task<bool> EmailExists(string email)
-        {
-            return await _userManager.FindByEmailAsync(email) != null;
-        }
-
-        public async Task<bool> Exists(string id)
-        {
-            return await _userManager.FindByIdAsync(id) != null;
-        }
-
         public async Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
             await _userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.NewPassword);
-        }
-
-
-        // Repository calls
-        public async Task<List<UserResponseAdminModel>> GetAllAdminAsync(int callerUserId, CancellationToken cancellationToken)
-        {
-            var result = await _userRepository.GetAllAdminAsync(callerUserId, cancellationToken);
-
-            return result.Adapt<List<UserResponseAdminModel>>();
         }
 
         public async Task<List<UserResponseModel>> GetAllAsync(CancellationToken cancellationToken)

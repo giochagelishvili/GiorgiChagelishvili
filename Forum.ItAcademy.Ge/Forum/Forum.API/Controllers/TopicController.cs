@@ -13,9 +13,9 @@ namespace Forum.API.Controllers
     [ApiController]
     public class TopicController : ControllerBase
     {
-        private readonly ITopicService _topicService;
+        private readonly ITopicServiceOld _topicService;
 
-        public TopicController(ITopicService topicService)
+        public TopicController(ITopicServiceOld topicService)
         {
             _topicService = topicService;
         }

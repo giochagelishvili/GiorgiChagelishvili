@@ -1,4 +1,4 @@
-﻿using Forum.Application.Users.Interfaces;
+﻿using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Responses;
 
 namespace Forum.Workers.Bans

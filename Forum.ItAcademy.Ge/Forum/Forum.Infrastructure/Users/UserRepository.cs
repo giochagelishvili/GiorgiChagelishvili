@@ -1,4 +1,4 @@
-﻿using Forum.Application.Users.Interfaces;
+﻿using Forum.Application.Users.Interfaces.Repositories;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +22,6 @@ namespace Forum.Infrastructure.Users
         public new async Task<List<User>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _dbSet.AsNoTracking()
-                .ToListAsync(cancellationToken);
-        }
-
-        public async Task<List<User>> GetAllAdminAsync(int callerUserId, CancellationToken cancellationToken)
-        {
-            return await _dbSet
-                .Where(user => user.Id != callerUserId)
                 .ToListAsync(cancellationToken);
         }
 

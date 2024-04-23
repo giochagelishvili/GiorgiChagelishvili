@@ -49,6 +49,16 @@ namespace Forum.Shared.Classes
             Message = ErrorMessages.UserNotFound;
         }
 
+        private void HandleException(PageNotFoundException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.NotFound;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.PageNotFound;
+        }
+
         private void HandleException(TopicNotFoundException exception)
         {
             Code = exception.Code;

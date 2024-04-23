@@ -1,4 +1,4 @@
-﻿using Forum.Application.Users.Interfaces;
+﻿using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Requests.Updates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +40,7 @@ namespace Forum.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult ChangePassword()
         {
             return View();

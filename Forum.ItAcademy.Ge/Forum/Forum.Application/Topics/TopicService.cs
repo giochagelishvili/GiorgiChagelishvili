@@ -1,9 +1,9 @@
 ﻿using Forum.Application.Exceptions;
-using Forum.Application.Topics.Interfaces;
+using Forum.Application.Topics.Interfaces.Interfaces;
+using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
-using Forum.Application.Users.Interfaces;
-using Forum.Domain;
+using Forum.Application.Users.Interfaces.Services;
 using Forum.Domain.Topics;
 using Mapster;
 using Microsoft.Extensions.Configuration;
@@ -23,86 +23,54 @@ namespace Forum.Application.Topics
             _config = config;
         }
 
-        public async Task<List<TopicResponseWorkerModel>> GetTopicWorkerAsync(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllTopicsAsync(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            var result = await _topicRepository.GetTopicWithLatestComment(cancellationToken);
+            if (page <= 0)
+                throw new PageNotFoundException();
 
-            return result.Adapt<List<TopicResponseWorkerModel>>();
-        }
+            var itemsToSkip = (page - 1) * itemsPerPage;
 
-        public async Task<bool> IsActiveAsync(int id, CancellationToken cancellationToken)
-        {
-            return await _topicRepository.IsActiveAsync(id, cancellationToken);
-        }
+            var result = await _topicRepository.GetAllTopicsAsync(itemsToSkip, itemsPerPage, cancellationToken);
 
-        public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken)
-        {
-            return await _topicRepository.ExistsAsync(id, cancellationToken);
-        }
-
-        public async Task UpdateStatusAsync(TopicStatusPutModel model, CancellationToken cancellationToken)
-        {
-            if (!await _topicRepository.ExistsAsync(model.Id, cancellationToken))
-                throw new TopicNotFoundException();
-
-            if (!Enum.IsDefined(typeof(Status), model.Status))
-                throw new InvalidStatusException();
-
-            await _topicRepository.UpdateStatusAsync(model, cancellationToken);
-        }
-
-        public async Task UpdateStateAsync(TopicStatePutModel model, CancellationToken cancellationToken)
-        {
-            if (!await _topicRepository.ExistsAsync(model.Id, cancellationToken))
-                throw new TopicNotFoundException();
-
-            if (model.State != State.Show && model.State != State.Hide)
-                throw new InvalidStateException();
-
-            await _topicRepository.UpdateStateAsync(model, cancellationToken);
-        }
-
-        public async Task<TopicResponseAdminModel> GetAdminTopic(int id, CancellationToken cancellationToken)
-        {
-            var result = await _topicRepository.GetAdminAsync(id, cancellationToken);
-
-            if (result == null)
-                throw new TopicNotFoundException();
-
-            return result.Adapt<TopicResponseAdminModel>();
-        }
-
-        public async Task<List<TopicResponseAdminFeedModel>> GetAdminTopics(CancellationToken cancellationToken)
-        {
-            var result = await _topicRepository.GetAllAdminAsync(cancellationToken);
-
-            return result.Adapt<List<TopicResponseAdminFeedModel>>();
-        }
-
-        public async Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken)
-        {
-            var result = await _topicRepository.GetUserTopics(userId, cancellationToken);
+            if (page > 1 && result.Count == 0)
+                throw new PageNotFoundException();
 
             return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
-        public async Task<List<TopicResponseNewsFeedModel>> GetAllAsync(int page, int itemsPerPage, CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllArchivedTopicsAsync(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            int itemsToSkip = (page - 1) * itemsPerPage;
+            if (page <= 0)
+                throw new PageNotFoundException();
 
-            var result = await _topicRepository.GetAllAsync(itemsToSkip, itemsPerPage, cancellationToken);
+            var itemsToSkip = (page - 1) * itemsPerPage;
+
+            var result = await _topicRepository.GetAllArchivedTopicsAsync(itemsToSkip, itemsPerPage, cancellationToken);
+
+            if (page > 1 && result.Count == 0)
+                throw new PageNotFoundException();
 
             return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
-        public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllUserTopicsAsync(int userId, int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            return await _topicRepository.GetTotalCountAsync(cancellationToken);
+            if (page <= 0)
+                throw new PageNotFoundException();
+
+            var itemsToSkip = (page - 1) * itemsPerPage;
+
+            var result = await _topicRepository.GetAllUserTopicsAsync(userId, itemsToSkip, itemsPerPage, cancellationToken);
+
+            if (page > 1 && result.Count == 0)
+                throw new PageNotFoundException();
+
+            return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
-        public async Task<TopicResponseModel> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<TopicResponseModel> GetTopicAsync(int topicId, CancellationToken cancellationToken)
         {
-            var result = await _topicRepository.GetAsync(id, cancellationToken);
+            var result = await _topicRepository.GetTopicAsync(topicId, cancellationToken);
 
             if (result == null)
                 throw new TopicNotFoundException();
@@ -110,7 +78,7 @@ namespace Forum.Application.Topics
             return result.Adapt<TopicResponseModel>();
         }
 
-        public async Task CreateAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
+        public async Task CreateTopicAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
             var userCommentCount = await _userService.GetUserCommentCountAsync(topic.AuthorId, cancellationToken);
             var minCommentsRequired = _config.GetValue<int>("Constants:MinimumCommentsRequired");
@@ -121,6 +89,31 @@ namespace Forum.Application.Topics
             var entity = topic.Adapt<Topic>();
 
             await _topicRepository.CreateAsync(entity, cancellationToken);
+        }
+
+        public async Task<int> GetTopicsCountAsync(CancellationToken cancellationToken)
+        {
+            return await _topicRepository.GetTopicsCountAsync(cancellationToken);
+        }
+
+        public async Task<int> GetArchivedTopicsCountAsync(CancellationToken cancellationToken)
+        {
+            return await _topicRepository.GetArchivedTopicsCountAsync(cancellationToken);
+        }
+
+        public async Task<int> GetUserTopicsCountAsync(int userId, CancellationToken cancellationToken)
+        {
+            return await _topicRepository.GetUserTopicsCountAsync(userId, cancellationToken);
+        }
+
+        public async Task<bool> ExistsAsync(int topicId, CancellationToken cancellationToken)
+        {
+            return await _topicRepository.ExistsAsync(topicId, cancellationToken);
+        }
+
+        public async Task<bool> IsActiveAsync(int topicId, CancellationToken cancellationToken)
+        {
+            return await _topicRepository.IsActiveAsync(topicId, cancellationToken);
         }
     }
 }

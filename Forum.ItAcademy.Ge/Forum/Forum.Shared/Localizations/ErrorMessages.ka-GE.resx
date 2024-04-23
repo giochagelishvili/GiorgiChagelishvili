@@ -168,6 +168,9 @@
   <data name="OneFieldRequired" xml:space="preserve">
     <value>მინიმუმ ერთი ველი შევსებული უნდა იყოს.</value>
   </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>ეს გვერდი ვერ მოიძებნა.</value>
+  </data>
   <data name="PasswordMaxLength" xml:space="preserve">
     <value>პაროლი უნდა შედგებოდეს მაქსიმუმ 30 სიმბოლოსგან.</value>
   </data>

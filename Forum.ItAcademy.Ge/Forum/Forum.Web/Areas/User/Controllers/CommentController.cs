@@ -24,7 +24,7 @@ namespace Forum.Web.Areas.User.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = ErrorMessages.CommentBodyRequired;
-                return RedirectToAction("Topic", "Topic", new { id = comment.TopicId });
+                return RedirectToAction("Topic", "Topic", new { topicId = comment.TopicId });
             }
 
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -33,7 +33,7 @@ namespace Forum.Web.Areas.User.Controllers
 
             await _commentService.CreateAsync(comment, cancellationToken);
 
-            return RedirectToAction("Topic", "Topic", new { id = comment.TopicId });
+            return RedirectToAction("Topic", "Topic", new { topicId = comment.TopicId });
         }
 
         [HttpPost]
@@ -43,7 +43,7 @@ namespace Forum.Web.Areas.User.Controllers
 
             await _commentService.DeleteAsync(commentId, authorId, cancellationToken);
 
-            return RedirectToAction("Topic", "Topic", new { id = topicId });
+            return RedirectToAction("Topic", "Topic", new { topicId });
         }
     }
 }

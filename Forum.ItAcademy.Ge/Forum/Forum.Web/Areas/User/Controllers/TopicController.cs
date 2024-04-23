@@ -1,4 +1,5 @@
 ﻿using Forum.Application.Topics.Interfaces;
+using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,32 +18,21 @@ namespace Forum.Web.Areas.User.Controllers
             _topicService = topicService;
         }
 
-        [HttpGet("topics/user/{userId}")]
-        public async Task<IActionResult> UserTopics(int userId, CancellationToken cancellationToken)
-        {
-            var result = await _topicService.GetUserTopics(userId, cancellationToken);
-
-            return View(result);
-        }
-
         [HttpGet]
-        public async Task<IActionResult> Topic(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Topic(int topicId, CancellationToken cancellationToken)
         {
-            if (TempData.ContainsKey("Error"))
-                ViewBag.Error = TempData["Error"];
-
-            var topic = await _topicService.GetAsync(id, cancellationToken);
+            var topic = await _topicService.GetTopicAsync(topicId, cancellationToken);
 
             return View(topic);
         }
 
-        [HttpGet("create")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromForm] TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -52,7 +42,7 @@ namespace Forum.Web.Areas.User.Controllers
 
             topic.AuthorId = userId;
 
-            await _topicService.CreateAsync(topic, cancellationToken);
+            await _topicService.CreateTopicAsync(topic, cancellationToken);
 
             return RedirectToAction("Topics", "Topic", new { area = "" });
         }

@@ -6,7 +6,20 @@
     ViewBag.Title = "Edit Topic";
 }
 
-<h2>Topic</h2>
+<div class="d-flex flex-row align-items-center w-100 justify-content-between">
+    <h2>Topic</h2>
+
+    <form method="post" asp-area="Admin" asp-action="GetByEmail" asp-controller="User">
+        <div class="d-flex flex-row align-items-center gap-2">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text">@@</span>
+                <input class="form-control" placeholder="Email" name="email" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
 
 <hr />
 
@@ -15,7 +28,7 @@
         <div class="d-flex flex-row w-100 justify-content-between align-items-start">
             <h1 class="display-4">@Model.Title</h1>
 
-            <a class="btn btn-outline-dark">@Model.Author.UserName</a>
+            <a asp-area="Admin" asp-action="Profile" asp-controller="User" asp-route-userId="@Model.Author.Id" class="btn btn-outline-dark">@Model.Author.UserName</a>
         </div>
 
         <p class="lead">@Model.Description</p>

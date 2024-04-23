@@ -214,6 +214,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page not found..
+        /// </summary>
+        public static string PageNotFound {
+            get {
+                return ResourceManager.GetString("PageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password must be less than 30 characters..
         /// </summary>
         public static string PasswordMaxLength {

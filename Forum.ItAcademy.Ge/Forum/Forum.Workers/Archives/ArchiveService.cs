@@ -7,9 +7,9 @@ namespace Forum.Workers.Archives
 {
     public class ArchiveService
     {
-        private readonly ITopicService _topicService;
+        private readonly ITopicServiceOld _topicService;
 
-        public ArchiveService(ITopicService topicService)
+        public ArchiveService(ITopicServiceOld topicService)
         {
             _topicService = topicService;
         }

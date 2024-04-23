@@ -168,6 +168,9 @@
   <data name="OneFieldRequired" xml:space="preserve">
     <value>At least one field is required.</value>
   </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Page not found.</value>
+  </data>
   <data name="PasswordMaxLength" xml:space="preserve">
     <value>Password must be less than 30 characters.</value>
   </data>

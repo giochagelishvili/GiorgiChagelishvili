@@ -5,7 +5,6 @@ using Forum.Domain.Roles;
 using Forum.Domain.Users;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using Forum.Application.Users.Interfaces;
 using Forum.Infrastructure.Users;
 using Forum.Application.Users;
 using Forum.Application.Comments.Interfaces;
@@ -16,6 +15,9 @@ using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics;
 using Forum.Workers.Bans;
 using Forum.Workers.Archives;
+using Serilog;
+using Forum.Application.Users.Interfaces.Services;
+using Forum.Application.Users.Interfaces.Repositories;
 
 namespace Forum.Workers
 {
@@ -28,12 +30,17 @@ namespace Forum.Workers
                 .AddJsonFile("appsettings.json")
                 .Build();
 
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
             try
             {
                 await CreateHostBuilder(args).Build().RunAsync();
             }
             catch (Exception ex)
             {
+                Log.Error(ex, ex.Message);
                 Console.WriteLine(ex);
             }
 
@@ -50,8 +57,8 @@ namespace Forum.Workers
                     services.AddHostedService<BanWorker>();
                     services.AddTransient<ICommentRepository, CommentRepository>();
                     services.AddTransient<ICommentService, CommentService>();
-                    services.AddTransient<ITopicRepository, TopicRepository>();
-                    services.AddTransient<ITopicService, TopicService>();
+                    services.AddTransient<ITopicRepositoryOld, TopicRepositoryOld>();
+                    services.AddTransient<ITopicServiceOld, TopicServiceOld>();
                     services.AddTransient<ArchiveService>();
                     services.AddHostedService<ArchiveWorker>();
                 });

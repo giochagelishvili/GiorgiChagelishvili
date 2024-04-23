@@ -35,10 +35,10 @@
         <div class="d-flex flex-row align-items-center gap-2">
             @if (User.Identity.Name == Model.UserName)
             {
-                <a asp-controller="Profile" asp-action="EditProfile" class="btn btn-dark">Edit Profile</a>
+                <a asp-area="" asp-controller="Profile" asp-action="EditProfile" class="btn btn-dark">Edit Profile</a>
             }
 
-            <a asp-area="" asp-controller="Topic" asp-action="UserTopics" asp-route-id="@Model.Id" class="btn btn-dark">See Topics</a>
+            <a asp-area="@(User.IsInRole("Admin") ? "Admin" : "")" asp-controller="Topic" asp-action="UserTopics" asp-route-userId="@Model.Id" class="btn btn-dark">See Topics</a>
         </div>
 
         <div class="text">

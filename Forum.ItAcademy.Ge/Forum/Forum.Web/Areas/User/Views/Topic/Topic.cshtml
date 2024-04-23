@@ -1,5 +1,6 @@
 ﻿@using Forum.Application.Topics.Responses;
 @using System.Security.Claims
+@using Forum.Domain
 @model TopicResponseModel;
 
 @{
@@ -22,22 +23,29 @@
 
         <hr class="my-4">
 
-        <p>Add Comment:</p>
+        @if (Model.Status == Status.Active)
+        {
+            <p>Add Comment:</p>
 
-        <form class="d-flex flex-column gap-4" asp-action="Create" asp-controller="Comment">
-            <input hidden name="TopicId" value="@Model.Id" />
+            <form class="d-flex flex-column gap-4" asp-action="Create" asp-controller="Comment">
+                <input hidden name="TopicId" value="@Model.Id" />
 
-            <textarea name="Body" class="form-control w-50 bg-dark text-white border-0 rounded-2" rows="4" placeholder="Write your thoughts..."></textarea>
+                <textarea name="Body" class="form-control w-50 bg-dark text-white border-0 rounded-2" rows="4" placeholder="Write your thoughts..."></textarea>
 
-            @if (ViewBag.Error != null)
-            {
-                <div class="p-2 bg-danger rounded-2">
-                    <p class="text-white m-0">@ViewBag.Error</p>
-                </div>
-            }
+                @if (ViewBag.Error != null)
+                {
+                    <div class="p-2 bg-danger rounded-2">
+                        <p class="text-white m-0">@ViewBag.Error</p>
+                    </div>
+                }
 
-            <button type="submit" class="btn btn-dark">Add Comment</button>
-        </form>
+                <button type="submit" class="btn btn-dark">Add Comment</button>
+            </form>
+        }
+        else
+        {
+            <p>You can't comment on inactive topic.</p>
+        }
     </div>
 
     @if (Model.Comments == null || Model.Comments.Count <= 0)
@@ -55,9 +63,7 @@
                 <p class="text-center m-0">@comment.Author.UserName</p>
                 @if (comment.Author.UserName == User.Identity.Name)
                 {
-                    <form asp-action="Delete" asp-controller="Comment">
-                        <input type="hidden" name="commentId" value="@comment.Id" />
-                        <input type="hidden" name="topicId" value="@Model.Id" />
+                    <form asp-action="Delete" asp-controller="Comment" asp-route-commentId="@comment.Id" asp-route-topicId="@Model.Id">
                         <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
                 }

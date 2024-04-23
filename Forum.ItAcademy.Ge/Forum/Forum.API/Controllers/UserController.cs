@@ -1,4 +1,4 @@
-﻿using Forum.Application.Users.Interfaces;
+﻿using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Requests.Updates;
 using Forum.Application.Users.Responses;
 using Microsoft.AspNetCore.Authorization;

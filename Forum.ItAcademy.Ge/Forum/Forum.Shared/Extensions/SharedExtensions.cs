@@ -5,7 +5,6 @@ using Forum.Application.Comments.Interfaces;
 using Forum.Application.Images;
 using Forum.Application.Images.Interfaces;
 using Forum.Application.Users;
-using Forum.Application.Users.Interfaces;
 using Forum.Application.Topics;
 using Forum.Application.Topics.Interfaces;
 using Forum.Infrastructure.Comments;
@@ -22,6 +21,11 @@ using Forum.Domain.Roles;
 using Microsoft.Extensions.Configuration;
 using Forum.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Forum.Application.Topics.Interfaces.Services;
+using Forum.Application.Topics.Interfaces.Interfaces;
+using Forum.Infrastructure.Topics.Admin;
+using Forum.Application.Users.Interfaces.Services;
+using Forum.Application.Users.Interfaces.Repositories;
 
 namespace Forum.Shared.Extensions
 {
@@ -31,15 +35,18 @@ namespace Forum.Shared.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<ITopicService, TopicService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IAdminTopicService, AdminTopicService>();
+            services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IAdminUserService, AdminUserService>();
 
-
-            services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAdminTopicRepository, AdminTopicRepository>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<IAdminUserRepository, AdminUserRepository>();
         }
 
         public static void AddCustomValidators(this IServiceCollection services)
