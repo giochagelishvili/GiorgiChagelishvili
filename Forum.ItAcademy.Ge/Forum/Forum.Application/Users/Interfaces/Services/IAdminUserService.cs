@@ -9,5 +9,6 @@ namespace Forum.Application.Users.Interfaces.Services
         Task<UserResponseAdminModel> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
         Task BanUserAsync(string userId);
         Task UnbanUserAsync(string userId);
+        Task<bool> ExistsAsync(string userId);
     }
 }

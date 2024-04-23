@@ -19,67 +19,47 @@ namespace Forum.API.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("unban/{id}")]
-        public async Task UnbanUser(string id)
-        {
-            await _userService.UnbanUser(id);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost("ban/{id}")]
-        public async Task BanUser(string id)
-        {
-            await _userService.BanUser(id);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("admin/users")]
-        public async Task<List<UserResponseAdminModel>> GetAllUsersAdmin(CancellationToken cancellationToken)
-        {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            return await _userService.GetAllAdminAsync(userId, cancellationToken);
-        }
-
         [AllowAnonymous]
-        [HttpGet("user/{email}")]
-        public async Task<UserResponseModel> GetByEmail(string email, CancellationToken cancellationToken)
+        [HttpGet("email")]
+        public async Task<UserResponseModel> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
             return await _userService.GetByEmailAsync(email, cancellationToken);
         }
 
-        [AllowAnonymous]
-        [HttpGet("profile")]
-        public async Task<UserResponseModel> Profile(CancellationToken cancellationToken)
+        [HttpGet("username")]
+        public async Task<UserResponseModel> GetByUsernameAsync(string username, CancellationToken cancellationToken)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return await _userService.GetByUsernameAsync(username, cancellationToken);
+        }
 
-            return await _userService.GetByIdAsync(userId, cancellationToken);
+        [HttpGet("id")]
+        public async Task<UserResponseModel> GetByUsernameAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _userService.GetByIdAsync(id, cancellationToken);
         }
 
         [HttpPost("update")]
-        public async Task Update(UserRequestPutModel putModel)
+        public async Task UpdateAsync(UserRequestPutModel putModel)
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _userService.UpdateAsync(putModel, id);
+            await _userService.UpdateAsync(putModel, userId);
         }
 
-        [HttpPost("changepassword")]
-        public async Task ChangePassword(PasswordRequestPutModel putModel)
+        [HttpPost("changePassword")]
+        public async Task ChangePasswordAsync(PasswordRequestPutModel putModel)
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _userService.ChangePasswordAsync(putModel, id);
+            await _userService.ChangePasswordAsync(putModel, userId);
         }
 
-        [HttpDelete("deletegender")]
-        public async Task DeleteGender()
+        [HttpDelete("deleteGender")]
+        public async Task DeleteGenderAsync()
         {
-            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _userService.DeleteGenderAsync(id);
+            await _userService.DeleteGenderAsync(userId);
         }
     }
 }

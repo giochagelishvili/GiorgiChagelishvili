@@ -58,6 +58,9 @@ namespace Forum.Application.Topics
             if (page <= 0)
                 throw new PageNotFoundException();
 
+            if (!await _userService.ExistsAsync(userId.ToString()))
+                throw new UserNotFoundException();
+
             var itemsToSkip = (page - 1) * itemsPerPage;
 
             var result = await _topicRepository.GetAllUserTopicsAsync(userId, itemsToSkip, itemsPerPage, cancellationToken);
@@ -103,6 +106,9 @@ namespace Forum.Application.Topics
 
         public async Task<int> GetUserTopicsCountAsync(int userId, CancellationToken cancellationToken)
         {
+            if (!await _userService.ExistsAsync(userId.ToString()))
+                throw new UserNotFoundException();
+
             return await _topicRepository.GetUserTopicsCountAsync(userId, cancellationToken);
         }
 

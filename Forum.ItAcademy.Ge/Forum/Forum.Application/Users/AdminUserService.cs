@@ -76,5 +76,10 @@ namespace Forum.Application.Users
 
             await _userManager.UpdateAsync(user);
         }
+
+        public async Task<bool> ExistsAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId) != null;
+        }
     }
 }

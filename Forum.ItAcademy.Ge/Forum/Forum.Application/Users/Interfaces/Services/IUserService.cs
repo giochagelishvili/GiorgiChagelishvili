@@ -11,10 +11,9 @@ namespace Forum.Application.Users.Interfaces.Services
         Task<UserResponseModel> GetByEmailAsync(string email, CancellationToken cancellationToken);
         Task<int> GetUserCommentCountAsync(int userId, CancellationToken cancellationToken);
         Task<List<string>> GetUserRolesAsync(string userId);
-
-        // Update
         Task UpdateAsync(UserRequestPutModel updateModel, string id);
         Task DeleteGenderAsync(string id);
         Task ChangePasswordAsync(PasswordRequestPutModel passwordModel, string id);
+        Task<bool> ExistsAsync(string id);
     }
 }

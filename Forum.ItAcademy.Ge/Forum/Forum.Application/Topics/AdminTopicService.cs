@@ -3,6 +3,7 @@ using Forum.Application.Topics.Interfaces.Interfaces;
 using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
+using Forum.Application.Users.Interfaces.Services;
 using Forum.Domain;
 using Mapster;
 
@@ -11,10 +12,12 @@ namespace Forum.Application.Topics
     public class AdminTopicService : IAdminTopicService
     {
         private readonly IAdminTopicRepository _topicRepository;
+        private readonly IAdminUserService _userService;
 
-        public AdminTopicService(IAdminTopicRepository topicRepository)
+        public AdminTopicService(IAdminTopicRepository topicRepository, IAdminUserService userService)
         {
             _topicRepository = topicRepository;
+            _userService = userService;
         }
 
         public async Task<List<TopicResponseAdminFeedModel>> GetAllTopicsAsync(int page, int itemsPerPage, CancellationToken cancellationToken)
@@ -51,6 +54,9 @@ namespace Forum.Application.Topics
         {
             if (page <= 0)
                 throw new PageNotFoundException();
+
+            if (!await _userService.ExistsAsync(userId.ToString()))
+                throw new UserNotFoundException();
 
             var itemsToSkip = (page - 1) * itemsPerPage;
 
@@ -106,6 +112,9 @@ namespace Forum.Application.Topics
 
         public async Task<int> GetUserTopicsCountAsync(int userId, CancellationToken cancellationToken)
         {
+            if (!await _userService.ExistsAsync(userId.ToString()))
+                throw new UserNotFoundException();
+
             return await _topicRepository.GetUserTopicsCountAsync(userId, cancellationToken);
         }
     }

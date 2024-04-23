@@ -1,82 +1,81 @@
-﻿using Forum.API.Infrastructure.Models.Topics;
-using Forum.Application.Topics.Interfaces;
+﻿using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Forum.API.Controllers
 {
+    [Authorize(Roles = "Member")]
     [Route("api/[controller]")]
     [ApiController]
     public class TopicController : ControllerBase
     {
-        private readonly ITopicServiceOld _topicService;
+        private readonly ITopicService _topicService;
+        private readonly IConfiguration _config;
 
-        public TopicController(ITopicServiceOld topicService)
+        public TopicController(ITopicService topicService, IConfiguration config)
         {
             _topicService = topicService;
+            _config = config;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("admin/updatestatus")]
-        public async Task UpdateStatus(TopicStatusPutModel status, CancellationToken cancellationToken)
-        {
-            await _topicService.UpdateStatusAsync(status, cancellationToken);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost("admin/updatestate")]
-        public async Task UpdateState(TopicStatePutModel state, CancellationToken cancellationToken)
-        {
-            await _topicService.UpdateStateAsync(state, cancellationToken);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("admin/topics")]
-        public async Task<List<TopicResponseAdminFeedModel>> GetAdminTopics(CancellationToken cancellationToken)
-        {
-            return await _topicService.GetAdminTopics(cancellationToken);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("admin/topic/{topicId}")]
-        public async Task<TopicResponseAdminModel> GetAdminTopic(int topicId, CancellationToken cancellationToken)
-        {
-            return await _topicService.GetAdminTopic(topicId, cancellationToken);
-        }
-
-        [HttpGet("user/{userId}")]
-        public async Task<List<TopicResponseNewsFeedModel>> GetUserTopics(int userId, CancellationToken cancellationToken)
-        {
-            return await _topicService.GetUserTopics(userId, cancellationToken);
-        }
-
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<List<TopicResponseNewsFeedModel>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllTopicsAsync(CancellationToken cancellationToken, int page = 1)
         {
-            return await _topicService.GetAllAsync(cancellationToken);
+            var itemsPerPage = _config.GetValue<int>("Constants:ItemsPerPage");
+
+            return await _topicService.GetAllTopicsAsync(page, itemsPerPage, cancellationToken);
         }
 
+        [AllowAnonymous]
+        [HttpGet("archive")]
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllArchivedTopicsAsync(CancellationToken cancellationToken, int page = 1)
+        {
+            var itemsPerPage = _config.GetValue<int>("Constants:ItemsPerPage");
+
+            return await _topicService.GetAllArchivedTopicsAsync(page, itemsPerPage, cancellationToken);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("userTopics/{userId}")]
+        public async Task<List<TopicResponseNewsFeedModel>> GetAllUserTopicsAsync(int userId, CancellationToken cancellationToken, int page = 1)
+        {
+            var itemsPerPage = _config.GetValue<int>("Constants:ItemsPerPage");
+
+            return await _topicService.GetAllUserTopicsAsync(userId, page, itemsPerPage, cancellationToken);
+        }
+
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<TopicResponseModel> Get(int id, CancellationToken cancellationToken)
+        public async Task<TopicResponseModel> GetTopicAsync(int topicId, CancellationToken cancellationToken)
         {
-            return await _topicService.GetAsync(id, cancellationToken);
+            return await _topicService.GetTopicAsync(topicId, cancellationToken);
         }
 
-        [Authorize(Roles = "Member")]
         [HttpPost]
-        public async Task Create(TopicRequestPostApiModel apiModel, CancellationToken cancellationToken)
+        public async Task CreateTopicAsync(TopicRequestPostModel postModel, CancellationToken cancellationToken)
         {
-            var topic = apiModel.Adapt<TopicRequestPostModel>();
+            await _topicService.CreateTopicAsync(postModel, cancellationToken);
+        }
 
-            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        [HttpGet("topicsCount")]
+        public async Task<int> GetTopicsCountAsync(CancellationToken cancellationToken)
+        {
+            return await _topicService.GetTopicsCountAsync(cancellationToken);
+        }
 
-            topic.AuthorId = id;
+        [HttpGet("archivedTopicsCount")]
+        public async Task<int> GetArchivedTopicsCountAsync(CancellationToken cancellationToken)
+        {
+            return await _topicService.GetArchivedTopicsCountAsync(cancellationToken);
+        }
 
-            await _topicService.CreateAsync(topic, cancellationToken);
+        [HttpGet("userTopicsCount")]
+        public async Task<int> GetUserTopicsCountAsync(int userId, CancellationToken cancellationToken)
+        {
+            return await _topicService.GetUserTopicsCountAsync(userId, cancellationToken);
         }
     }
 }

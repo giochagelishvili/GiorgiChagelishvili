@@ -130,5 +130,10 @@ namespace Forum.Application.Users
         {
             return await _userRepository.GetUserCommentCountAsync(userId, cancellationToken);
         }
+
+        public async Task<bool> ExistsAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId) != null;
+        }
     }
 }
