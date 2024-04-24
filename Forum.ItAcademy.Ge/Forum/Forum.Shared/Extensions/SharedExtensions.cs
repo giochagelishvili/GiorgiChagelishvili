@@ -6,7 +6,6 @@ using Forum.Application.Images;
 using Forum.Application.Images.Interfaces;
 using Forum.Application.Users;
 using Forum.Application.Topics;
-using Forum.Application.Topics.Interfaces;
 using Forum.Infrastructure.Comments;
 using Forum.Infrastructure.Images;
 using Forum.Infrastructure.Topics;

@@ -10,14 +10,16 @@ using Forum.Application.Users;
 using Forum.Application.Comments.Interfaces;
 using Forum.Infrastructure.Comments;
 using Forum.Application.Comments;
-using Forum.Infrastructure.Topics;
-using Forum.Application.Topics.Interfaces;
-using Forum.Application.Topics;
-using Forum.Workers.Bans;
-using Forum.Workers.Archives;
 using Serilog;
 using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Interfaces.Repositories;
+using Forum.Workers.Bans;
+using Forum.Infrastructure.Topics;
+using Forum.Application.Topics.Interfaces.Interfaces;
+using Forum.Application.Topics;
+using Forum.Application.Topics.Interfaces.Services;
+using Forum.Workers.Archives;
+using Forum.Infrastructure.Topics.Admin;
 
 namespace Forum.Workers
 {
@@ -53,12 +55,16 @@ namespace Forum.Workers
                     services.AddIdentity<User, Role>().AddEntityFrameworkStores<ForumContext>();
                     services.AddTransient<IUserRepository, UserRepository>();
                     services.AddTransient<IUserService, UserService>();
-                    services.AddSingleton<BanService>();
+                    services.AddTransient<IAdminUserService, AdminUserService>();
+                    services.AddTransient<IAdminUserRepository, AdminUserRepository>();
+                    services.AddTransient<BanService>();
                     services.AddHostedService<BanWorker>();
                     services.AddTransient<ICommentRepository, CommentRepository>();
                     services.AddTransient<ICommentService, CommentService>();
-                    services.AddTransient<ITopicRepositoryOld, TopicRepositoryOld>();
-                    services.AddTransient<ITopicServiceOld, TopicServiceOld>();
+                    services.AddTransient<ITopicRepository, TopicRepository>();
+                    services.AddTransient<IAdminTopicRepository, AdminTopicRepository>();
+                    services.AddTransient<ITopicService, TopicService>();
+                    services.AddTransient<IAdminTopicService, AdminTopicService>();
                     services.AddTransient<ArchiveService>();
                     services.AddHostedService<ArchiveWorker>();
                 });

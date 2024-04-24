@@ -25,6 +25,8 @@ namespace Forum.Persistence.Configurations
                 .IsRequired()
                 .HasDefaultValue(false);
 
+            builder.HasQueryFilter(comment => !comment.IsDeleted);
+
             builder.HasOne(comment => comment.Author)
                 .WithMany(user => user.Comments)
                 .HasForeignKey(comment => comment.AuthorId)

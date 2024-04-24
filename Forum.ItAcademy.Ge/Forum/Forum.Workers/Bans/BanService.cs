@@ -5,21 +5,21 @@ namespace Forum.Workers.Bans
 {
     public class BanService
     {
-        private readonly IUserService _userService;
+        private readonly IAdminUserService _adminUserService;
 
-        public BanService(IUserService userService)
+        public BanService(IAdminUserService adminUserService)
         {
-            _userService = userService;
+            _adminUserService = adminUserService;
         }
 
-        public async Task<List<UserResponseModel>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<List<UserResponseAdminModel>> GetBannedUsersAsync(CancellationToken cancellationToken)
         {
-            return await _userService.GetAllAsync(cancellationToken);
+            return await _adminUserService.GetBannedUsersAsync(cancellationToken);
         }
 
         public async Task UnbanUser(string id)
         {
-            await _userService.UnbanUser(id);
+            await _adminUserService.UnbanUserAsync(id);
         }
     }
 }

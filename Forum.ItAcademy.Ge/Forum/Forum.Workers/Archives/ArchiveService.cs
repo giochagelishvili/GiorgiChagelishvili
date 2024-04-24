@@ -1,4 +1,4 @@
-﻿using Forum.Application.Topics.Interfaces;
+﻿using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses.Default;
 using Forum.Domain;
@@ -7,16 +7,18 @@ namespace Forum.Workers.Archives
 {
     public class ArchiveService
     {
-        private readonly ITopicServiceOld _topicService;
+        private readonly IAdminTopicService _adminTopicService;
+        private readonly ITopicService _topicService;
 
-        public ArchiveService(ITopicServiceOld topicService)
+        public ArchiveService(IAdminTopicService adminTopicService, ITopicService topicService)
         {
+            _adminTopicService = adminTopicService;
             _topicService = topicService;
         }
 
         public async Task<List<TopicResponseWorkerModel>> GetTopicWorkerAsync(CancellationToken cancellationToken)
         {
-            return await _topicService.GetTopicWorkerAsync(cancellationToken);
+            return await _topicService.GetAllArchiveWorkerTopicsAsync(cancellationToken);
         }
 
         public async Task UpdateStatusAsync(int topicId, CancellationToken cancellationToken)
@@ -27,7 +29,7 @@ namespace Forum.Workers.Archives
                 Status = Status.Inactive
             };
 
-            await _topicService.UpdateStatusAsync(updateModel, cancellationToken);
+            await _adminTopicService.UpdateStatusAsync(updateModel, cancellationToken);
         }
     }
 }

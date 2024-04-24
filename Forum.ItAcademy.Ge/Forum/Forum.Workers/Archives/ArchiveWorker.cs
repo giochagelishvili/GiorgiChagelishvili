@@ -7,8 +7,8 @@ namespace Forum.Workers.Archives
     public class ArchiveWorker : BackgroundService
     {
         private readonly ArchiveService _archiveService;
-        private readonly IConfiguration _config;
         private readonly CrontabSchedule _schedule;
+        private readonly IConfiguration _config;
         private DateTime _nextRun;
 
         public ArchiveWorker(ArchiveService archiveService, IConfiguration config)
@@ -28,12 +28,13 @@ namespace Forum.Workers.Archives
 
                 if (now > _nextRun)
                 {
-                    await DoWork(stoppingToken);
+                    await CheckTopics(stoppingToken);
                     _nextRun = _schedule.GetNextOccurrence(DateTime.UtcNow);
                 }
             }
         }
-        private async Task DoWork(CancellationToken stoppingToken)
+
+        private async Task CheckTopics(CancellationToken stoppingToken)
         {
             var topics = await _archiveService.GetTopicWorkerAsync(stoppingToken);
 

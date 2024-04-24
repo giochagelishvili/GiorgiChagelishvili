@@ -5,7 +5,6 @@ namespace Forum.Application.Users.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<List<UserResponseModel>> GetAllAsync(CancellationToken cancellationToken);
         Task<UserResponseModel> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<UserResponseModel> GetByUsernameAsync(string username, CancellationToken cancellationToken);
         Task<UserResponseModel> GetByEmailAsync(string email, CancellationToken cancellationToken);

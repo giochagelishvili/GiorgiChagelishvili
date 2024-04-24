@@ -80,13 +80,6 @@ namespace Forum.Application.Users
             await _userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.NewPassword);
         }
 
-        public async Task<List<UserResponseModel>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            var result = await _userRepository.GetAllAsync(cancellationToken);
-
-            return result.Adapt<List<UserResponseModel>>();
-        }
-
         public async Task<UserResponseModel> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             var result = await _userRepository.GetByIdAsync(id, cancellationToken);

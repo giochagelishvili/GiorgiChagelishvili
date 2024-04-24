@@ -7,6 +7,7 @@ namespace Forum.Application.Topics.Interfaces.Interfaces
         Task<List<TopicCommentsCount>> GetAllTopicsAsync(int itemsToSkip, int itemsToTake, CancellationToken cancellationToken);
         Task<List<TopicCommentsCount>> GetAllArchivedTopicsAsync(int itemsToSkip, int itemsToTake, CancellationToken cancellationToken);        
         Task<List<TopicCommentsCount>> GetAllUserTopicsAsync(int userId, int itemsToSkip, int itemsToTake, CancellationToken cancellationToken);
+        Task<List<TopicWithLatestComment>> GetAllArchiveWorkerTopicsAsync(CancellationToken cancellationToken);
         Task<Topic?> GetTopicAsync(int topicId, CancellationToken cancellationToken);
         Task CreateAsync(Topic topic, CancellationToken cancellationToken);
         Task<int> GetTopicsCountAsync(CancellationToken cancellationToken);

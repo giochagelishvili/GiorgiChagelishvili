@@ -19,12 +19,6 @@ namespace Forum.Infrastructure.Users
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public new async Task<List<User>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return await _dbSet.AsNoTracking()
-                .ToListAsync(cancellationToken);
-        }
-
         public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _dbSet

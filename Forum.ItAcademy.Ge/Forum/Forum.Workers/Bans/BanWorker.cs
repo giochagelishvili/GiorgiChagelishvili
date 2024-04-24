@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NCrontab;
 
@@ -6,14 +7,15 @@ namespace Forum.Workers.Bans
 {
     public class BanWorker : BackgroundService
     {
-        private readonly BanService _banService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly CrontabSchedule _schedule;
         private DateTime _nextRun;
 
-        public BanWorker(BanService banService, IConfiguration config)
+        public BanWorker(IServiceProvider serviceProvider, IConfiguration config)
         {
-            _banService = banService;
             var cronExpression = config.GetValue<string>("Constants:BanWorkerCronExpression");
+
+            _serviceProvider = serviceProvider;
             _schedule = CrontabSchedule.Parse(cronExpression, new CrontabSchedule.ParseOptions { IncludingSeconds = true });
             _nextRun = _schedule.GetNextOccurrence(DateTime.UtcNow);
         }
@@ -26,25 +28,23 @@ namespace Forum.Workers.Bans
 
                 if (now > _nextRun)
                 {
-                    await DoWork(stoppingToken);
+                    await CheckBannedUsers(stoppingToken);
                     _nextRun = _schedule.GetNextOccurrence(DateTime.UtcNow);
                 }
             }
         }
 
-        private async Task DoWork(CancellationToken stoppingToken)
+        private async Task CheckBannedUsers(CancellationToken stoppingToken)
         {
-            var users = await _banService.GetAllAsync(stoppingToken);
+            using var service = _serviceProvider.CreateAsyncScope();
 
-            var bannedUsers = users.Where(x => x.IsBanned).ToList();
+            BanService banService = service.ServiceProvider.GetService<BanService>();
+
+            var bannedUsers = await banService.GetBannedUsersAsync(stoppingToken);
 
             foreach (var user in bannedUsers)
-            {
                 if (user.BannedUntil <= DateTime.UtcNow)
-                {
-                    await _banService.UnbanUser(user.Id.ToString());
-                }
-            }
+                    await banService.UnbanUser(user.Id.ToString());
         }
     }
 }

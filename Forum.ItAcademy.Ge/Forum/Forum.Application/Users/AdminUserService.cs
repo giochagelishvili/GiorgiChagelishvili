@@ -29,6 +29,13 @@ namespace Forum.Application.Users
             return result.Adapt<List<UserResponseAdminModel>>();
         }
 
+        public async Task<List<UserResponseAdminModel>> GetBannedUsersAsync(CancellationToken cancellationToken)
+        {
+            var result = await _userRepository.GetBannedUsersAsync(cancellationToken);
+
+            return result.Adapt<List<UserResponseAdminModel>>();
+        }
+
         public async Task<UserResponseAdminModel> GetUserAsync(int userId, CancellationToken cancellationToken)
         {
             var result = await _userRepository.GetUserAsync(userId, cancellationToken);
@@ -59,7 +66,7 @@ namespace Forum.Application.Users
             var banDuration = _config.GetValue<int>("Constants:BanDuration");
 
             user.IsBanned = true;
-            user.BannedUntil = DateTime.UtcNow.AddDays(banDuration);
+            user.BannedUntil = DateTime.UtcNow.AddSeconds(10);
 
             await _userManager.UpdateAsync(user);
         }

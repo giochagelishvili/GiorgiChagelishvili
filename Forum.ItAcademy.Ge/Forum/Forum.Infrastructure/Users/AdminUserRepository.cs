@@ -17,6 +17,13 @@ namespace Forum.Infrastructure.Users
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<List<User>> GetBannedUsersAsync(CancellationToken cancellationToken)
+        {
+            return await _dbSet.AsNoTracking()
+                .Where(user => user.IsBanned)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<User?> GetUserAsync(int id, CancellationToken cancellationToken)
         {
             return await _dbSet

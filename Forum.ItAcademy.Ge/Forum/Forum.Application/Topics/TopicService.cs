@@ -71,6 +71,13 @@ namespace Forum.Application.Topics
             return result.Adapt<List<TopicResponseNewsFeedModel>>();
         }
 
+        public async Task<List<TopicResponseWorkerModel>> GetAllArchiveWorkerTopicsAsync(CancellationToken cancellationToken)
+        {
+            var result = await _topicRepository.GetAllArchiveWorkerTopicsAsync(cancellationToken);
+
+            return result.Adapt<List<TopicResponseWorkerModel>>();
+        }
+
         public async Task<TopicResponseModel> GetTopicAsync(int topicId, CancellationToken cancellationToken)
         {
             var result = await _topicRepository.GetTopicAsync(topicId, cancellationToken);
@@ -84,7 +91,7 @@ namespace Forum.Application.Topics
         public async Task CreateTopicAsync(TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
             var userCommentCount = await _userService.GetUserCommentCountAsync(topic.AuthorId, cancellationToken);
-            var minCommentsRequired = _config.GetValue<int>("Constants:MinimumCommentsRequired");
+            var minCommentsRequired = int.Parse(_config["Constants:MinimumCommentsRequired"]);
 
             if (userCommentCount < minCommentsRequired)
                 throw new NotEnoughCommentsException();

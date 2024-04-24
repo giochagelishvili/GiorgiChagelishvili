@@ -51,6 +51,17 @@ namespace Forum.Infrastructure.Topics
                 }).ToListAsync(cancellationToken);
         }
 
+        public async Task<List<TopicWithLatestComment>> GetAllArchiveWorkerTopicsAsync(CancellationToken cancellationToken)
+        {
+            return await _dbSet.AsNoTracking()
+                .Where(topic => topic.State != State.Pending && topic.Status == Status.Active)
+                .Select(topic => new TopicWithLatestComment
+                {
+                    TopicId = topic.Id,
+                    ModifiedAt = topic.ModifiedAt,
+                    LatestComment = topic.Comments.OrderByDescending(comment => comment.CreatedAt).FirstOrDefault()
+                }).ToListAsync(cancellationToken);
+        }
         public async Task<Topic?> GetTopicAsync(int topicId, CancellationToken cancellationToken)
         {
             return await _dbSet.Include(topic => topic.Author)
