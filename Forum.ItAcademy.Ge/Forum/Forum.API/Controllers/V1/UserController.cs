@@ -1,16 +1,16 @@
-﻿using Forum.Application.Users.Interfaces.Services;
+﻿using Forum.API.Controllers.V1.Admin;
+using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Requests.Updates;
 using Forum.Application.Users.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.API.Controllers
+namespace Forum.API.Controllers.V1
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : CustomControllerBase
     {
         private readonly IUserService _userService;
 

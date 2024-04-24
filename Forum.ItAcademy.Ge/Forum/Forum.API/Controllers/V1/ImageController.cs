@@ -1,14 +1,14 @@
-﻿using Forum.Application.Images.Interfaces;
+﻿using Forum.API.Controllers.V1.Admin;
+using Forum.Application.Images.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.API.Controllers
+namespace Forum.API.Controllers.V1
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
-    public class ImageController : ControllerBase
+    public class ImageController : CustomControllerBase
     {
         private readonly IImageService _imageService;
 

@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.API.Controllers.Admin
+namespace Forum.API.Controllers.V1.Admin
 {
     [Authorize(Roles = "Admin")]
-    [Route("api/[controller]")]
     [ApiController]
-    public class AdminUserController : ControllerBase
+    public class AdminUserController : CustomControllerBase
     {
         private readonly IAdminUserService _adminUserService;
 

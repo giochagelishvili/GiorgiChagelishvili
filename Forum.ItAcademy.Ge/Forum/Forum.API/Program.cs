@@ -32,6 +32,8 @@ namespace Forum.API
 
             builder.Services.UseSwaggerConfiguration();
 
+            builder.Services.UseConfiguredVersioning();
+
             var app = builder.Build();
 
             app.UseMiddleware<CultureMiddleware>();
@@ -39,8 +41,7 @@ namespace Forum.API
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.AddSwaggerEndpoints();
             }
 
             await app.Services.SeedRoles();

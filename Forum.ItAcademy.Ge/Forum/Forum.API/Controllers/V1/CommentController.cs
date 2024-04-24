@@ -1,4 +1,6 @@
-﻿using Forum.API.Infrastructure.Models.Comments;
+﻿using Asp.Versioning;
+using Forum.API.Controllers.V1.Admin;
+using Forum.API.Infrastructure.Models.Comments;
 using Forum.Application.Comments.Interfaces;
 using Forum.Application.Comments.Requests;
 using Mapster;
@@ -6,12 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.API.Controllers
+namespace Forum.API.Controllers.V1
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
-    public class CommentController : ControllerBase
+    public class CommentController : CustomControllerBase
     {
         private readonly ICommentService _commentService;
 

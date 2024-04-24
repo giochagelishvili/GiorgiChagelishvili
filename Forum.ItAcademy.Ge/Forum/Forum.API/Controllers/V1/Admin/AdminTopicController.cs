@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Forum.API.Controllers.Admin
+namespace Forum.API.Controllers.V1.Admin
 {
     [Authorize(Roles = "Admin")]
-    [Route("api/[controller]")]
     [ApiController]
-    public class AdminTopicController : ControllerBase
+    public class AdminTopicController : CustomControllerBase
     {
         private readonly IAdminTopicService _adminTopicService;
         private readonly IConfiguration _config;

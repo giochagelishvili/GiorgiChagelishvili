@@ -1,15 +1,16 @@
-﻿using Forum.Application.Topics.Interfaces.Services;
+﻿using Asp.Versioning;
+using Forum.API.Controllers.V1.Admin;
+using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Forum.API.Controllers
+namespace Forum.API.Controllers.V1
 {
     [Authorize(Roles = "Member")]
-    [Route("api/[controller]")]
     [ApiController]
-    public class TopicController : ControllerBase
+    public class TopicController : CustomControllerBase
     {
         private readonly ITopicService _topicService;
         private readonly IConfiguration _config;

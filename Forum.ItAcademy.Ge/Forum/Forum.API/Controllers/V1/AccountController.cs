@@ -1,14 +1,14 @@
-﻿using Forum.API.Infrastructure.Authorization;
+﻿using Forum.API.Controllers.V1.Admin;
+using Forum.API.Infrastructure.Authorization;
 using Forum.Application.Accounts.Interfaces;
 using Forum.Application.Accounts.Requests;
 using Forum.Application.Users.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Forum.API.Controllers
+namespace Forum.API.Controllers.V1
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : CustomControllerBase
     {
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
