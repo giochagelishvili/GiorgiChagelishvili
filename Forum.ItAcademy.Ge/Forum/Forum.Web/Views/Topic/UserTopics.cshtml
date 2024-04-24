@@ -1,4 +1,4 @@
-﻿@using Forum.Application.Topics.Responses;
+﻿@using Forum.Application.Topics.Responses.Default;
 @using Forum.Domain;
 @model List<TopicResponseNewsFeedModel>;
 
@@ -62,7 +62,7 @@
             <a asp-area="@(isMember?.ToString() == "True" ? "User" : "")"
                asp-action="Topic"
                asp-controller="Topic"
-               asp-route-id="@topic.TopicId"
+               asp-route-topicId="@topic.TopicId"
                class="list-group-item list-group-item-action flex-column align-items-start border-top">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@topic.TopicTitle</h5>
