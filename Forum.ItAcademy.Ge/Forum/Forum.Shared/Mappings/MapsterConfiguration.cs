@@ -1,9 +1,9 @@
 ﻿using Forum.Application.Users.Responses;
-using Forum.Application.Topics.Responses;
 using Forum.Domain.Topics;
 using Forum.Domain.Users;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
+using Forum.Application.Topics.Responses.Default;
 
 namespace Forum.Shared.Mappings
 {

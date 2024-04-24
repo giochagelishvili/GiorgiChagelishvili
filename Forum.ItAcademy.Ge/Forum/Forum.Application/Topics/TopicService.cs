@@ -2,7 +2,7 @@
 using Forum.Application.Topics.Interfaces.Interfaces;
 using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
-using Forum.Application.Topics.Responses;
+using Forum.Application.Topics.Responses.Default;
 using Forum.Application.Users.Interfaces.Services;
 using Forum.Domain.Topics;
 using Mapster;

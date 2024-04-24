@@ -1,6 +1,6 @@
 ﻿using Forum.Application.Comments.Responses;
 
-namespace Forum.Application.Topics.Responses
+namespace Forum.Application.Topics.Responses.Default
 {
     public class TopicResponseWorkerModel
     {

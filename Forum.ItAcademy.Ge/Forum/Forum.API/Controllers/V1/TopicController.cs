@@ -2,7 +2,7 @@
 using Forum.API.Controllers.V1.Admin;
 using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
-using Forum.Application.Topics.Responses;
+using Forum.Application.Topics.Responses.Default;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

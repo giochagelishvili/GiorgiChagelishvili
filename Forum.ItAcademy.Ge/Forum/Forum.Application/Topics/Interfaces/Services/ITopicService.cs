@@ -1,5 +1,5 @@
 ﻿using Forum.Application.Topics.Requests;
-using Forum.Application.Topics.Responses;
+using Forum.Application.Topics.Responses.Default;
 
 namespace Forum.Application.Topics.Interfaces.Services
 {

@@ -1,6 +1,6 @@
 ﻿using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Requests;
-using Forum.Application.Topics.Responses;
+using Forum.Application.Topics.Responses.Default;
 using Forum.Domain;
 
 namespace Forum.Workers.Archives
