@@ -50,6 +50,16 @@ namespace Forum.API.Controllers.V1.Admin
             return await _adminTopicService.GetTopicAsync(topicId, cancellationToken);
         }
 
+        [HttpPost("create")]
+        public async Task CreateTopic(TopicRequestPostModel postModel, CancellationToken cancellationToken)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            postModel.AuthorId = userId;
+
+            await _adminTopicService.CreateTopicAsync(postModel, cancellationToken);
+        }
+
         [HttpPost("updateState")]
         public async Task UpdateStateAsync(TopicStatePutModel putModel, CancellationToken cancellationToken)
         {
