@@ -13,7 +13,7 @@ namespace Forum.Infrastructure.Images
 
         public async Task<Image?> GetAsync(int userId, CancellationToken cancellationToken)
         {
-            return await _dbSet.FirstOrDefaultAsync(image => image.UserId == userId && !image.IsDeleted, cancellationToken);
+            return await _dbSet.FirstOrDefaultAsync(image => image.UserId == userId, cancellationToken);
         }
 
         public async Task<bool> ExistsAsync(int userId, CancellationToken cancellationToken)
@@ -28,9 +28,6 @@ namespace Forum.Infrastructure.Images
 
             image.Url = updatedImage.Url;
 
-            if (image.IsDeleted)
-                image.IsDeleted = false;
-
             _dbSet.Update(image);
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -41,9 +38,7 @@ namespace Forum.Infrastructure.Images
             var image = await _dbSet
                 .FirstOrDefaultAsync(image => image.UserId == userId, cancellationToken);
 
-            image.IsDeleted = true;
-
-            _dbSet.Update(image);
+            _dbSet.Remove(image);
 
             await _context.SaveChangesAsync(cancellationToken);
         }

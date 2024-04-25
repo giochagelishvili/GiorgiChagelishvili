@@ -20,6 +20,7 @@ using Forum.Application.Topics;
 using Forum.Application.Topics.Interfaces.Services;
 using Forum.Workers.Archives;
 using Forum.Infrastructure.Topics.Admin;
+using Forum.Infrastructure.Users.Admin;
 
 namespace Forum.Workers
 {

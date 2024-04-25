@@ -1,6 +1,5 @@
 ﻿using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses.Admin;
-using Forum.Application.Users.Responses;
 
 namespace Forum.Application.Topics.Interfaces.Services
 {
@@ -10,6 +9,7 @@ namespace Forum.Application.Topics.Interfaces.Services
         Task<List<TopicResponseAdminFeedModel>> GetAllArchivedTopicsAsync(int page, int itemsPerPage, CancellationToken cancellationToken);
         Task<List<TopicResponseAdminFeedModel>> GetAllUserTopicsAsync(int userId, int page, int itemsPerPage, CancellationToken cancellationToken);
         Task<TopicResponseAdminModel> GetTopicAsync(int topicId, CancellationToken cancellationToken);
+        Task CreateTopicAsync(TopicRequestPostModel postModel, CancellationToken cancellationToken);
         Task UpdateStateAsync(TopicStatePutModel putModel, CancellationToken cancellationToken);
         Task UpdateStatusAsync(TopicStatusPutModel putModel, CancellationToken cancellationToken);
         Task<int> GetTopicsCountAsync(CancellationToken cancellationToken);

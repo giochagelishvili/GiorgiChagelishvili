@@ -1,9 +1,8 @@
 ﻿using Forum.Application.Exceptions;
 using Forum.Application.Images.Interfaces;
+using Forum.Application.Users.Interfaces.Services;
 using Forum.Domain.Images;
-using Forum.Domain.Users;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Forum.Application.Images
@@ -12,18 +11,19 @@ namespace Forum.Application.Images
     {
         private readonly IImageRepository _imageRepository;
         private readonly IConfiguration _config;
-        private readonly UserManager<User> _userManager;
 
-        public ImageService(IImageRepository imageRepository, UserManager<User> userManager, IConfiguration config)
+        public ImageService(IImageRepository imageRepository, IConfiguration config)
         {
             _imageRepository = imageRepository;
-            _userManager = userManager;
             _config = config;
         }
 
         public async Task<string> GetAsync(int userId, CancellationToken cancellationToken)
         {
             var image = await _imageRepository.GetAsync(userId, cancellationToken);
+
+            if (image == null)
+                throw new ImageNotFoundException();
 
             return image.Url;
         }
@@ -72,10 +72,18 @@ namespace Forum.Application.Images
 
         public async Task DeleteAsync(int userId, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var image = await _imageRepository.GetAsync(userId, cancellationToken);
 
-            if (user == null)
-                throw new UserNotFoundException();
+            var uploadPath = _config.GetValue<string>("Constants:UploadPath");
+            var requestPath = _config.GetValue<string>("Constants:RequestPath");
+
+            var imageName = image.Url.Substring(requestPath.Length);
+            var imagePath = uploadPath + imageName;
+
+            if (File.Exists(imagePath))
+                File.Delete(imagePath);
+            else
+                throw new ImageNotFoundException();
 
             await _imageRepository.DeleteAsync(userId, cancellationToken);
         }

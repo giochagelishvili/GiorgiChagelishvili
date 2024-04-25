@@ -25,6 +25,7 @@ using Forum.Application.Topics.Interfaces.Interfaces;
 using Forum.Infrastructure.Topics.Admin;
 using Forum.Application.Users.Interfaces.Services;
 using Forum.Application.Users.Interfaces.Repositories;
+using Forum.Infrastructure.Users.Admin;
 
 namespace Forum.Shared.Extensions
 {

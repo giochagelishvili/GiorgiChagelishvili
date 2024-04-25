@@ -87,9 +87,6 @@ namespace Forum.Application.Users
             if (result == null)
                 throw new UserNotFoundException();
 
-            if (result.Image != null && result.Image.IsDeleted)
-                result.Image = null;
-
             return result.Adapt<UserResponseModel>();
         }
 
@@ -100,9 +97,6 @@ namespace Forum.Application.Users
             if (result == null)
                 throw new UserNotFoundException();
 
-            if (result.Image != null && result.Image.IsDeleted)
-                result.Image = null;
-
             return result.Adapt<UserResponseModel>();
         }
 
@@ -112,9 +106,6 @@ namespace Forum.Application.Users
 
             if (result == null)
                 throw new UserNotFoundException();
-
-            if (result.Image != null && result.Image.IsDeleted)
-                result.Image = null;
 
             return result.Adapt<UserResponseModel>();
         }

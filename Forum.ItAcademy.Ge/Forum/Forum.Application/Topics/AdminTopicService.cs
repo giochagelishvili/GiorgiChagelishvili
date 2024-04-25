@@ -5,6 +5,7 @@ using Forum.Application.Topics.Requests;
 using Forum.Application.Topics.Responses.Admin;
 using Forum.Application.Users.Interfaces.Services;
 using Forum.Domain;
+using Forum.Domain.Topics;
 using Mapster;
 
 namespace Forum.Application.Topics
@@ -76,6 +77,13 @@ namespace Forum.Application.Topics
                 throw new TopicNotFoundException();
 
             return result.Adapt<TopicResponseAdminModel>();
+        }
+
+        public async Task CreateTopicAsync(TopicRequestPostModel postModel, CancellationToken cancellationToken)
+        {
+            var entity = postModel.Adapt<Topic>();
+
+            await _topicRepository.CreateTopicAsync(entity, cancellationToken);
         }
 
         public async Task UpdateStateAsync(TopicStatePutModel putModel, CancellationToken cancellationToken)

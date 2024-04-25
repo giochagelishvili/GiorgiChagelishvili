@@ -42,7 +42,12 @@ namespace Forum.Workers.Archives
 
             foreach (var topic in topics)
             {
-                if (topic.LatestComment == null && topic.ModifiedAt.AddDays(daysToMoveToArchive) <= DateTime.UtcNow || topic.LatestComment?.CreatedAt.AddDays(daysToMoveToArchive) <= DateTime.UtcNow)
+                //if (topic.LatestComment == null && topic.ModifiedAt.AddDays(daysToMoveToArchive) <= DateTime.UtcNow || topic.LatestComment?.CreatedAt.AddDays(daysToMoveToArchive) <= DateTime.UtcNow)
+                //{
+                //    await _archiveService.UpdateStatusAsync(topic.TopicId, stoppingToken);
+                //}
+
+                if (topic.LatestComment == null && topic.ModifiedAt.AddSeconds(10) <= DateTime.UtcNow || topic.LatestComment?.CreatedAt.AddSeconds(10) <= DateTime.UtcNow)
                 {
                     await _archiveService.UpdateStatusAsync(topic.TopicId, stoppingToken);
                 }

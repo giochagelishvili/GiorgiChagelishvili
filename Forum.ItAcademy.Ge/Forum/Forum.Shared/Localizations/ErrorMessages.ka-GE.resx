@@ -141,6 +141,9 @@
   <data name="EmptyBio" xml:space="preserve">
     <value>ბიო არ უნდა იყოს ცარიელი.</value>
   </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>ფოტო ვერ მოიძებნა.</value>
+  </data>
   <data name="InactiveTopic" xml:space="preserve">
     <value>არააქტიურ თემებზე ახალი კომენტარების დაწერა აკრძალულია.</value>
   </data>

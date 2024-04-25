@@ -59,6 +59,16 @@ namespace Forum.Shared.Classes
             Message = ErrorMessages.PageNotFound;
         }
 
+        private void HandleException(ImageNotFoundException exception)
+        {
+            Code = exception.Code;
+            Status = (int)HttpStatusCode.NotFound;
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
+            Title = exception.Message;
+            LogLevel = LogLevel.Error;
+            Message = ErrorMessages.ImageNotFound;
+        }
+
         private void HandleException(TopicNotFoundException exception)
         {
             Code = exception.Code;

@@ -24,6 +24,9 @@ dotnet_diagnostic.CS8602.severity = silent
 # CS8600: Converting null literal or possible null value to non-nullable type.
 dotnet_diagnostic.CS8600.severity = silent
 
+# IDE0057: Use range operator
+dotnet_diagnostic.IDE0057.severity = silent
+
 [*.{cs,vb}]
 #### Naming styles ####
 

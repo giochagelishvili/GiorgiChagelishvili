@@ -133,6 +133,15 @@ namespace Forum.Shared.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image not found..
+        /// </summary>
+        public static string ImageNotFound {
+            get {
+                return ResourceManager.GetString("ImageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New comments are not allowed on inactive topics..
         /// </summary>
         public static string InactiveTopic {

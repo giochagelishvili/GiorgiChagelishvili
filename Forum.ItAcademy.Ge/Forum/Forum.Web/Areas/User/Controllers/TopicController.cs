@@ -27,13 +27,13 @@ namespace Forum.Web.Areas.User.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateTopic()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] TopicRequestPostModel topic, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTopic([FromForm] TopicRequestPostModel topic, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 return View();

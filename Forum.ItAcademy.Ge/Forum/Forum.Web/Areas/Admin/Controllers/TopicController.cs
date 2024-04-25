@@ -1,9 +1,10 @@
 ﻿using Forum.Application.Topics;
-using Forum.Application.Topics.Interfaces;
 using Forum.Application.Topics.Interfaces.Services;
 using Forum.Application.Topics.Requests;
+using Forum.Domain.Topics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Forum.Web.Areas.Admin.Controllers
 {
@@ -72,6 +73,27 @@ namespace Forum.Web.Areas.Admin.Controllers
             var topic = await _adminTopicService.GetTopicAsync(id, cancellationToken);
 
             return View(topic);
+        }
+
+        [HttpGet]
+        public IActionResult CreateTopic()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTopic([FromForm] TopicRequestPostModel postModel, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            postModel.AuthorId = userId;
+
+            await _adminTopicService.CreateTopicAsync(postModel, cancellationToken);
+
+            return RedirectToAction(nameof(Topics));
         }
 
         [HttpPost]

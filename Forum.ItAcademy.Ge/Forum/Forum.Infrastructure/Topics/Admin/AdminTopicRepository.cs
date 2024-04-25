@@ -21,7 +21,7 @@ namespace Forum.Infrastructure.Topics.Admin
                 .Select(topic => new TopicCommentsCount
                 {
                     Topic = topic,
-                    CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
+                    CommentCount = topic.Comments.Count()
                 }).ToListAsync(cancellationToken);
         }
 
@@ -34,7 +34,7 @@ namespace Forum.Infrastructure.Topics.Admin
                 .Select(topic => new TopicCommentsCount
                 {
                     Topic = topic,
-                    CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
+                    CommentCount = topic.Comments.Count()
                 }).ToListAsync(cancellationToken);
         }
 
@@ -47,7 +47,7 @@ namespace Forum.Infrastructure.Topics.Admin
                 .Select(topic => new TopicCommentsCount
                 {
                     Topic = topic,
-                    CommentCount = topic.Comments.Where(comment => !comment.IsDeleted).Count()
+                    CommentCount = topic.Comments.Count()
                 }).ToListAsync(cancellationToken);
         }
 
@@ -55,7 +55,17 @@ namespace Forum.Infrastructure.Topics.Admin
         {
             return await _dbSet.Include(topic => topic.Author)
                 .Include(topic => topic.Comments)
+                .ThenInclude(comment => comment.Author)
                 .FirstOrDefaultAsync(topic => topic.Id == topicId, cancellationToken);
+        }
+
+        public async Task CreateTopicAsync(Topic topic, CancellationToken cancellationToken)
+        {
+            topic.State = State.Show;
+
+            await _dbSet.AddAsync(topic, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task UpdateStateAsync(TopicStatePutModel putModel, CancellationToken cancellationToken)

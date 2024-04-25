@@ -32,7 +32,7 @@ namespace Forum.Tests.Unit
         public async Task GetAllTopicsAsync_WhenPageIsLessThanOrEqualToZero_ShouldThrowPageNotFoundException(int page)
         {
             //Act
-            var result = async () => await _sut.GetAllTopicsAsync(page, It.IsAny<int>(), CancellationToken.None);
+            var result = async () => await _sut.GetAllTopicsAsync(page, It.IsAny<int>(), It.IsAny<CancellationToken>());
 
             //Assert
             await result.Should().ThrowAsync<PageNotFoundException>().WithMessage(ErrorMessages.PageNotFound);
@@ -73,9 +73,10 @@ namespace Forum.Tests.Unit
         //GetAllTopicsAsync
         [Theory]
         [InlineData(1, 2)]
-        [InlineData(3, 2)]
+        [InlineData(3, 4)]
         public async Task GetAllTopicsAsync_WhenPageIsValidAndResultIsNotZero_ShouldHaveCountOfItemsPerPage(int page, int itemsPerPage)
         {
+            // Stage
             var topics = new List<TopicCommentsCount>();
 
             for (int i = 1; i <= itemsPerPage; i++)
@@ -87,7 +88,6 @@ namespace Forum.Tests.Unit
                 });
             }
 
-            // Stage
             _topicRepositoryMock.Setup(x => x.GetAllTopicsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(topics);
 
             //Act

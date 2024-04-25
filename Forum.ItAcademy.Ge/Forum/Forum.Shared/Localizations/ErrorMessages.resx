@@ -141,6 +141,9 @@
   <data name="EmptyBio" xml:space="preserve">
     <value>Bio should not be empty in order to be updated.</value>
   </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>Image not found.</value>
+  </data>
   <data name="InactiveTopic" xml:space="preserve">
     <value>New comments are not allowed on inactive topics.</value>
   </data>

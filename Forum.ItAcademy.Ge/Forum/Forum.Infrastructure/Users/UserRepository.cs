@@ -15,7 +15,7 @@ namespace Forum.Infrastructure.Users
         {
             return await _dbSet
                 .Where(user => user.Id == userId)
-                .Select(user => user.Comments.Where(comment => !comment.IsDeleted).Count())
+                .Select(user => user.Comments.Count())
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
